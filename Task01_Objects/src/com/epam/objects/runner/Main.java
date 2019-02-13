@@ -51,5 +51,6 @@ final class Main {
      * @param args program arguments.
      */
     public static void main(final String[] args) {
+        LOGGER.info("Hello world");
     }
 }
