@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 /**
  * Class Reader was created for read data form file, expect a few situations
- * described in methods. Reader uses Java 8 tools for reading: {@link Path},
+ * described in methods. Reader uses Stream API for reading: {@link Path},
  * {@link Stream}, {@link Files}
  * @author Vladislav Sergienya
  * @version 1.0
