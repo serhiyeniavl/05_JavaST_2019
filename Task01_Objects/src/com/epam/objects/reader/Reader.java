@@ -1,5 +1,6 @@
 package com.epam.objects.reader;
 
+import com.epam.objects.exception.EmptyFileException;
 import com.epam.objects.exception.MissingFilePathException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
  * Class Reader was created for read data form file, expect a few situations
  * described in methods. Reader uses Stream API for reading: {@link Path},
  * {@link Stream}, {@link Files}
+ *
  * @author Vladislav Sergienya
  * @version 1.0
  */
@@ -30,9 +32,10 @@ public class Reader {
     }
 
     public Reader(final String filePath) throws MissingFilePathException {
-        if (filePath != null) {
+        if (!isNullablePath(filePath)) {
             path = Paths.get(filePath);
         } else {
+            LOGGER.error("Program did not get a file: path is null");
             throw new MissingFilePathException("Argument filePath is null");
         }
     }
@@ -45,12 +48,19 @@ public class Reader {
     private void readData() {
         try (Stream<String> stringStream = Files.lines(path)) {
             stringList = stringStream.collect(Collectors.toList());
+            if (stringList.isEmpty()) {
+                throw new EmptyFileException("File if empty");
+            }
         } catch (IOException e) {
-            LOGGER.error("File reading error.");
-        } catch (NullPointerException e) {
-            LOGGER.error("Program did not get a file: path is null");
+            LOGGER.error("File does not exist.", e);
         } catch (UncheckedIOException e) {
-            LOGGER.error("File path is a directory, incorrect input.");
+            LOGGER.error("File path is a directory, incorrect input.", e);
+        } catch (EmptyFileException e) {
+            LOGGER.error("Specified file is empty", e);
         }
+    }
+
+    private boolean isNullablePath(final String filePath) {
+        return filePath == null;
     }
 }
