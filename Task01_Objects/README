@@ -1,0 +1,7 @@
+
+
+
+Input file should include three points and number of basis angels in one line:
+first point - top point of the pyramid(input only z coordinate), the rest
+points - points placing on one line, because of basis of the pyramid is right
+polygon.
