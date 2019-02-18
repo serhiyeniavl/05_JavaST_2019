@@ -1,4 +1,4 @@
-/**
+/*
  * Package has entity classes.
  */
 package com.epam.objects.entity;
@@ -6,7 +6,7 @@ package com.epam.objects.entity;
 import java.util.Objects;
 
 /**
- * Entity class for describe a point in three dimensional space.
+ * Entity class for describe a point in two dimensional space.
  *
  * @author Vladislav Sergienya.
  */
@@ -19,22 +19,15 @@ public class Point {
      * Point y.
      */
     private double y;
-    /**
-     * Point z.
-     */
-    private double z;
 
     /**
-     * Creates object {@link Point}
-     * 
-     * @param x value x
-     * @param y value y
-     * @param z value z
+     * Creates object.
+     * @param coordinateX value x
+     * @param coordinateY value y
      */
-    public Point(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Point(final double coordinateX, final double coordinateY) {
+        this.x = coordinateX;
+        this.y = coordinateY;
     }
 
     /**
@@ -47,10 +40,10 @@ public class Point {
 
     /**
      * Set a value x.
-     * @param x value to set point x.
+     * @param coordinateX value to set point x.
      */
-    public void setX(final double x) {
-        this.x = x;
+    public void setX(final double coordinateX) {
+        this.x = coordinateX;
     }
 
     /**
@@ -63,26 +56,10 @@ public class Point {
 
     /**
      * Set a value y.
-     * @param y value to set point y
+     * @param coordinateY value to set point y
      */
-    public void setY(final double y) {
-        this.y = y;
-    }
-
-    /**
-     * Return value z.
-     * @return coordinate z
-     */
-    public double getZ() {
-        return z;
-    }
-
-    /**
-     * Set a value z.
-     * @param z value to set a point z
-     */
-    public void setZ(final double z) {
-        this.z = z;
+    public void setY(final double coordinateY) {
+        this.y = coordinateY;
     }
 
     /**
@@ -99,17 +76,25 @@ public class Point {
         }
         Point point = (Point) o;
         return Double.compare(point.x, x) == 0
-                && Double.compare(point.y, y) == 0
-                && Double.compare(point.z, z) == 0;
+                && Double.compare(point.y, y) == 0;
     }
 
     /**
      * Generates a hashcode of the object by it's fields.
      * @return Hashcode of the objects got in params.
      * @see Objects#hash(Object...)
+     * {@inheritDoc}
      */
     public int hashCode() {
-        return Objects.hash(x, y, z);
+        int result;
+        long temp;
+        final int coeff1 = 31;
+        final int coeff2 = 32;
+        temp = Double.doubleToLongBits(x);
+        result = (int) (temp ^ (temp >>> coeff2));
+        temp = Double.doubleToLongBits(y);
+        result = coeff1 * result + (int) (temp ^ (temp >>> coeff2));
+        return result;
     }
 
     /**
@@ -120,7 +105,6 @@ public class Point {
         return "Point{"
                 + "x=" + x
                 + ", y=" + y
-                + ", z=" + z
                 + '}';
     }
 }
