@@ -1,9 +1,9 @@
 package com.epam.objects.factory;
 
-import com.epam.objects.entity.Geometry;
+import com.epam.objects.entity.Point;
 
 
 public interface PointFactory extends Factory {
-    Geometry createPoint(double coordinateX, double coordinateY,
-                         double coordinateZ);
+    Point createPoint(double coordinateX, double coordinateY,
+                      double coordinateZ);
 }
