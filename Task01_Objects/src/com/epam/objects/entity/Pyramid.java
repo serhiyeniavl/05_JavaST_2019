@@ -14,8 +14,10 @@ public class Pyramid implements Geometry {
         this.angels = angelsQuan;
     }
 
-    public void setPoints(final List<Point> pointList) {
-        this.points = pointList;
+    public void setPoint(final double coordinateX, final double coordinateY,
+                         final double coordinateZ, final int index) {
+        this.points.set(index, new Point(coordinateX, coordinateY,
+                coordinateZ));
     }
 
     public void setHeight(final double h) {
@@ -26,8 +28,8 @@ public class Pyramid implements Geometry {
         this.angels = angelsQuan;
     }
 
-    public List<Point> getPoints() {
-        return points;
+    public Point getPoint(final int index) {
+        return points.get(index);
     }
 
     public double getHeight() {
