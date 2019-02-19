@@ -57,10 +57,14 @@ public class ObjectValidator {
     }
 
     private boolean isPointsDot(final List<Double> points) {
-        return (points.get(FileData.FIRST_X.getPosition())
-                .equals(points.get(FileData.SECOND_X.getPosition())))
-                && (points.get(FileData.FIRST_Y.getPosition())
-                .equals(points.get(FileData.SECOND_Y.getPosition())));
+        final int firstXpos = 0;
+        final int firstYpos = 1;
+        final int secondXpos = 2;
+        final int secondYpos = 3;
+        return (points.get(firstXpos)
+                .equals(points.get(secondXpos)))
+                && (points.get(firstYpos)
+                .equals(points.get(secondYpos)));
     }
 
     private boolean isZNotEquals(final double z1, final double z2) {
