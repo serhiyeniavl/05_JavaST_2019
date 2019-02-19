@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Vladislav Sergienya.
  */
-public class Point {
+public class Point implements Geometry {
     /**
      * Point x.
      */
@@ -20,18 +20,25 @@ public class Point {
      */
     private double y;
 
+    private double z;
+
     /**
      * Creates object.
+     *
      * @param coordinateX value x
      * @param coordinateY value y
+     * @param coordinateZ value z
      */
-    public Point(final double coordinateX, final double coordinateY) {
+    public Point(final double coordinateX, final double coordinateY,
+                 final double coordinateZ) {
         this.x = coordinateX;
         this.y = coordinateY;
+        this.z = coordinateZ;
     }
 
     /**
      * Return value x.
+     *
      * @return coordinate x
      */
     public double getX() {
@@ -40,6 +47,7 @@ public class Point {
 
     /**
      * Set a value x.
+     *
      * @param coordinateX value to set point x.
      */
     public void setX(final double coordinateX) {
@@ -48,6 +56,7 @@ public class Point {
 
     /**
      * Return value y.
+     *
      * @return coordinate y
      */
     public double getY() {
@@ -56,17 +65,28 @@ public class Point {
 
     /**
      * Set a value y.
+     *
      * @param coordinateY value to set point y
      */
     public void setY(final double coordinateY) {
         this.y = coordinateY;
     }
 
+    public double getZ() {
+        return z;
+    }
+
+    public void setZ(final double coordinateZ) {
+        this.z = coordinateZ;
+    }
+
     /**
      * Compares two objects.
+     *
      * @param o object for comparison,
      * @return true when this object equals of <code>Object</code> o.
      */
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -74,37 +94,51 @@ public class Point {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
         Point point = (Point) o;
-        return Double.compare(point.x, x) == 0
-                && Double.compare(point.y, y) == 0;
+
+        if (Double.compare(point.x, x) != 0) {
+            return false;
+        }
+        if (Double.compare(point.y, y) != 0) {
+            return false;
+        }
+
+        return Double.compare(point.z, z) == 0;
     }
 
     /**
      * Generates a hashcode of the object by it's fields.
+     *
      * @return Hashcode of the objects got in params.
      * @see Objects#hash(Object...)
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
         int result;
         long temp;
-        final int coeff1 = 31;
-        final int coeff2 = 32;
         temp = Double.doubleToLongBits(x);
-        result = (int) (temp ^ (temp >>> coeff2));
+        result = (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(y);
-        result = coeff1 * result + (int) (temp ^ (temp >>> coeff2));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
+
     /**
      * String representation of this class.
+     *
      * @return string with data of this object.
      */
+    @Override
     public String toString() {
         return "Point{"
                 + "x=" + x
                 + ", y=" + y
+                + ", z=" + z
                 + '}';
     }
 }
