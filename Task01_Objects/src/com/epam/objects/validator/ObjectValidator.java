@@ -16,10 +16,6 @@ public class ObjectValidator {
         if (isDontEnoughData(data)) {
             return false;
         }
-        double apothem = data.get(FileData.APOTHEM.getPosition());
-        if (isApothemIncorrect(apothem)) {
-            return false;
-        }
         double height = data.get(FileData.HEIGHT.getPosition());
         if (isHeightIncorrect(height)) {
             return false;
@@ -35,22 +31,16 @@ public class ObjectValidator {
                 .getPosition()))) {
             return false;
         }
-        if (isAngelsQuanIncorrect(data.get(FileData.NUM_OF_ANGELS
-                .getPosition()))) {
+        if (isZNotEquals(data.get(FileData.FIRST_Z.getPosition()),
+                data.get(FileData.SECOND_Z.getPosition()))) {
             return false;
         }
-        return !isApothemDoesNotCorrespondsHeight(data.get(FileData.HEIGHT
-                .getPosition()), data.get(FileData.APOTHEM
-                .getPosition()), data.get(FileData.NUM_OF_ANGELS
+        return !isAngelsQuanIncorrect(data.get(FileData.NUM_OF_ANGELS
                 .getPosition()));
     }
 
     private boolean isDontEnoughData(final List<Double> inputData) {
         return inputData.size() != FileData.DATA_QUANTITY.getPosition();
-    }
-
-    private boolean isApothemIncorrect(final double apothem) {
-        return apothem <= 0.0;
     }
 
     private boolean isHeightIncorrect(final double height) {
@@ -73,23 +63,7 @@ public class ObjectValidator {
                 .equals(points.get(FileData.SECOND_Y.getPosition())));
     }
 
-    private boolean isApothemDoesNotCorrespondsHeight(final double height,
-                                                      final double apothem,
-                                                      final double angels) {
-        final double epsilon = 0.001;
-        final double halfCircleGrad = 180;
-        double insideRadius
-                = Math.sqrt(((data.get(FileData.SECOND_X.getPosition())
-                - data.get(FileData.FIRST_X.getPosition()))
-                * (data.get(FileData.SECOND_X.getPosition())
-                - data.get(FileData.FIRST_X.getPosition())))
-                + ((data.get(FileData.SECOND_Y.getPosition())
-                - data.get(FileData.FIRST_Y.getPosition()))
-                * (data.get(FileData.SECOND_Y.getPosition())
-                - data.get(FileData.FIRST_Y.getPosition()))));
-        return apothem <= height || (Math.abs(((apothem * apothem)
-                - (height * height)) - (Math.pow(insideRadius
-                / (2 * Math.tan(Math.toRadians(halfCircleGrad / angels))), 2)))
-                > epsilon);
+    private boolean isZNotEquals(final double z1, final double z2) {
+        return z1 != z2;
     }
 }
