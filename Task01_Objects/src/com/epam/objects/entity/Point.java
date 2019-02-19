@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Vladislav Sergienya.
  */
-public class Point implements Geometry {
+public class Point {
     /**
      * Point x.
      */

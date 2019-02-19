@@ -2,7 +2,7 @@ package com.epam.objects.entity;
 
 import java.util.List;
 
-public class Pyramid implements Geometry {
+public class Pyramid {
     private List<Point> points;
     private double height;
     private double angels;

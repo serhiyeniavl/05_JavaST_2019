@@ -1,9 +1,9 @@
 package com.epam.objects.constants;
 
 public enum FileData {
-    FIRST_X(0), FIRST_Y(1), SECOND_X(2), SECOND_Y(3),
-    APOTHEM(4), HEIGHT(5), LITTLE_HEIGHT(6), NUM_OF_ANGELS(7),
-    DATA_QUANTITY(8);
+    FIRST_X(0), FIRST_Y(1), FIRST_Z(2), SECOND_X(3),
+    SECOND_Y(4), SECOND_Z(5), HEIGHT(6), LITTLE_HEIGHT(7),
+    NUM_OF_ANGELS(8), DATA_QUANTITY(9);
 
     private final int position;
 
