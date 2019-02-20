@@ -1,0 +1,12 @@
+This program lets to user calculate volume, square and volume ratio of right
+pyramid, with polygon in basis.
+
+Input data in file: two 3D dots (six numbers), pyramid height, little height
+(to show a point where plane crosses a pyramid) and number of basis angels.
+
+To calculate those values program uses algorithms based on geometrical
+mathematical formulas. Actively using standard Math library.
+
+Code written in Java Code Convention, with plugin "CheckStyle" and "SonarLint".
+
+Using technologies: Java STREAM API, TestNG, Log4j2.
