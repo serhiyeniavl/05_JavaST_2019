@@ -3,7 +3,6 @@
  */
 package com.epam.objects.entity;
 
-import java.util.Objects;
 
 /**
  * Entity class for describe a point in two dimensional space.
@@ -20,6 +19,9 @@ public class Point {
      */
     private double y;
 
+    /**
+     * Point z.
+     */
     private double z;
 
     /**
@@ -37,8 +39,6 @@ public class Point {
     }
 
     /**
-     * Return value x.
-     *
      * @return coordinate x
      */
     public double getX() {
@@ -46,8 +46,6 @@ public class Point {
     }
 
     /**
-     * Set a value x.
-     *
      * @param coordinateX value to set point x.
      */
     public void setX(final double coordinateX) {
@@ -55,8 +53,6 @@ public class Point {
     }
 
     /**
-     * Return value y.
-     *
      * @return coordinate y
      */
     public double getY() {
@@ -64,25 +60,28 @@ public class Point {
     }
 
     /**
-     * Set a value y.
-     *
-     * @param coordinateY value to set point y
+     * @param coordinateY value to set point y.
      */
     public void setY(final double coordinateY) {
         this.y = coordinateY;
     }
 
+    /**
+     * @return coordinate z.
+     */
     public double getZ() {
         return z;
     }
 
+    /**
+     * @param coordinateZ value to set point z.
+     */
     public void setZ(final double coordinateZ) {
         this.z = coordinateZ;
     }
 
     /**
      * Compares two objects.
-     *
      * @param o object for comparison,
      * @return true when this object equals of <code>Object</code> o.
      */
@@ -109,28 +108,27 @@ public class Point {
 
     /**
      * Generates a hashcode of the object by it's fields.
-     *
      * @return Hashcode of the objects got in params.
-     * @see Objects#hash(Object...)
      * {@inheritDoc}
      */
     @Override
     public int hashCode() {
         int result;
         long temp;
+        final int coeff1 = 31;
+        final int coeff2 = 32;
         temp = Double.doubleToLongBits(x);
-        result = (int) (temp ^ (temp >>> 32));
+        result = (int) (temp ^ (temp >>> coeff2));
         temp = Double.doubleToLongBits(y);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = coeff1 * result + (int) (temp ^ (temp >>> coeff2));
         temp = Double.doubleToLongBits(z);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = coeff1 * result + (int) (temp ^ (temp >>> coeff2));
         return result;
     }
 
 
     /**
      * String representation of this class.
-     *
      * @return string with data of this object.
      */
     @Override
