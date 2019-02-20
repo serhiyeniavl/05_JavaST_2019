@@ -5,7 +5,7 @@ import com.epam.objects.entity.Point;
 /**
  * Factory method implementation for creation class {@link Point}.
  */
-public interface PointFactory extends Factory {
+public interface PointFactory extends Factory<Point> {
     /**
      * @param coordinateX value x.
      * @param coordinateY value y.

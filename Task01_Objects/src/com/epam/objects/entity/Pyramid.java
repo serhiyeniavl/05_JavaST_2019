@@ -6,7 +6,7 @@ import java.util.List;
  * Entity class for restoring pyramid info.
  * @author Vladislav Sergienya.
  */
-public class Pyramid {
+public class Pyramid implements Geometry {
     /**
      * List of pyramid basis points.
      */

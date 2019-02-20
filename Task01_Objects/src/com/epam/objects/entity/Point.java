@@ -9,7 +9,7 @@ package com.epam.objects.entity;
  *
  * @author Vladislav Sergienya.
  */
-public class Point {
+public class Point implements Geometry {
     /**
      * Point x.
      */

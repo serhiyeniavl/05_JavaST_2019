@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Factory method implementation for creation class {@link Pyramid}.
  */
-public interface PyramidFactory extends Factory {
+public interface PyramidFactory extends Factory<Pyramid> {
 
     /**
      * @param points basis points.
