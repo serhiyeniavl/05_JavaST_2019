@@ -1,12 +1,23 @@
 package com.epam.objects.entity;
 
+import com.epam.objects.exception.InvalidDataAmountException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 /**
  * Entity class for restoring pyramid info.
+ *
  * @author Vladislav Sergienya.
  */
 public class Pyramid implements Geometry {
+    /**
+     * Logger for managing exception massages.
+     */
+    private static final Logger LOGGER
+            = LogManager.getLogger(Pyramid.class);
+
     /**
      * List of pyramid basis points.
      */
@@ -24,12 +35,22 @@ public class Pyramid implements Geometry {
 
     /**
      * Creates pyramid by input data.
-     * @param pointList basis points.
-     * @param h height.
+     *
+     * @param pointList  basis points.
+     * @param h          height.
      * @param angelsQuan quantity of basis angels.
+     * @throws InvalidDataAmountException when list size does not suite for
+     * program requirements, when coordinates z did not arrange in one plane,
+     * when coordinates x, y form one point.
      */
     public Pyramid(final List<Point> pointList, final double h,
-                   final double angelsQuan) {
+                   final double angelsQuan) throws InvalidDataAmountException {
+        if (pointList.size() != 2 || h <= 0.0 || angelsQuan <= 2
+        || Double.compare(pointList.get(0).getZ(), pointList.get(1).getZ())
+                != 0) {
+            LOGGER.error("Invalid data when call constructor.");
+            throw new InvalidDataAmountException("Incorrect data amount.");
+        }
         this.points = pointList;
         this.height = h;
         this.angels = angelsQuan;
@@ -37,28 +58,64 @@ public class Pyramid implements Geometry {
 
     /**
      * Set pyramid basis point.
+     *
      * @param coordinateX value x.
      * @param coordinateY value y.
      * @param coordinateZ value z.
      * @param index point index in list.
+     * @throws InvalidDataAmountException when list size does not suite for
+     * program requirements, when coordinates z did not arrange in one plane,
+     * when coordinates x, y form one point.
      */
     public void setPoint(final double coordinateX, final double coordinateY,
-                         final double coordinateZ, final int index) {
+                         final double coordinateZ, final int index)
+            throws InvalidDataAmountException {
+        if (index > 1) {
+            LOGGER.error("Invalid data when try to set a point.");
+            throw new InvalidDataAmountException("Invalid data.");
+        }
+        if ((index == 1
+                && Double.compare(coordinateZ, points.get(0).getZ()) != 0)
+                || (index == 0
+                && Double.compare(coordinateZ, points.get(0).getZ()) != 0)) {
+            LOGGER.error("Invalid plane. Plane must be parallel to"
+                    + " coordinate plane.");
+            throw new InvalidDataAmountException("Invalid coordinate z.");
+        }
+        if ((index == 0 && Double.compare(coordinateX, points.get(1).getX())
+                == 0 && Double.compare(coordinateY, points.get(1).getY()) == 0)
+                || (index == 1
+                && Double.compare(coordinateX, points.get(0).getX()) == 0
+                && Double.compare(coordinateY, points.get(0).getY()) == 0)) {
+            LOGGER.error("Invalid points. They form one dot.");
+            throw new InvalidDataAmountException("Invalid coordinates x, y.");
+        }
         this.points.set(index, new Point(coordinateX, coordinateY,
                 coordinateZ));
     }
 
     /**
      * @param h set pyramid height.
+     * @throws InvalidDataAmountException when height is invalid.
      */
-    public void setHeight(final double h) {
+    public void setHeight(final double h) throws InvalidDataAmountException {
+        if (h <= 0.0) {
+            LOGGER.error("Set value is not correct.");
+            throw new InvalidDataAmountException("Invalid amount.");
+        }
         this.height = h;
     }
 
     /**
      * @param angelsQuan set angels quantity.
+     * @throws InvalidDataAmountException when quantity of angels is invalid.
      */
-    public void setAngels(final double angelsQuan) {
+    public void setAngels(final double angelsQuan)
+            throws InvalidDataAmountException {
+        if (angelsQuan <= 2.0) {
+            LOGGER.error("Invalid amount of angels.");
+            throw new InvalidDataAmountException("Invalid amount");
+        }
         this.angels = angelsQuan;
     }
 
@@ -87,6 +144,7 @@ public class Pyramid implements Geometry {
     /**
      * Compares two object on equals.
      * {@inheritDoc}
+     *
      * @param o object to compare.
      * @return true when two objects are equal, false when are not.
      */
@@ -111,8 +169,9 @@ public class Pyramid implements Geometry {
     }
 
     /**
-     * Generates individual representation of the object named hashcode.
+     * Generates individual number representation of the object.
      * {@inheritDoc}
+     *
      * @return object hashcode.
      */
     @Override
