@@ -97,7 +97,7 @@ public class ObjectValidator {
      * otherwise {@code false}.
      */
     private boolean isAngelsQuanIncorrect(final double angels) {
-        return angels != (int) angels && Double.compare(angels, 2) <= 0;
+        return angels != (int) angels || Double.compare(angels, 2) <= 0;
     }
 
     /**
