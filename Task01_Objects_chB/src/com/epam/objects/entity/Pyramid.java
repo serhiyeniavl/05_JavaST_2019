@@ -1,9 +1,12 @@
 package com.epam.objects.entity;
 
 import com.epam.objects.exception.InvalidDataAmountException;
+import com.epam.objects.observer.Observable;
+import com.epam.objects.observer.Observer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,12 +14,14 @@ import java.util.List;
  *
  * @author Vladislav Sergienya.
  */
-public class Pyramid implements Geometry {
+public class Pyramid implements Geometry, Observable {
     /**
      * Logger for managing exception massages.
      */
     private static final Logger LOGGER
             = LogManager.getLogger(Pyramid.class);
+
+    private List<Observer> observers;
 
     /**
      * List of pyramid basis points.
@@ -54,6 +59,7 @@ public class Pyramid implements Geometry {
         this.points = pointList;
         this.height = h;
         this.angels = angelsQuan;
+        observers = new ArrayList<>();
     }
 
     /**
@@ -139,6 +145,23 @@ public class Pyramid implements Geometry {
      */
     public double getAngels() {
         return angels;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
     }
 
     /**
