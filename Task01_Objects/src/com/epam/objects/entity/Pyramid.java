@@ -70,7 +70,7 @@ public class Pyramid implements Geometry {
     public void setPoint(final double coordinateX, final double coordinateY,
                          final double coordinateZ, final int index)
             throws InvalidDataAmountException {
-        if (index > 1) {
+        if (index > 1 || index < 0) {
             LOGGER.error("Invalid data when try to set a point.");
             throw new InvalidDataAmountException("Invalid data.");
         }
