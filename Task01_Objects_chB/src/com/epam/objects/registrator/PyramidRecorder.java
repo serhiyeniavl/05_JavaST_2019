@@ -7,12 +7,10 @@ import com.epam.objects.observer.Observer;
 public class PyramidRecorder implements Observer {
     private double volume;
     private double square;
-
     private int id;
-    private static int idCounter = -1;
 
     public void register(final Pyramid pyramid) {
-        id = ++idCounter;
+        id = pyramid.getId();
         calc(pyramid);
     }
 

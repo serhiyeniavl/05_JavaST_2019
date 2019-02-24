@@ -38,6 +38,9 @@ public class Pyramid implements Geometry, Observable {
      */
     private double angels;
 
+    private static int idCounter = -1;
+    private int id;
+
     /**
      * Creates pyramid by input data.
      *
@@ -59,7 +62,8 @@ public class Pyramid implements Geometry, Observable {
         this.points = pointList;
         this.height = h;
         this.angels = angelsQuan;
-        observers = new ArrayList<>();
+        this.observers = new ArrayList<>();
+        this.id = ++idCounter;
     }
 
     /**
@@ -145,6 +149,10 @@ public class Pyramid implements Geometry, Observable {
      */
     public double getAngels() {
         return angels;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
