@@ -120,10 +120,15 @@ public class PyramidRepositorySingleton implements Observer {
         } else if (specification instanceof SortPyramidSpecification) {
             SortPyramidSpecification sortSpecification
                     = (SortPyramidSpecification) specification;
-            pyramidList = pyramids;
-            pyramidList.sort(sortSpecification);
+            pyramidList = new ArrayList<>(pyramids);
+            pyramidList.sort(sortSpecification.sort());
         }
         return pyramidList;
+    }
+
+    public void clearRepository() {
+        recorders.clear();
+        pyramids.clear();
     }
 
     @Override
