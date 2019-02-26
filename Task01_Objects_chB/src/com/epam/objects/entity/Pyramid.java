@@ -21,6 +21,9 @@ public class Pyramid implements Geometry, Observable {
     private static final Logger LOGGER
             = LogManager.getLogger(Pyramid.class);
 
+    /**
+     * Observers list.
+     */
     private List<Observer> observers;
 
     /**
@@ -38,7 +41,14 @@ public class Pyramid implements Geometry, Observable {
      */
     private double angels;
 
+    /**
+     * Static field counter for identify created pyramid.
+     */
     private static int idCounter = -1;
+
+    /**
+     * Id for identify pyramids.
+     */
     private int id;
 
     /**
@@ -151,15 +161,25 @@ public class Pyramid implements Geometry, Observable {
         return angels;
     }
 
+    /**
+     * @return pyramid id.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Method inherited from {@link Observer} for add new observer.
+     * @param observer new class for observe.
+     */
     @Override
-    public void addObserver(Observer observer) {
+    public void addObserver(final Observer observer) {
         observers.add(observer);
     }
 
+    /**
+     * Method notifies all observers that pyramid changed state.
+     */
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
@@ -167,8 +187,12 @@ public class Pyramid implements Geometry, Observable {
         }
     }
 
+    /**
+     * Method removes observer.
+     * @param observer object to remove.
+     */
     @Override
-    public void removeObserver(Observer observer) {
+    public void removeObserver(final Observer observer) {
         observers.remove(observer);
     }
 
@@ -177,7 +201,8 @@ public class Pyramid implements Geometry, Observable {
      * {@inheritDoc}
      *
      * @param o object to compare.
-     * @return true when two com.epam.test.com.epam.objects are equal, false when are not.
+     * @return true when two com.epam.test.com.epam.objects are equal,
+     * false when are not.
      */
     @Override
     public boolean equals(final Object o) {

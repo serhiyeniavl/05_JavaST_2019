@@ -43,7 +43,7 @@ public class FindPyramidByFirstPointSpecification implements
      * @return {@code true} if points are equal.
      */
     @Override
-    public boolean specified(Object object) {
+    public boolean specified(final Object object) {
         Pyramid pyramid = (Pyramid) object;
         return point.equals(pyramid.getPoint(0));
     }
