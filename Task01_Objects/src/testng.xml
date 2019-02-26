@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suit1">
+    <test name="Figure creation path">
+        <packages>
+            <package name="test.com.epam.objects.action"/>
+            <package name="test.com.epam.objects.factory"/>
+            <package name="test.com.epam.objects.parser"/>
+            <package name="test.com.epam.objects.validator"/>
+            <package name="test.com.epam.objects.reader"/>
+            <package name="test.com.epam.objects.creator"/>
+        </packages>
+    </test>
+</suite>
