@@ -6,7 +6,13 @@ import com.epam.objects.repository.specification.SortPyramidSpecification;
 
 import java.util.Comparator;
 
+/**
+ * Class provides method for sort pyramid by volume.
+ */
 public class SortByVolumeSpecification implements SortPyramidSpecification {
+    /**
+     * @return {@link Comparator} sorts pyramids by its volume.
+     */
     @Override
     public Comparator<Pyramid> sort() {
         return Comparator.comparingDouble(

@@ -24,13 +24,42 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Test class for {@link PyramidRepositorySingleton}.
+ */
 public class PyramidRepositorySingletonTest {
+    /**
+     * Common repository for test methods.
+     */
     private PyramidRepositorySingleton repository;
+
+    /**
+     * List of points for pyramid1.
+     */
     private List<Point> points1;
+
+    /**
+     * List of points for pyramid2.
+     */
     private List<Point> points2;
+
+    /**
+     * Pyramid for save to repo.
+     */
     private Pyramid pyramid1;
+
+    /**
+     * Pyramid for save to repo.
+     */
     private Pyramid pyramid2;
 
+
+    /**
+     * Method runs before test class. Initializing repository, pyramids and
+     * points.
+     * @throws InvalidDataAmountException when index repository out of bound.
+     * @throws NullArgumentException when try to save null element in repo.
+     */
     @BeforeClass
     private void init() throws InvalidDataAmountException,
             NullArgumentException {
@@ -57,12 +86,17 @@ public class PyramidRepositorySingletonTest {
         repository.save(pyramid1, recorder1);
     }
 
+    /**
+     * Method runs before test for clear repository.
+     */
     @AfterClass
     private void clear() {
         repository.clearRepository();
     }
 
-
+    /**
+     * @return volume changes pyramid when it changes own state.
+     */
     @DataProvider(name = "create data for test update method")
     private Object[][] createData() {
         return
@@ -71,6 +105,9 @@ public class PyramidRepositorySingletonTest {
                 };
     }
 
+    /**
+     * @return pyramids list for find and sort test methods.
+     */
     @DataProvider(name = "create list for sorts")
     private Object[][] createList() {
         return
@@ -80,10 +117,16 @@ public class PyramidRepositorySingletonTest {
                                 add(pyramid1);
                                 add(pyramid2);
                             }
-                        }}
+                        } }
                 };
     }
 
+    /**
+     * Test how pattern Observers work.
+     * @param expected expected value when pyramid changes state.
+     * @throws InvalidDataAmountException when index repository out of bound.
+     * @throws NullArgumentException when try to save null element in repo.
+     */
     @Test(description = "Test situation when object changes state.",
             dataProvider = "create data for test update method")
     public void testUpdate1(final double expected) throws
@@ -104,6 +147,10 @@ public class PyramidRepositorySingletonTest {
                 expected, 0.01);
     }
 
+    /**
+     * Method waits repo throw exception.
+     * @throws NullArgumentException when try to save null element in repo.
+     */
     @Test(description = "Test situation when repository throws exception.",
             expectedExceptions = NullArgumentException.class)
     public void testUpdate2() throws
@@ -113,6 +160,10 @@ public class PyramidRepositorySingletonTest {
                 1, 0.01);
     }
 
+    /**
+     * Method waits repo throw exception.
+     * @throws NullArgumentException when try to save null element in repo.
+     */
     @Test(description = "Test situation when repository throws exception.",
             expectedExceptions = NullArgumentException.class)
     public void testUpdate3() throws
@@ -122,6 +173,10 @@ public class PyramidRepositorySingletonTest {
                 1, 0.01);
     }
 
+    /**
+     * Method waits repo throw exception.
+     * @throws InvalidDataAmountException when specified invalid index.
+     */
     @Test(description = "Test situation when repository throws exception.",
             expectedExceptions = InvalidDataAmountException.class)
     public void testUpdate4() throws
@@ -131,26 +186,36 @@ public class PyramidRepositorySingletonTest {
                 1, 0.01);
     }
 
+    /**
+     * Method tests query on sort in repo.
+     * @param expected expected list from sort.
+     */
     @Test(description = "Test query to repository sort by square",
             dataProvider = "create list for sorts")
     public void testQuery1(final List<Pyramid> expected) {
-
         PyramidSpecification specification
                 = new SortBySquareSpecification();
         List<Pyramid> actual = repository.query(specification);
         Assert.assertEquals(actual, expected);
     }
 
+    /**
+     * Method tests query on sort in repo.
+     * @param expected expected list from sort.
+     */
     @Test(description = "Test query to repository sort by volume",
             dataProvider = "create list for sorts")
     public void testQuery2(final List<Pyramid> expected) {
-
         PyramidSpecification specification
                 = new SortByVolumeSpecification();
         List<Pyramid> actual = repository.query(specification);
         Assert.assertEquals(actual, expected);
     }
 
+    /**
+     * Method tests query on sort in repo.
+     * @param expected expected list from sort.
+     */
     @Test(description = "Test query to repository sort by id",
             dataProvider = "create list for sorts")
     public void testQuery3(final List<Pyramid> expected) {
@@ -160,6 +225,10 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual, expected);
     }
 
+    /**
+     * Method tests query on sort in repo.
+     * @param expected expected list from sort.
+     */
     @Test(description = "Test query to repository sort by first x point",
             dataProvider = "create list for sorts")
     public void testQuery4(final List<Pyramid> expected) {
@@ -169,6 +238,10 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual, expected);
     }
 
+    /**
+     * Method tests query on sort in repo.
+     * @param expected expected list from sort.
+     */
     @Test(description = "Test query to repository sort by first y point",
             dataProvider = "create list for sorts")
     public void testQuery5(final List<Pyramid> expected) {
@@ -178,16 +251,25 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual, expected);
     }
 
+    /**
+     * Method tests query on find objects in repo.
+     * @param expected expected list after query.
+     * @throws InvalidDataAmountException when specified invalid ID.
+     */
     @Test(description = "Test query to repository find pyramid by id",
             dataProvider = "create list for sorts")
     public void testQuery6(final List<Pyramid> expected)
             throws InvalidDataAmountException {
         PyramidSpecification specification
-                = new FindPyramidByIDSpecification(1);
+                = new FindPyramidByIDSpecification(0);
         List<Pyramid> actual = repository.query(specification);
-        Assert.assertEquals(actual.get(0), expected.get(1));
+        Assert.assertEquals(actual.get(0), expected.get(0));
     }
 
+    /**
+     * Method tests query on find objects in repo.
+     * @param expected expected list after query.
+     */
     @Test(description = "Test query to repository find pyramid by square",
             dataProvider = "create list for sorts")
     public void testQuery7(final List<Pyramid> expected) {
@@ -197,6 +279,10 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual.get(0), expected.get(0));
     }
 
+    /**
+     * Method tests query on find objects in repo.
+     * @param expected expected list after query.
+     */
     @Test(description = "Test query to repository find pyramid by volume",
             dataProvider = "create list for sorts")
     public void testQuery8(final List<Pyramid> expected) {
@@ -206,6 +292,11 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual.get(0), expected.get(1));
     }
 
+    /**
+     * Method tests query on find objects in repo.
+     * @param expected expected list after query.
+     * @throws NullArgumentException when try to set null object in point.
+     */
     @Test(description = "Test query to repository find pyramid by first point",
             dataProvider = "create list for sorts")
     public void testQuery9(final List<Pyramid> expected) throws
@@ -218,3 +309,4 @@ public class PyramidRepositorySingletonTest {
         Assert.assertEquals(actual.get(0), expected.get(0));
     }
 }
+

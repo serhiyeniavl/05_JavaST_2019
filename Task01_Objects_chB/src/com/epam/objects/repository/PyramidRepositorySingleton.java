@@ -16,26 +16,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PyramidRepositorySingleton implements Observer {
+/**
+ * Class stores {@link Pyramid} and {@link PyramidRecorder} objects. Class
+ * declares as singleton, it has only one object for entire program.
+ */
+public final class PyramidRepositorySingleton implements Observer {
+    /**
+     * Logger for logging errors.
+     */
     private static final Logger LOGGER
             = LogManager.getLogger(PyramidRepositorySingleton.class);
 
+    /**
+     * Single instance of the class.
+     */
     private static final PyramidRepositorySingleton INSTANCE
             = new PyramidRepositorySingleton();
 
+    /**
+     * Pyramids storing in repo.
+     */
     private List<Pyramid> pyramids;
+
+    /**
+     * Recorders for pyramids.
+     */
     private List<PyramidRecorder> recorders;
 
+    /**
+     * Constructor - initializing lists.
+     */
     private PyramidRepositorySingleton() {
         pyramids = new ArrayList<>();
         recorders = new ArrayList<>();
     }
 
+    /**
+     * @return instance of the class.
+     */
     public static PyramidRepositorySingleton getInstance() {
         return INSTANCE;
     }
 
-
+    /**
+     * Method adds pyramid and recorder in repo.
+     *
+     * @param pyramid  for store.
+     * @param recorder for store.
+     * @throws NullArgumentException when pyramid or recorder is null.
+     */
     public void save(final Pyramid pyramid,
                      final PyramidRecorder recorder)
             throws NullArgumentException {
@@ -48,6 +77,12 @@ public class PyramidRepositorySingleton implements Observer {
         recorders.add(recorder);
     }
 
+    /**
+     * Delete pyramid and it's recorder by index.
+     *
+     * @param index of pyramid.
+     * @throws InvalidDataAmountException when index is invalid.
+     */
     public void delete(final int index) throws InvalidDataAmountException {
         if (index >= pyramids.size() || index < 0) {
             LOGGER.error("Index is invalid.");
@@ -63,6 +98,12 @@ public class PyramidRepositorySingleton implements Observer {
         }
     }
 
+    /**
+     * Delete pyramid and it's recorder by pyramid instance.
+     *
+     * @param pyramid for deleting.
+     * @throws NullArgumentException when pyramid is null.
+     */
     public void delete(final Pyramid pyramid) throws NullArgumentException {
         if (pyramid == null) {
             LOGGER.error("Argument pyramid is null. Method can't delete"
@@ -84,15 +125,28 @@ public class PyramidRepositorySingleton implements Observer {
         }
     }
 
+    /**
+     * @return pyramids store in repo.
+     */
     public List<Pyramid> getAllPyramids() {
         return new ArrayList<>(pyramids);
     }
 
+    /**
+     * @return recorders store in repo.
+     */
     public List<PyramidRecorder> getAllRecorders() {
         return new ArrayList<>(recorders);
     }
 
-    public List<Pyramid> query(PyramidSpecification specification) {
+    /**
+     * Takes users query by specified method. If specification is finding
+     * method casts it to {@link FindPyramidSpecification}, otherwise to
+     * {@link SortPyramidSpecification}.
+     * @param specification specified query.
+     * @return list based on specified query.
+     */
+    public List<Pyramid> query(final PyramidSpecification specification) {
         List<Pyramid> pyramidList = new ArrayList<>();
 
         if (specification instanceof FindPyramidSpecification) {
@@ -126,13 +180,21 @@ public class PyramidRepositorySingleton implements Observer {
         return pyramidList;
     }
 
+    /**
+     * Delete all objects storing in repo.
+     */
     public void clearRepository() {
         recorders.clear();
         pyramids.clear();
     }
 
+    /**
+     * {@link com.epam.objects.observer.Observable} method for updating repo
+     * objects that changed and notified all observers.
+     * @param ob
+     */
     @Override
-    public void update(Object ob) {
+    public void update(final Object ob) {
         Pyramid pyramid = (Pyramid) ob;
         int counter = 0;
         for (Pyramid p : pyramids) {
@@ -143,12 +205,13 @@ public class PyramidRepositorySingleton implements Observer {
         }
     }
 
+    /**
+     * Finds pyramid in repo by appropriate recorder id.
+     * @param id recorder id.
+     * @return {@link Optional} object of pyramid.
+     */
     private Optional<Pyramid> findPyramidByRecorderId(final int id) {
-        for (Pyramid pyramid : pyramids) {
-            if (pyramid.getId() == id) {
-                return Optional.of(pyramid);
-            }
-        }
-        return Optional.empty();
+        return Optional.of(pyramids.stream()
+                .filter(pyramid -> pyramid.getId() == id).findFirst()).get();
     }
 }

@@ -6,7 +6,13 @@ import com.epam.objects.repository.specification.SortPyramidSpecification;
 
 import java.util.Comparator;
 
+/**
+ * Class provides method for sort pyramid by square.
+ */
 public class SortBySquareSpecification implements SortPyramidSpecification {
+    /**
+     * @return {@link Comparator} sorts pyramids by its square.
+     */
     @Override
     public Comparator<Pyramid> sort() {
         return Comparator.comparingDouble(
