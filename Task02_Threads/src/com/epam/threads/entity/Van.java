@@ -10,60 +10,109 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Entity class for define van. Implements {@link Callable} to create thread of
+ * vans.
+ */
 public class Van implements Callable<Optional<Object>> {
+    /**
+     * Logger for logging errors.
+     */
     private static final Logger LOGGER
             = LogManager.getLogger(Van.class);
 
+    /**
+     * Static field to define vanId for new object.
+     */
     private static int idCounter = 0;
-    private int id;
+
+    /**
+     * Van id.
+     */
+    private int vanId;
+
+    /**
+     * Field shows target to arrive in base.
+     */
     private String target;
+
+    /**
+     * Field shows van status in order.
+     */
     private String status;
 
+    /**
+     * String defines express status in order.
+     */
+    private static final String EXPRESS_STATUS = "express";
 
-    public Van(final String target, final String vanStatus)
+    /**
+     * String defines common status in order.
+     */
+    private static final String COMMON_STATUS = "common";
+
+
+    /**
+     * Constructor - initialize target of van and status.
+     *
+     * @param arriveTarget arrive target.
+     * @param vanStatus    van status.
+     * @throws InvalidArgumentException when target or status is invalid.
+     * @throws NullArgumentException    when target or status is null pointer.
+     */
+    public Van(final String arriveTarget, final String vanStatus)
             throws InvalidArgumentException, NullArgumentException {
-        if (target == null || vanStatus == null) {
+        if (arriveTarget == null || vanStatus == null) {
             throw new NullArgumentException("Vans argument is null");
         }
-        if ((!target.equals("load")) && (!target.equals("unload"))) {
+        if ((!arriveTarget.equals("load"))
+                && (!arriveTarget.equals("unload"))) {
             throw new InvalidArgumentException("Invalid string target.");
         }
-        if (!vanStatus.equals("common") && (!vanStatus.equals("express"))) {
+        if (!vanStatus.equals(COMMON_STATUS)
+                && (!vanStatus.equals(EXPRESS_STATUS))) {
             throw new InvalidArgumentException("Invalid string status.");
         }
-        this.target = target;
+        this.target = arriveTarget;
         this.status = vanStatus;
-        id = ++idCounter;
+        vanId = ++idCounter;
     }
 
+    /**
+     * Method runs when {@link java.util.concurrent.ExecutorService} call it.
+     * Show info for user how van is acting in base.
+     *
+     * @return this object.
+     * @see java.util.concurrent.ExecutorService
+     */
     @Override
     public Optional<Object> call() {
-        if (status.equals("express")) {
-            System.out.println("Express van number " + id
+        if (status.equals(EXPRESS_STATUS)) {
+            System.out.println("Express van number " + vanId
                     + " arrived to base.");
         } else {
-            System.out.println("Van number " + id + " arrived to base.");
+            System.out.println("Van number " + vanId + " arrived to base.");
         }
         int terminalNum = LogisticBaseSingleton.INSTANCE.takeTerminal();
         delay(1);
-        System.out.println("Van number " + id + " took a terminal "
+        System.out.println("Van number " + vanId + " took a terminal "
                 + terminalNum + ".");
         delay(2);
         if (target.equals("load")) {
-            System.out.println("Van's " + id + " loading...");
+            System.out.println("Van's " + vanId + " loading...");
         } else {
-            if (status.equals("express")) {
-                System.out.println("Express van's " + id + " unloading...");
+            if (status.equals(EXPRESS_STATUS)) {
+                System.out.println("Express van's " + vanId + " unloading...");
             } else {
-                System.out.println("Van's " + id + " unloading...");
+                System.out.println("Van's " + vanId + " unloading...");
             }
         }
-        if (status.equals("express")) {
-            System.out.println("Express van " + id + " leaved terminal "
+        if (status.equals(EXPRESS_STATUS)) {
+            System.out.println("Express van " + vanId + " leaved terminal "
                     + terminalNum + ".");
         } else {
-            System.out.println("Van " + id + " leaved terminal " + terminalNum
-                    + ".");
+            System.out.println("Van " + vanId + " leaved terminal "
+                    + terminalNum + ".");
         }
         try {
             LogisticBaseSingleton.INSTANCE.leaveTerminal(terminalNum);
@@ -73,6 +122,11 @@ public class Van implements Callable<Optional<Object>> {
         return Optional.of(this);
     }
 
+    /**
+     * Sets delay for call method.
+     *
+     * @param timeout delay time.
+     */
     private void delay(final int timeout) {
         try {
             TimeUnit.SECONDS.sleep(timeout);

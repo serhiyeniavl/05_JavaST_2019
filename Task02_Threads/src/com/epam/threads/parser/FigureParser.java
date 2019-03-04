@@ -18,6 +18,7 @@ public class FigureParser {
 
     /**
      * Parsing integer numbers form {@link List}.
+     *
      * @param stringList list for parsing.
      * @return {@link List} of parsed integers.
      */

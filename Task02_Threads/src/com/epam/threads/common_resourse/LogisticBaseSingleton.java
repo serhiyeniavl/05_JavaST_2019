@@ -11,24 +11,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+/**
+ * Class singleton for distribution vans by terminals.
+ * {@see Terminal}.
+ */
 public final class LogisticBaseSingleton {
+    /**
+     * Logger for logging errors.
+     */
     private static final Logger LOGGER
             = LogManager.getLogger(LogisticBaseSingleton.class);
 
-    private int terminalsQuantity = 10;
+    /**
+     * Terminal quantity in base.
+     */
+    private static final int TERMINALS_QUANTITY = 10;
 
+    /**
+     *
+     */
     public static final LogisticBaseSingleton INSTANCE
             = new LogisticBaseSingleton();
 
+    /**
+     * {@link List} of terminals.
+     */
     private List<Terminal> terminals;
+
+    /**
+     * Order controller for control order.
+     */
     private OrderController orderController;
 
 
+    /**
+     * Constructor - initialize terminals list.
+     */
     private LogisticBaseSingleton() {
-        terminals = new ArrayList<>(terminalsQuantity);
+        terminals = new ArrayList<>(TERMINALS_QUANTITY);
         addTerminals();
     }
 
+    /**
+     * Sets order controller.
+     *
+     * @param controller order controller.
+     * @throws NullArgumentException when argument controller is null.
+     */
     public void setOrderController(final OrderController controller) throws
             NullArgumentException {
         if (controller == null) {
@@ -37,6 +66,11 @@ public final class LogisticBaseSingleton {
         this.orderController = controller;
     }
 
+    /**
+     * Takes terminal to arrived van in base.
+     *
+     * @return terminal number.
+     */
     public int takeTerminal() {
         int terminalNumber = 1;
         for (Terminal terminal : terminals) {
@@ -49,18 +83,31 @@ public final class LogisticBaseSingleton {
         return terminalNumber;
     }
 
+    /**
+     * Sets busied terminal is free by terminal number.
+     *
+     * @param terminalNum terminal number.
+     * @throws InvalidArgumentException when terminal number is invalid.
+     */
     public void leaveTerminal(final int terminalNum) throws
             InvalidArgumentException {
-        if (terminalNum <= 0 || terminalNum > terminalsQuantity) {
+        if (terminalNum <= 0 || terminalNum > TERMINALS_QUANTITY) {
             throw new InvalidArgumentException(
                     "Number of terminals out of bound.");
         }
         terminals.get(terminalNum - 1).setFree(true);
     }
 
+    /**
+     * Starts work of logic base. Sets executor service in
+     * {@link OrderController}. Method can call stopWork method by it own.
+     *
+     * @param stopWhenVansServiced if this param is true method stops it's work
+     *                             when all stuff is serviced.
+     */
     public void startWork(final boolean stopWhenVansServiced) {
         orderController.setExecutorService(Executors
-                .newFixedThreadPool(terminalsQuantity));
+                .newFixedThreadPool(TERMINALS_QUANTITY));
         try {
             orderController.start();
         } catch (IllegalCallException e) {
@@ -71,12 +118,18 @@ public final class LogisticBaseSingleton {
         }
     }
 
+    /**
+     * Method stops order controller work.
+     */
     public void stopWork() {
         orderController.stop();
     }
 
+    /**
+     * Additional method to add terminals in list.
+     */
     private void addTerminals() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < TERMINALS_QUANTITY; i++) {
             terminals.add(new Terminal());
         }
     }

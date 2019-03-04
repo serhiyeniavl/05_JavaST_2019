@@ -1,4 +1,4 @@
-package com.epam.threads.thread_factory;
+package com.epam.threads.factory;
 
 import com.epam.threads.entity.Van;
 import com.epam.threads.exception.InvalidArgumentException;
@@ -16,10 +16,11 @@ import java.util.Queue;
 public class VanFactoryImpl implements VanFactory<Van> {
     /**
      * Creates {@link Map} that contains priority and van target.
+     *
      * @param data input data.
      * @return queue of vans {@link Map}.
-     * @throws InvalidArgumentException when van target is invalid.
-     * @throws NullArgumentException when van status is invalid.
+     * @throws InvalidArgumentException when van target or status is invalid.
+     * @throws NullArgumentException    when method argument is null.
      */
     @Override
     public Map<Integer, Queue<Van>> createVanQueueMap(final List<Integer> data)

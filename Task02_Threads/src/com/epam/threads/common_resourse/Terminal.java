@@ -3,21 +3,46 @@ package com.epam.threads.common_resourse;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Terminal {
-    private Lock lock;
+/**
+ * Class helper to create terminal in {@link LogisticBaseSingleton}.
+ *
+ * @see Lock
+ */
+class Terminal {
+    /**
+     * Locker.
+     */
+    private Lock locker;
+
+    /**
+     * Terminal status.
+     */
     private boolean isFree = true;
 
-    protected Terminal() {
-        lock = new ReentrantLock();
+    /**
+     * Constructor - initialize locker.
+     */
+    Terminal() {
+        locker = new ReentrantLock();
     }
 
-    protected boolean isFree() {
+    /**
+     * Checks terminal status.
+     *
+     * @return terminal status.
+     */
+    boolean isFree() {
         return isFree;
     }
 
-    public void setFree(boolean free) {
-        lock.lock();
+    /**
+     * Sets terminal status.
+     *
+     * @param free status to set.
+     */
+    void setFree(final boolean free) {
+        locker.lock();
         isFree = free;
-        lock.unlock();
+        locker.unlock();
     }
 }

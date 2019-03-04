@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Class validating data form input file.
  */
-public class FigureValidator {
+public final class FigureValidator {
     /**
      * Pattern for check figure.
      */
