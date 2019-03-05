@@ -5,8 +5,9 @@ import com.epam.threads.controller.OrderController;
 import com.epam.threads.entity.Van;
 import com.epam.threads.exception.InvalidArgumentException;
 import com.epam.threads.exception.NullArgumentException;
+import com.epam.threads.io.Writer;
 import com.epam.threads.parser.FigureParser;
-import com.epam.threads.reader.Reader;
+import com.epam.threads.io.Reader;
 import com.epam.threads.factory.VanFactory;
 import com.epam.threads.factory.VanFactoryImpl;
 import org.apache.logging.log4j.LogManager;
@@ -43,9 +44,22 @@ public final class Runner {
      * @param args program arguments.
      */
     public static void main(final String[] args) {
+        Writer fileWriter;
         Reader fileReader;
         List<Integer> fileData = null;
         FigureParser parser = new FigureParser();
+        try {
+            fileWriter = new Writer(FILE_PATH);
+            final int dataInputQuantity = 3;
+            final int randomRange = 10;
+            fileWriter.writeRandomInteger(dataInputQuantity, randomRange);
+        } catch (NullArgumentException e) {
+            LOGGER.error("File path is null.", e);
+        } catch (InvalidArgumentException e) {
+            LOGGER.error("File path is incorrect.", e);
+        }
+
+
         try {
             fileReader = new Reader(FILE_PATH);
             fileData = parser.parseInteger(
