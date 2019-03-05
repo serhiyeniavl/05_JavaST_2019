@@ -1,4 +1,4 @@
-package com.epam.threads.reader;
+package com.epam.threads.io;
 
 import com.epam.threads.exception.EmptyFileException;
 import com.epam.threads.exception.NullArgumentException;
