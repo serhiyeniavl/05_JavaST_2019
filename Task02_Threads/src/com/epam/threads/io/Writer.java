@@ -58,17 +58,19 @@ public class Writer {
     }
 
     /**
-     * Writes to file integers in defined range (from 0 to range argument).
+     * Writes to file integers in defined range (from bound1 to bound1).
      *
      * @param quantity quantity of elements need to write in file.
-     * @param range    max number to random.
+     * @param bound2   initial random boundary.
+     * @param bound2   max number to random.
      * @throws InvalidArgumentException when file path is invalid.
      */
-    public void writeRandomInteger(final int quantity, final int range)
+    public void writeRandomInteger(final int quantity, final int bound1,
+                                   final int bound2)
             throws InvalidArgumentException {
         StringBuilder dataStr = new StringBuilder();
         for (int i = 0; i < quantity; i++) {
-            dataStr.append(random.nextInt(range));
+            dataStr.append(random.nextInt(bound2 - bound1) + bound1);
             dataStr.append(" ");
         }
         try {
