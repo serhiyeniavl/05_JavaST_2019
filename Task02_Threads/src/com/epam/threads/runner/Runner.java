@@ -48,17 +48,19 @@ public final class Runner {
         Reader fileReader;
         List<Integer> fileData = null;
         FigureParser parser = new FigureParser();
+
         try {
             fileWriter = new Writer(FILE_PATH);
             final int dataInputQuantity = 3;
-            final int randomRange = 10;
-            fileWriter.writeRandomInteger(dataInputQuantity, randomRange);
+            final int randomBound1 = 5;
+            final int randomBound2 = 20;
+            fileWriter.writeRandomInteger(dataInputQuantity, randomBound1,
+                    randomBound2);
         } catch (NullArgumentException e) {
             LOGGER.error("File path is null.", e);
         } catch (InvalidArgumentException e) {
             LOGGER.error("File path is incorrect.", e);
         }
-
 
         try {
             fileReader = new Reader(FILE_PATH);
