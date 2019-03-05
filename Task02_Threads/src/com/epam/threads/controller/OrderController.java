@@ -5,8 +5,7 @@ import com.epam.threads.exception.IllegalCallException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -58,11 +57,13 @@ public class OrderController {
             throw new IllegalCallException("Method should've been called"
                     + " with set field service.");
         }
+        Queue<Van> vans = new ArrayDeque<>();
+        vans.addAll(vanQueue.get(1));
+        vans.addAll(vanQueue.get(0));
         try {
-            service.invokeAll(vanQueue.get(1));
-            service.invokeAll(vanQueue.get(0));
+            service.invokeAll(vans);
         } catch (InterruptedException e) {
-            LOGGER.error("Thread interrupted while waiting.", e);
+            LOGGER.error("Thread was interrupted when running.", e);
             Thread.currentThread().interrupt();
         }
     }
