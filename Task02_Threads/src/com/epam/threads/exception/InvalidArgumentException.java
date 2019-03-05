@@ -12,4 +12,16 @@ public class InvalidArgumentException extends Exception {
     public InvalidArgumentException(final String message) {
         super(message);
     }
+
+    /**
+     * Constructor - creates exception with error message and cause of that
+     * exception.
+     *
+     * @param message exception message.
+     * @param cause   cause of exception.
+     */
+    public InvalidArgumentException(final String message,
+                                    final Throwable cause) {
+        super(message, cause);
+    }
 }
