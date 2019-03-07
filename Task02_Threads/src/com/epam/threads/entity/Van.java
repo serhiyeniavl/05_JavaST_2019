@@ -97,7 +97,6 @@ public class Van implements Callable<Optional<Object>> {
         delay(1);
         System.out.println("Van number " + vanId + " took a terminal "
                 + terminalNum + ".");
-        delay(2);
         if (target.equals("load")) {
             System.out.println("Van's " + vanId + " loading...");
         } else {
@@ -107,6 +106,7 @@ public class Van implements Callable<Optional<Object>> {
                 System.out.println("Van's " + vanId + " unloading...");
             }
         }
+        delay(2);
         if (status.equals(EXPRESS_STATUS)) {
             System.out.println("Express van " + vanId + " leaved terminal "
                     + terminalNum + ".");
@@ -119,6 +119,7 @@ public class Van implements Callable<Optional<Object>> {
         } catch (InvalidArgumentException e) {
             LOGGER.error("Invalid terminal number.", e);
         }
+        delay(1);
         return Optional.of(this);
     }
 
