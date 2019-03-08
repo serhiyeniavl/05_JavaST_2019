@@ -5,7 +5,9 @@ import com.epam.threads.exception.IllegalCallException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 
 /**

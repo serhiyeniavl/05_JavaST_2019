@@ -61,7 +61,7 @@ public class Writer {
      * Writes to file integers in defined range (from bound1 to bound1).
      *
      * @param quantity quantity of elements need to write in file.
-     * @param bound2   initial random boundary.
+     * @param bound1   initial random boundary.
      * @param bound2   max number to random.
      * @throws InvalidArgumentException when file path is invalid.
      */
