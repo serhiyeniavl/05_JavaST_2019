@@ -7,7 +7,7 @@ public class LexemParser extends AbstractTextParser {
     private static final String COMPONENT_NAME = "Lexem";
 
     @Override
-    protected void parseComponent(TextComponent textComponent) {
+    protected void parseComponent(final TextComponent textComponent) {
         parseComponent(textComponent, LEXEM_SEPARATOR_REGEX, COMPONENT_NAME);
     }
 }
