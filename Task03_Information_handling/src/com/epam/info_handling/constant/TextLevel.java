@@ -1,6 +1,6 @@
 package com.epam.info_handling.constant;
 
-public enum TextTreeLevel {
+public enum TextLevel {
     WHOLE_TEXT(0),
     PARAGRAPH(1),
     SENTENCE(2),
@@ -10,13 +10,13 @@ public enum TextTreeLevel {
     PUNCTUATION_MARK(6),
     SYMBOL(7);
 
-    int textLevel;
+    private int level;
 
-    TextTreeLevel(final int level) {
-        this.textLevel = level;
+    TextLevel(final int textLevel) {
+        this.level = textLevel;
     }
 
-    public int getLevel() {
-        return textLevel;
+    public int getValue() {
+        return level;
     }
 }
