@@ -53,7 +53,7 @@ public class TextComponentImpl implements TextComponent {
 
     public String acquireWholeText() {
         StringBuilder wholeText = new StringBuilder();
-
+        //TODO: make tree traversal.
         return wholeText.toString();
     }
 
