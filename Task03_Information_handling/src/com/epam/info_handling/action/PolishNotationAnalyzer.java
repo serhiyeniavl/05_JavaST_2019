@@ -1,92 +1,69 @@
 package com.epam.info_handling.action;
 
 import com.epam.info_handling.constant.ByteOperation;
-import com.epam.info_handling.constant.ConstByteOperation;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class PolishNotationAnalyzer {
     private StringBuilder polishNotation;
-    Deque<ByteOperation> operationsDeque;
+    private Deque<ByteOperation> operationsDeque;
 
 
     public String analyzeAndGet(final String byteExpression) {
         polishNotation = new StringBuilder();
         operationsDeque = new ArrayDeque();
+
         final int expLen = byteExpression.length();
         final int firstFigureInASCIITablePos = 48;
         final int lastFigureInASCIITablePos = 57;
+        final int twoSignOperatorLen = 2;
+        final int threeSignOperatorLen = 3;
         int figureInitPos = -1;
+
+        boolean isSingleOperator;
+
         for (int i = 0; i < expLen; i++) {
+            isSingleOperator = false;
             if (byteExpression.charAt(i) >= firstFigureInASCIITablePos
+                    //TODO: try to reduce this method as possible
                     && byteExpression.charAt(i) <= lastFigureInASCIITablePos) {
                 if (figureInitPos == -1) {
                     figureInitPos = i;
                 }
                 if (i == expLen - 1) {
-                    appendFigure(byteExpression, figureInitPos, i + 1);
+                    appendFigure(
+                            byteExpression.substring(figureInitPos, i + 1));
                     break;
                 }
                 continue;
             } else if (figureInitPos != -1) {
-                appendFigure(byteExpression, figureInitPos, i);
+                appendFigure(byteExpression.substring(figureInitPos, i));
                 figureInitPos = -1;
             }
-            if (byteExpression.charAt(i) == '(') {
-                operationsDeque.add(ByteOperation.LEFT_BRACE);
-            } else if (byteExpression.charAt(i) == ')') {
-                while (operationsDeque.peekLast() != ByteOperation.LEFT_BRACE) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
+            if (!isBrace(byteExpression.charAt(i))) {
+                for (ByteOperation operation : ByteOperation.values()) {
+                    //TODO: make list contains only single operators
+                    if (handleSingleOperator(
+                            byteExpression.charAt(i), operation)) {
+                        operationsDeque.add(operation);
+                        isSingleOperator = true;
+                        break;
+                    }
                 }
-                operationsDeque.pollLast();
-            } else if (byteExpression.charAt(i) == ConstByteOperation.AND.charAt(0)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.AND.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
+                if (!isSingleOperator) {
+                    for (ByteOperation operation : ByteOperation.values()) {
+                        if (handleOperator(
+                                byteExpression.substring(
+                                        i + twoSignOperatorLen), operation)
+                                || handleOperator(
+                                byteExpression.substring(
+                                        i + threeSignOperatorLen), operation)) {
+                            operationsDeque.add(operation);
+                            break;
+                        }
+                    }
                 }
-                operationsDeque.add(ByteOperation.AND);
-            } else if (byteExpression.charAt(i) == ConstByteOperation.OR.charAt(0)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.OR.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.OR);
-            } else if (byteExpression.charAt(i) == ConstByteOperation.XOR.charAt(0)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.XOR.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.XOR);
-            } else if (byteExpression.substring(i, i + 2).equals(ConstByteOperation.RIGHT_SHIFT)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.RIGHT_SHIFT.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.RIGHT_SHIFT);
-                ++i;
-            } else if (byteExpression.charAt(i) == ConstByteOperation.NOT.charAt(0)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.NOT.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.NOT);
-
-            } else if (!operationsDeque.isEmpty() && byteExpression.substring(i, i + 3).equals(ConstByteOperation.RIGHT_SHIFT_FILL_NULL)) {
-                if (operationsDeque.peekLast().getPriority() >= ByteOperation.RIGHT_SHIFT_NULL_FILL.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.RIGHT_SHIFT_NULL_FILL);
-                i += 2;
-            } else if (byteExpression.substring(i, i + 2).equals(ConstByteOperation.LEFT_SHIFT)) {
-                if (!operationsDeque.isEmpty() && operationsDeque.peekLast().getPriority() >= ByteOperation.LEFT_SHIFT.getPriority()) {
-                    polishNotation.append(operationsDeque.pollLast().getOperation());
-                    polishNotation.append(" ");
-                }
-                operationsDeque.add(ByteOperation.LEFT_SHIFT);
-                ++i;
             }
         }
         while (!operationsDeque.isEmpty()) {
@@ -95,9 +72,8 @@ public class PolishNotationAnalyzer {
         return polishNotation.toString().trim();
     }
 
-    private void appendFigure(final String byteExpression,
-                              final int beg, final int end) {
-        polishNotation.append(byteExpression.substring(beg, end));
+    private void appendFigure(final String byteExpression) {
+        polishNotation.append(byteExpression);
         polishNotation.append(" ");
     }
 
@@ -111,15 +87,41 @@ public class PolishNotationAnalyzer {
         polishNotation.append(" ");
     }
 
-    private boolean handleSingleOperator(final char operator,
-                                         final ByteOperation byteOperation) {
-        if (!operationsDeque.isEmpty()
-                && operator == byteOperation.getOperation().charAt(0)
-                && operationsDeque.peekLast().getPriority()
-                >= byteOperation.getPriority()) {
-            appendOperatorToNotation();
+    private boolean isBrace(final char operator) {
+        if (operator == '(') {
+            operationsDeque.add(ByteOperation.LEFT_BRACE);
+        } else if (operator == ')') {
+            while (operationsDeque.peekLast() != ByteOperation.LEFT_BRACE) {
+                appendOperatorToNotation();
+            }
+            operationsDeque.pollLast();
+        }
+        return operator == '(' || operator == ')';
+    }
+
+    private boolean handleOperator(final String operator,
+                                   final ByteOperation byteOperation) {
+        if (operator.equals(byteOperation.getOperation())) {
+            tryAppendToNotation(byteOperation);
             return true;
         }
         return false;
+    }
+
+    private boolean handleSingleOperator(final char operator,
+                                         final ByteOperation byteOperation) {
+        if (operator == byteOperation.getOperation().charAt(0)) {
+            tryAppendToNotation(byteOperation);
+            return true;
+        }
+        return false;
+    }
+
+    private void tryAppendToNotation(final ByteOperation operation) {
+        if (!operationsDeque.isEmpty()
+                && operationsDeque.peekLast().getPriority()
+                >= operation.getPriority()) {
+            appendOperatorToNotation();
+        }
     }
 }
