@@ -3,7 +3,9 @@ package com.epam.info_handling.action;
 import com.epam.info_handling.constant.ByteOperation;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class PolishNotationAnalyzer {
     private StringBuilder polishNotation;
@@ -23,6 +25,19 @@ public class PolishNotationAnalyzer {
 
         boolean isSingleOperator;
 
+        List<ByteOperation> singleByteOperations = new ArrayList<>();
+        List<ByteOperation> longByteOperations = new ArrayList<>();
+        for (ByteOperation operation : ByteOperation.values()) {
+            if (operation == ByteOperation.LEFT_BRACE) {
+                continue;
+            }
+            if (operation.getOperation().length() == 1) {
+                singleByteOperations.add(operation);
+            } else {
+                longByteOperations.add(operation);
+            }
+        }
+
         for (int i = 0; i < expLen; i++) {
             isSingleOperator = false;
             if (byteExpression.charAt(i) >= firstFigureInASCIITablePos
@@ -32,18 +47,16 @@ public class PolishNotationAnalyzer {
                     figureInitPos = i;
                 }
                 if (i == expLen - 1) {
-                    appendFigure(
+                    appendFigureToNotation(
                             byteExpression.substring(figureInitPos, i + 1));
-                    break;
                 }
                 continue;
             } else if (figureInitPos != -1) {
-                appendFigure(byteExpression.substring(figureInitPos, i));
+                appendFigureToNotation(byteExpression.substring(figureInitPos, i));
                 figureInitPos = -1;
             }
             if (!isBrace(byteExpression.charAt(i))) {
-                for (ByteOperation operation : ByteOperation.values()) {
-                    //TODO: make list contains only single operators
+                for (ByteOperation operation : singleByteOperations) {
                     if (handleSingleOperator(
                             byteExpression.charAt(i), operation)) {
                         operationsDeque.add(operation);
@@ -52,27 +65,29 @@ public class PolishNotationAnalyzer {
                     }
                 }
                 if (!isSingleOperator) {
-                    for (ByteOperation operation : ByteOperation.values()) {
+                    for (ByteOperation operation : longByteOperations) {
                         if (handleOperator(
                                 byteExpression.substring(
-                                        i + twoSignOperatorLen), operation)
+                                        i, (i + twoSignOperatorLen)), operation)
                                 || handleOperator(
                                 byteExpression.substring(
-                                        i + threeSignOperatorLen), operation)) {
+                                        i, (i + threeSignOperatorLen)),
+                                operation)) {
                             operationsDeque.add(operation);
-                            break;
                         }
                     }
                 }
             }
         }
+
         while (!operationsDeque.isEmpty()) {
             appendOperator(operationsDeque.pollLast());
         }
+
         return polishNotation.toString().trim();
     }
 
-    private void appendFigure(final String byteExpression) {
+    private void appendFigureToNotation(final String byteExpression) {
         polishNotation.append(byteExpression);
         polishNotation.append(" ");
     }
