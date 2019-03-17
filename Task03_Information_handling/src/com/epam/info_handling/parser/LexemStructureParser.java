@@ -13,7 +13,7 @@ public class LexemStructureParser extends AbstractTextParser {
         String lexem = textComponent.getData();
         try {
             if (lexem.matches("[^a-zA-Z]+")) {
-                textComponent.add(new Leaf("Expression", lexem));
+                textComponent.add(new Leaf("ByteExpression", lexem));
             } else if (lexem.matches("[[()\'\"-]?a-zA-Z]+")) {
 
                 textComponent.add(new TextComponentImpl("Word", lexem));
