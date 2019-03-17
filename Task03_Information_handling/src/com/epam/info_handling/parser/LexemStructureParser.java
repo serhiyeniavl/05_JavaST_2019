@@ -29,7 +29,7 @@ public class LexemStructureParser extends AbstractTextParser {
         } catch (UnsupportedMethodException e) {
             LOGGER.error(INVALID_METHOD_MSG, e);
         } catch (InvalidIndexException e) {
-            e.printStackTrace();
+            LOGGER.error(INVALID_INDEX_MSG, e);
         }
     }
 }
