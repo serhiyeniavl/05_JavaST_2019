@@ -1,8 +1,6 @@
 package com.epam.info_handling.entity;
 
-import com.epam.info_handling.constant.TextLevel;
 import com.epam.info_handling.exception.InvalidIndexException;
-import com.epam.info_handling.exception.UnsupportedMethodException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,33 +51,10 @@ public class TextComponentImpl implements TextComponent {
         this.components.removeAll(Arrays.asList(textComponents));
     }
 
-    public List<String> acquireComponent(final TextLevel level) {
-        List<String> requiredComponents = new ArrayList<>();
-//        TextComponentImpl prevComponent = this;
-//        for (int i = 1; i <= level.getValue(); i++) {
-//            try {
-//                TextComponentImpl currentComponent = prevComponent.getChild(0);
-//                prevComponent = currentComponent;
-//            } catch (InvalidIndexException e) {
-//                LOGGER.error("Invalid index. Out of bound.", e);
-////            } catch (UnsupportedMethodException e) {
-////                LOGGER.error("Invalid method was called.", e);
-////            }
-//            }
-//        }
-//
-//        for (TextComponent component : prevComponent.components) {
-//            requiredComponents.add(component.getData());
-//        }
-        try {
-            System.out.println(this.getChild(0).getChild(0).getChild(0).getChild(0).getChild(0).getChild(0).getName());
-        } catch (InvalidIndexException e) {
-            e.printStackTrace();
-        } catch (UnsupportedMethodException e) {
-            e.printStackTrace();
-        }
+    public String acquireWholeText() {
+        StringBuilder wholeText = new StringBuilder();
 
-        return requiredComponents;
+        return wholeText.toString();
     }
 
     public TextComponent getChild(final int index)

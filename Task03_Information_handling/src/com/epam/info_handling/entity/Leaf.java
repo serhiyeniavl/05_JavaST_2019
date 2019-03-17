@@ -1,9 +1,6 @@
 package com.epam.info_handling.entity;
 
-import com.epam.info_handling.constant.TextLevel;
 import com.epam.info_handling.exception.UnsupportedMethodException;
-
-import java.util.List;
 
 public class Leaf implements TextComponent {
     private static final String ERROR_MSG
@@ -48,7 +45,7 @@ public class Leaf implements TextComponent {
     }
 
     @Override
-    public List<String> acquireComponent(final TextLevel level)
+    public String acquireWholeText()
             throws UnsupportedMethodException {
         throw new UnsupportedMethodException(ERROR_MSG);
     }
