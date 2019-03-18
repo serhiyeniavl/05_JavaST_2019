@@ -1,13 +1,13 @@
 package com.epam.info_handling.action;
 
-import com.epam.info_handling.constant.ByteOperation;
+import com.epam.info_handling.constant.ByteOperationEnum;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class PolishNotationAnalyzer {
     private StringBuilder polishNotation;
-    private Deque<ByteOperation> operationsDeque;
+    private Deque<ByteOperationEnum> operationsDeque;
 
     private static final int FIRST_FIGURE_IN_ASCII_TABLE_POS = 48;
     private static final int LAST_FIGURE_IN_ASCII_TABLE_POS = 57;
@@ -30,7 +30,7 @@ public class PolishNotationAnalyzer {
                 continue;
             }
             if (!isBrace(byteExpression.charAt(carriage))) {
-                for (ByteOperation operation : ByteOperation.values()) {
+                for (ByteOperationEnum operation : ByteOperationEnum.values()) {
                     if (tryAppendToDeque(carriage, operation, byteExpression)) {
                         break;
                     }
@@ -48,7 +48,7 @@ public class PolishNotationAnalyzer {
         polishNotation.append(" ");
     }
 
-    private void appendOperatorToNotation(final ByteOperation operation) {
+    private void appendOperatorToNotation(final ByteOperationEnum operation) {
         polishNotation.append(operation.getOperation());
         polishNotation.append(" ");
     }
@@ -59,7 +59,7 @@ public class PolishNotationAnalyzer {
     }
 
 
-    private void tryAppendToNotation(final ByteOperation operation) {
+    private void tryAppendToNotation(final ByteOperationEnum operation) {
         if (!operationsDeque.isEmpty()
                 && operationsDeque.peekLast().getPriority()
                 >= operation.getPriority()) {
@@ -68,7 +68,7 @@ public class PolishNotationAnalyzer {
     }
 
     private boolean tryAppendToDeque(final int currentPos,
-                                     final ByteOperation operation,
+                                     final ByteOperationEnum operation,
                                      final String byteExpression) {
         if ((handleSingleOperator(byteExpression.charAt(currentPos), operation))
                 || (currentPos + TWO_SIGN_OPERATOR_LEN < expressionLen
@@ -89,9 +89,9 @@ public class PolishNotationAnalyzer {
 
     private boolean isBrace(final char operator) {
         if (operator == '(') {
-            operationsDeque.add(ByteOperation.LEFT_BRACE);
+            operationsDeque.add(ByteOperationEnum.LEFT_BRACE);
         } else if (operator == ')') {
-            while (operationsDeque.peekLast() != ByteOperation.LEFT_BRACE) {
+            while (operationsDeque.peekLast() != ByteOperationEnum.LEFT_BRACE) {
                 appendOperatorToNotation();
             }
             operationsDeque.pollLast();
@@ -121,7 +121,7 @@ public class PolishNotationAnalyzer {
     }
 
     private boolean handleOperator(final String operator,
-                                   final ByteOperation byteOperation) {
+                                   final ByteOperationEnum byteOperation) {
         if (operator.equals(byteOperation.getOperation())) {
             tryAppendToNotation(byteOperation);
             return true;
@@ -130,10 +130,10 @@ public class PolishNotationAnalyzer {
     }
 
     private boolean handleSingleOperator(final char operator,
-                                         final ByteOperation byteOperation) {
-        if (byteOperation.getOperation().length() == 1
-                && operator == byteOperation.getOperation().charAt(0)) {
-            tryAppendToNotation(byteOperation);
+                                         final ByteOperationEnum operation) {
+        if (operation.getOperation().length() == 1
+                && operator == operation.getOperation().charAt(0)) {
+            tryAppendToNotation(operation);
             return true;
         }
         return false;

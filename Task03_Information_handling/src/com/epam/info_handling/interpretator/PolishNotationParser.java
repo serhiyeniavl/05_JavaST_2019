@@ -1,6 +1,6 @@
 package com.epam.info_handling.interpretator;
 
-import com.epam.info_handling.constant.ConstByteOperation;
+import com.epam.info_handling.constant.ByteOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,33 +12,33 @@ public class PolishNotationParser {
         List<ByteExpression> expression = new ArrayList<>();
         Arrays.asList(polishNotation.split("\\p{Blank}+")).forEach(token -> {
             switch (token) {
-                case ConstByteOperation.OR:
+                case ByteOperation.OR:
                     expression.add(c -> c.push(c.poll() | c.poll()));
                     break;
-                case ConstByteOperation.NOT:
+                case ByteOperation.NOT:
                     expression.add(c -> c.push(~c.poll()));
                     break;
-                case ConstByteOperation.XOR:
+                case ByteOperation.XOR:
                     expression.add(c -> c.push(c.poll() ^ c.poll()));
                     break;
-                case ConstByteOperation.AND:
+                case ByteOperation.AND:
                     expression.add(c -> c.push(c.poll() & c.poll()));
                     break;
-                case ConstByteOperation.LEFT_SHIFT:
+                case ByteOperation.LEFT_SHIFT:
                     expression.add(c -> {
                         final int rightVal = c.poll();
                         final int leftVal = c.poll();
                         c.push(leftVal << rightVal);
                     });
                     break;
-                case ConstByteOperation.RIGHT_SHIFT:
+                case ByteOperation.RIGHT_SHIFT:
                     expression.add(c -> {
                         final int rightVal = c.poll();
                         final int leftVal = c.poll();
                         c.push(leftVal >> rightVal);
                     });
                     break;
-                case ConstByteOperation.RIGHT_SHIFT_FILL_NULL:
+                case ByteOperation.RIGHT_SHIFT_FILL_NULL:
                     expression.add(c -> {
                         final int rightVal = c.poll();
                         final int leftVal = c.poll();
