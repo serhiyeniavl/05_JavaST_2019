@@ -12,28 +12,17 @@ public class TextComponentImpl implements TextComponent {
     private static final Logger LOGGER
             = LogManager.getLogger(TextComponentImpl.class);
 
-    private String name;
-    private String data;
     private List<TextComponent> components = new ArrayList<>();
+
+    private TextElement textElement;
 
     public TextComponentImpl() {
 
     }
 
-    public TextComponentImpl(final String componentName,
-                             final String componentData) {
-        this.name = componentName;
-        this.data = componentData;
+    public TextComponentImpl(final TextElement element) {
+        this.textElement = element;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getData() {
-        return data;
-    }
-
 
     public void add(final TextComponent... textComponents) {
         this.components.addAll(Arrays.asList(textComponents));
@@ -65,4 +54,16 @@ public class TextComponentImpl implements TextComponent {
         return components.get(index);
     }
 
+    public TextElement getTextElement() {
+        return textElement;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (TextComponent component : components) {
+            builder.append(components.toString());
+        }
+        return super.toString();
+    }
 }

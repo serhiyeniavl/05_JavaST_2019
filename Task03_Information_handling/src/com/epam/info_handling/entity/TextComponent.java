@@ -16,8 +16,4 @@ public interface TextComponent {
             UnsupportedMethodException;
 
     String acquireWholeText() throws UnsupportedMethodException;
-
-    String getData();
-
-    String getName();
 }

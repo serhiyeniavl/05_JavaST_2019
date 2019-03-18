@@ -6,11 +6,12 @@ public class Leaf implements TextComponent {
     private static final String ERROR_MSG
             = "Method is not supported in current class.";
 
-    private String name;
     private String data;
 
-    public Leaf(final String componentName, final String componentData) {
-        this.name = componentName;
+    private TextElement textElement;
+
+    public Leaf(final String componentData, final TextElement element) {
+        this.textElement = element;
         this.data = componentData;
     }
 
@@ -50,13 +51,16 @@ public class Leaf implements TextComponent {
         throw new UnsupportedMethodException(ERROR_MSG);
     }
 
-    @Override
     public String getData() {
         return data;
     }
 
+    public TextElement getTextElement() {
+        return textElement;
+    }
+
     @Override
-    public String getName() {
-        return name;
+    public String toString() {
+        return data;
     }
 }
