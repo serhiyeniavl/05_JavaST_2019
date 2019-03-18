@@ -5,7 +5,8 @@ import com.epam.info_handling.entity.TextComponent;
 public class TextParser extends AbstractTextParser {
 
     @Override
-    public void parseComponent(final TextComponent textComponent) {
+    public void parseComponent(final TextComponent textComponent,
+                               final String data) {
         //Method has an empty body because of class was created only for start
         //text parse chain.
     }
