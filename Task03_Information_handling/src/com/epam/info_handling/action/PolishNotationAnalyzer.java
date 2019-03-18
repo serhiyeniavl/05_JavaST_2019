@@ -3,96 +3,52 @@ package com.epam.info_handling.action;
 import com.epam.info_handling.constant.ByteOperation;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 
 public class PolishNotationAnalyzer {
     private StringBuilder polishNotation;
     private Deque<ByteOperation> operationsDeque;
 
+    private static final int FIRST_FIGURE_IN_ASCII_TABLE_POS = 48;
+    private static final int LAST_FIGURE_IN_ASCII_TABLE_POS = 57;
+    private static final int TWO_SIGN_OPERATOR_LEN = 2;
+    private static final int THREE_SIGN_OPERATOR_LEN = 3;
+
+    private int expressionLen;
+
 
     public String analyzeAndGet(final String byteExpression) {
         polishNotation = new StringBuilder();
         operationsDeque = new ArrayDeque();
+        expressionLen = byteExpression.length();
 
-        final int expLen = byteExpression.length();
-        final int firstFigureInASCIITablePos = 48;
-        final int lastFigureInASCIITablePos = 57;
-        final int twoSignOperatorLen = 2;
-        final int threeSignOperatorLen = 3;
-        int figureInitPos = -1;
+        int carriage = 0;
 
-        boolean isSingleOperator;
-
-        List<ByteOperation> singleByteOperations = new ArrayList<>();
-        List<ByteOperation> longByteOperations = new ArrayList<>();
-        for (ByteOperation operation : ByteOperation.values()) {
-            if (operation == ByteOperation.LEFT_BRACE) {
+        while (carriage < expressionLen) {
+            if (isFigure(byteExpression.charAt(carriage))) {
+                carriage = findFigure(carriage, byteExpression) + 1;
                 continue;
             }
-            if (operation.getOperation().length() == 1) {
-                singleByteOperations.add(operation);
-            } else {
-                longByteOperations.add(operation);
-            }
-        }
-
-        for (int i = 0; i < expLen; i++) {
-            isSingleOperator = false;
-            if (byteExpression.charAt(i) >= firstFigureInASCIITablePos
-                    //TODO: try to reduce this method as possible
-                    && byteExpression.charAt(i) <= lastFigureInASCIITablePos) {
-                if (figureInitPos == -1) {
-                    figureInitPos = i;
-                }
-                if (i == expLen - 1) {
-                    appendFigureToNotation(
-                            byteExpression.substring(figureInitPos, i + 1));
-                }
-                continue;
-            } else if (figureInitPos != -1) {
-                appendFigureToNotation(byteExpression.substring(figureInitPos, i));
-                figureInitPos = -1;
-            }
-            if (!isBrace(byteExpression.charAt(i))) {
-                for (ByteOperation operation : singleByteOperations) {
-                    if (handleSingleOperator(
-                            byteExpression.charAt(i), operation)) {
-                        operationsDeque.add(operation);
-                        isSingleOperator = true;
+            if (!isBrace(byteExpression.charAt(carriage))) {
+                for (ByteOperation operation : ByteOperation.values()) {
+                    if (tryAppendToDeque(carriage, operation, byteExpression)) {
                         break;
                     }
                 }
-                if (!isSingleOperator) {
-                    for (ByteOperation operation : longByteOperations) {
-                        if (handleOperator(
-                                byteExpression.substring(
-                                        i, (i + twoSignOperatorLen)), operation)
-                                || handleOperator(
-                                byteExpression.substring(
-                                        i, (i + threeSignOperatorLen)),
-                                operation)) {
-                            operationsDeque.add(operation);
-                        }
-                    }
-                }
             }
+            ++carriage;
         }
 
-        while (!operationsDeque.isEmpty()) {
-            appendOperator(operationsDeque.pollLast());
-        }
-
+        cleanOperationDeque();
         return polishNotation.toString().trim();
     }
 
-    private void appendFigureToNotation(final String byteExpression) {
-        polishNotation.append(byteExpression);
+    private void appendFigureToNotation(final String figure) {
+        polishNotation.append(figure);
         polishNotation.append(" ");
     }
 
-    private void appendOperator(final ByteOperation operation) {
+    private void appendOperatorToNotation(final ByteOperation operation) {
         polishNotation.append(operation.getOperation());
         polishNotation.append(" ");
     }
@@ -100,6 +56,35 @@ public class PolishNotationAnalyzer {
     private void appendOperatorToNotation() {
         polishNotation.append(operationsDeque.pollLast().getOperation());
         polishNotation.append(" ");
+    }
+
+
+    private void tryAppendToNotation(final ByteOperation operation) {
+        if (!operationsDeque.isEmpty()
+                && operationsDeque.peekLast().getPriority()
+                >= operation.getPriority()) {
+            appendOperatorToNotation();
+        }
+    }
+
+    private boolean tryAppendToDeque(final int currentPos,
+                                     final ByteOperation operation,
+                                     final String byteExpression) {
+        if ((handleSingleOperator(byteExpression.charAt(currentPos), operation))
+                || (currentPos + TWO_SIGN_OPERATOR_LEN < expressionLen
+                && handleOperator(byteExpression.substring(
+                currentPos, (
+                        currentPos + TWO_SIGN_OPERATOR_LEN)),
+                operation))
+                || ((currentPos + THREE_SIGN_OPERATOR_LEN < expressionLen)
+                && handleOperator(
+                byteExpression.substring(
+                        currentPos, (currentPos + THREE_SIGN_OPERATOR_LEN)),
+                operation))) {
+            operationsDeque.add(operation);
+            return true;
+        }
+        return false;
     }
 
     private boolean isBrace(final char operator) {
@@ -114,6 +99,27 @@ public class PolishNotationAnalyzer {
         return operator == '(' || operator == ')';
     }
 
+    private boolean isFigure(final char symbol) {
+        return symbol >= FIRST_FIGURE_IN_ASCII_TABLE_POS
+                && symbol
+                <= LAST_FIGURE_IN_ASCII_TABLE_POS;
+    }
+
+    private int findFigure(final int currentPos, final String expression) {
+        int carriage = currentPos;
+        while (carriage + 1 != expressionLen
+                && isFigure(expression.charAt(carriage + 1))) {
+            carriage++;
+        }
+        if (currentPos == expressionLen - 1) {
+            appendFigureToNotation(expression.substring(currentPos));
+        } else {
+            appendFigureToNotation(
+                    expression.substring(currentPos, carriage + 1));
+        }
+        return carriage;
+    }
+
     private boolean handleOperator(final String operator,
                                    final ByteOperation byteOperation) {
         if (operator.equals(byteOperation.getOperation())) {
@@ -125,18 +131,17 @@ public class PolishNotationAnalyzer {
 
     private boolean handleSingleOperator(final char operator,
                                          final ByteOperation byteOperation) {
-        if (operator == byteOperation.getOperation().charAt(0)) {
+        if (byteOperation.getOperation().length() == 1
+                && operator == byteOperation.getOperation().charAt(0)) {
             tryAppendToNotation(byteOperation);
             return true;
         }
         return false;
     }
 
-    private void tryAppendToNotation(final ByteOperation operation) {
-        if (!operationsDeque.isEmpty()
-                && operationsDeque.peekLast().getPriority()
-                >= operation.getPriority()) {
-            appendOperatorToNotation();
+    private void cleanOperationDeque() {
+        while (!operationsDeque.isEmpty()) {
+            appendOperatorToNotation(operationsDeque.pollLast());
         }
     }
 }
