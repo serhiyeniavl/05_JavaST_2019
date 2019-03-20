@@ -5,20 +5,16 @@ import com.epam.info_handling.exception.InvalidIndexException;
 import com.epam.info_handling.interpretator.ByteExpression;
 import com.epam.info_handling.interpretator.ByteExpressionCalculator;
 import com.epam.info_handling.interpretator.PolishNotationParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TextComponentImpl implements TextComponent {
-    private static final Logger LOGGER
-            = LogManager.getLogger(TextComponentImpl.class);
 
     private List<TextComponent> components = new ArrayList<>();
-
     private TextElement textElement;
+
 
     public TextComponentImpl(final TextElement element) {
         this.textElement = element;
