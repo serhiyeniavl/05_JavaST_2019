@@ -17,7 +17,7 @@ public class LexemeStructureParser extends AbstractTextParser {
         try {
             String[] punctuationMarks = acquirePunctuationMarksFromLexeme(data);
             if (data.matches(EXPRESSION_SEPARATOR_REGEX)
-                    & punctuationMarks.length == 0) {
+                    && punctuationMarks.length == 0) {
                 textComponent.add(
                         new TextComponentImpl(TextElement.EXPRESSION));
                 invokeNext(textComponent.getChild(0), data);
