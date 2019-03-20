@@ -42,7 +42,7 @@ public class PolishNotationParser {
                     expression.add(c -> {
                         final int rightVal = c.poll();
                         final int leftVal = c.poll();
-                        c.push(leftVal >> rightVal);
+                        c.push(leftVal >>> rightVal);
                     });
                     break;
                 default:

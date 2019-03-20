@@ -1,5 +1,6 @@
 package com.epam.info_handling.action;
 
+import com.epam.info_handling.constant.ByteOperation;
 import com.epam.info_handling.constant.ByteOperationEnum;
 
 import java.util.ArrayDeque;
@@ -32,6 +33,9 @@ public class PolishNotationAnalyzer {
             if (!isBrace(byteExpression.charAt(carriage))) {
                 for (ByteOperationEnum operation : ByteOperationEnum.values()) {
                     if (tryAppendToDeque(carriage, operation, byteExpression)) {
+                        if (operation == ByteOperationEnum.RIGHT_SHIFT_NULL_FILL) {
+                            carriage += 2;
+                        }
                         break;
                     }
                 }
@@ -71,15 +75,15 @@ public class PolishNotationAnalyzer {
                                      final ByteOperationEnum operation,
                                      final String byteExpression) {
         if ((handleSingleOperator(byteExpression.charAt(currentPos), operation))
-                || (currentPos + TWO_SIGN_OPERATOR_LEN < expressionLen
+                || (currentPos + THREE_SIGN_OPERATOR_LEN < expressionLen
                 && handleOperator(byteExpression.substring(
                 currentPos, (
-                        currentPos + TWO_SIGN_OPERATOR_LEN)),
+                        currentPos + THREE_SIGN_OPERATOR_LEN)),
                 operation))
-                || ((currentPos + THREE_SIGN_OPERATOR_LEN < expressionLen)
+                || ((currentPos + TWO_SIGN_OPERATOR_LEN < expressionLen)
                 && handleOperator(
                 byteExpression.substring(
-                        currentPos, (currentPos + THREE_SIGN_OPERATOR_LEN)),
+                        currentPos, (currentPos + TWO_SIGN_OPERATOR_LEN)),
                 operation))) {
             operationsDeque.add(operation);
             return true;
