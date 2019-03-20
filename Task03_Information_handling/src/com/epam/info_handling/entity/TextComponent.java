@@ -15,5 +15,5 @@ public interface TextComponent {
     TextComponent getChild(int index) throws InvalidIndexException,
             UnsupportedMethodException;
 
-    String acquireWholeText() throws UnsupportedMethodException;
+    String toString();
 }

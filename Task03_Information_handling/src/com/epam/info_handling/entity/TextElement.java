@@ -4,7 +4,7 @@ public enum TextElement {
     TEXT,
     PARAGRAPH,
     SENTENCE,
-    LEXEM,
+    LEXEME,
     WORD,
     EXPRESSION,
     PUNCTUATION_MARK,

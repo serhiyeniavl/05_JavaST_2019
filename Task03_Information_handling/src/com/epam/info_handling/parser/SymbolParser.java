@@ -23,7 +23,7 @@ public class SymbolParser extends AbstractTextParser {
 
         for (String component : components) {
             try {
-                textComponent.add(new Leaf(component, ELEMENT));
+                textComponent.add(new Leaf(component.charAt(0), ELEMENT));
             } catch (UnsupportedMethodException e) {
                 LOGGER.error(INVALID_METHOD_MSG, e);
             }
