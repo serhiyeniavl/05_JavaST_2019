@@ -16,10 +16,6 @@ public class TextComponentImpl implements TextComponent {
 
     private TextElement textElement;
 
-    public TextComponentImpl() {
-
-    }
-
     public TextComponentImpl(final TextElement element) {
         this.textElement = element;
     }
@@ -40,12 +36,6 @@ public class TextComponentImpl implements TextComponent {
         this.components.removeAll(Arrays.asList(textComponents));
     }
 
-    public String acquireWholeText() {
-        StringBuilder wholeText = new StringBuilder();
-        //TODO: make tree traversal.
-        return wholeText.toString();
-    }
-
     public TextComponent getChild(final int index)
             throws InvalidIndexException {
         if (index < 0 || index >= components.size()) {
@@ -62,8 +52,19 @@ public class TextComponentImpl implements TextComponent {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (TextComponent component : components) {
-            builder.append(components.toString());
+            builder.append(component.toString());
         }
-        return super.toString();
+        switch (textElement) {
+            case LEXEME:
+                builder.append(" ");
+                break;
+            case PARAGRAPH:
+                builder.append("\n   ");
+                break;
+            case TEXT:
+                builder = builder.reverse().append("   ").reverse();
+            default:
+        }
+        return builder.toString();
     }
 }
