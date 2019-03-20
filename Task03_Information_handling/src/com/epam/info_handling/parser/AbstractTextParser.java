@@ -26,15 +26,8 @@ public abstract class AbstractTextParser {
     }
 
     public void parseText(final String fullText) {
-        entireTextComponent = new TextComponentImpl();
-        try {
-            entireTextComponent.add(new TextComponentImpl(TextElement.TEXT));
-            invokeNext(entireTextComponent.getChild(0), fullText);
-        } catch (InvalidIndexException e) {
-            LOGGER.error(INVALID_INDEX_MSG);
-        } catch (UnsupportedMethodException e) {
-            LOGGER.error(INVALID_METHOD_MSG, e);
-        }
+        entireTextComponent = new TextComponentImpl(TextElement.TEXT);
+        invokeNext(entireTextComponent, fullText);
     }
 
     public void setNext(final AbstractTextParser nextParser) {
@@ -45,16 +38,22 @@ public abstract class AbstractTextParser {
                                            String data);
 
     void parseComponent(final TextComponent textComponent,
-                        final String parsePatterRegex,
+                        final String parsePatternRegex,
                         final TextElement element,
                         final String data) {
         List<String> components = Arrays.stream(
-                data.split(parsePatterRegex))
+                data.split(parsePatternRegex))
                 .map(String::trim)
                 .collect(Collectors.toList());
 
         int counter = -1;
         while (++counter < components.size()) {
+            while (element == TextElement.SENTENCE
+                    && counter + 1 < components.size()
+                    && components.get(counter + 1).equals(".")) {
+                components.add(counter, components.remove(counter)
+                        + components.remove(counter));
+            }
             try {
                 textComponent.add(new TextComponentImpl(element));
                 invokeNext(textComponent.getChild(counter),
