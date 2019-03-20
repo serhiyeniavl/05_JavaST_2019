@@ -1,6 +1,10 @@
 package com.epam.info_handling.entity;
 
+import com.epam.info_handling.action.PolishNotationAnalyzer;
 import com.epam.info_handling.exception.InvalidIndexException;
+import com.epam.info_handling.interpretator.ByteExpression;
+import com.epam.info_handling.interpretator.ByteExpressionCalculator;
+import com.epam.info_handling.interpretator.PolishNotationParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,6 +59,15 @@ public class TextComponentImpl implements TextComponent {
             builder.append(component.toString());
         }
         switch (textElement) {
+            case EXPRESSION:
+                String polishNotation = new PolishNotationAnalyzer()
+                        .analyzeAndGet(builder.toString());
+                List<ByteExpression> expressionList = new PolishNotationParser()
+                        .parse(polishNotation);
+                builder = new StringBuilder(
+                        String.valueOf((int) new ByteExpressionCalculator()
+                                .handleExpression(expressionList)));
+                break;
             case LEXEME:
                 builder.append(" ");
                 break;
