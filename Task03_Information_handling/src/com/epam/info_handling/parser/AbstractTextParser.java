@@ -48,12 +48,6 @@ public abstract class AbstractTextParser {
 
         int counter = -1;
         while (++counter < components.size()) {
-            while (element == TextElement.SENTENCE
-                    && counter + 1 < components.size()
-                    && components.get(counter + 1).equals(".")) {
-                components.add(counter, components.remove(counter)
-                        + components.remove(counter));
-            }
             try {
                 textComponent.add(new TextComponentImpl(element));
                 invokeNext(textComponent.getChild(counter),
