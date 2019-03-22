@@ -7,7 +7,7 @@ import java.util.Deque;
 
 public class PolishNotationAnalyzer {
     private StringBuilder polishNotation;
-    private Deque<ByteOperationEnum> operationsDeque;
+    private Deque<ByteOperationEnum> operationsDeque = new ArrayDeque<>();
 
     private static final int FIRST_FIGURE_IN_ASCII_TABLE_POS = 48;
     private static final int LAST_FIGURE_IN_ASCII_TABLE_POS = 57;
@@ -19,7 +19,6 @@ public class PolishNotationAnalyzer {
 
     public String analyzeAndGet(final String byteExpression) {
         polishNotation = new StringBuilder();
-        operationsDeque = new ArrayDeque();
         expressionLen = byteExpression.length();
 
         int carriage = 0;

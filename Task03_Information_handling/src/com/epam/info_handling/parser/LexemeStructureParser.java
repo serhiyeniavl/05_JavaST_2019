@@ -26,11 +26,11 @@ public class LexemeStructureParser extends AbstractTextParser {
                     textComponent.add(new TextComponentImpl(TextElement.WORD));
                     invokeNext(textComponent.getChild(0), data);
                 } else {
+                    String punctuationMark = punctuationMarks[1];
                     String word = data.substring(
-                            0, data.length() - punctuationMarks.length + 1);
+                            0, data.length() - punctuationMark.length());
                     textComponent.add(new TextComponentImpl(TextElement.WORD));
                     invokeNext(textComponent.getChild(0), word);
-                    String punctuationMark = punctuationMarks[1];
                     textComponent.add(
                             new TextComponentImpl(
                                     TextElement.PUNCTUATION_MARK));
