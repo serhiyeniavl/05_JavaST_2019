@@ -2,6 +2,8 @@ package com.epam.info_handling.entity;
 
 import com.epam.info_handling.exception.UnsupportedMethodException;
 
+import java.util.List;
+
 public class Leaf implements TextComponent {
     private static final String ERROR_MSG
             = "Method is not supported in current class.";
@@ -22,7 +24,7 @@ public class Leaf implements TextComponent {
     }
 
     @Override
-    public void add(final TextComponent... components)
+    public void add(final List<TextComponent> components)
             throws UnsupportedMethodException {
         throw new UnsupportedMethodException(ERROR_MSG);
     }
@@ -40,6 +42,12 @@ public class Leaf implements TextComponent {
     }
 
     @Override
+    public List<TextComponent> getComponents()
+            throws UnsupportedMethodException {
+        throw new UnsupportedMethodException(ERROR_MSG);
+    }
+
+    @Override
     public TextComponent getChild(final int index)
             throws UnsupportedMethodException {
         throw new UnsupportedMethodException(ERROR_MSG);
@@ -49,6 +57,7 @@ public class Leaf implements TextComponent {
         return Character.toString(data);
     }
 
+    @Override
     public TextElement getTextElement() {
         return textElement;
     }
