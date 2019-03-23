@@ -8,12 +8,13 @@ import java.util.List;
 public interface TextComponent {
     void add(TextComponent component) throws UnsupportedMethodException;
 
-    void add(final List<TextComponent> components)
+    void add(List<TextComponent> components)
             throws UnsupportedMethodException;
 
     void remove(TextComponent component) throws UnsupportedMethodException;
 
-    void remove(TextComponent... components) throws UnsupportedMethodException;
+    void remove(List<TextComponent> components)
+            throws UnsupportedMethodException;
 
     List<TextComponent> getComponents()
             throws UnsupportedMethodException;
@@ -21,7 +22,7 @@ public interface TextComponent {
     TextComponent getChild(int index) throws InvalidIndexException,
             UnsupportedMethodException;
 
-    TextElement getTextElement() throws UnsupportedMethodException;
+    TextElement getTextElement();
 
     String toString();
 }

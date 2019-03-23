@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TextComponentImpl implements TextComponent {
@@ -46,8 +45,8 @@ public class TextComponentImpl implements TextComponent {
         components.remove(component);
     }
 
-    public void remove(final TextComponent... textComponents) {
-        this.components.removeAll(Arrays.asList(textComponents));
+    public void remove(final List<TextComponent> components) {
+        this.components.removeAll(components);
     }
 
     public TextComponent getChild(final int index)

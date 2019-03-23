@@ -36,7 +36,7 @@ public class Leaf implements TextComponent {
     }
 
     @Override
-    public void remove(final TextComponent... components)
+    public void remove(final List<TextComponent> components)
             throws UnsupportedMethodException {
         throw new UnsupportedMethodException(ERROR_MSG);
     }
