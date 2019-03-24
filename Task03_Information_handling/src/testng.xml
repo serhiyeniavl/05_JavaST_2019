@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suit1">
+    <test name="Reading data test">
+        <classes>
+            <class name="test.com.epam.info_handling.reader.ReaderTest"/>
+        </classes>
+    </test>
+    <test name="Creation text composite. Test parsers with it">
+        <packages>
+            <package name="test.com.epam.info_handling.entity.TextComponentImplTest"/>
+        </packages>
+    </test>
+    <test name="Expressions calculation">
+        <classes>
+            <class name="test.com.epam.info_handling.action.ByteExpressionCalculatorTest"/>
+        </classes>
+    </test>
+    <test name="Text component sorts">
+        <classes>
+            <class name="test.com.epam.info_handling.sort.SortSpecificationTest"/>
+        </classes>
+    </test>
+    <test name="Text component clone test">
+        <classes>
+            <class name="test.com.epam.info_handling.action.CompoundTextClonerTest"/>
+        </classes>
+    </test>
+</suite>
