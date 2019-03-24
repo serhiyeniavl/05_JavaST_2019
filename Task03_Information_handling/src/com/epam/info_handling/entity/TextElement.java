@@ -54,7 +54,7 @@ public enum TextElement {
      *
      * @param textLevel text level in int.
      */
-    TextElement(int textLevel) {
+    TextElement(final int textLevel) {
         this.level = textLevel;
     }
 }

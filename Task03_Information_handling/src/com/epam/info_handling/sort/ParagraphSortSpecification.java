@@ -1,6 +1,5 @@
 package com.epam.info_handling.sort;
 
-import com.epam.info_handling.action.TextSorter;
 import com.epam.info_handling.entity.TextComponent;
 import com.epam.info_handling.exception.UnsupportedMethodException;
 import org.apache.logging.log4j.LogManager;

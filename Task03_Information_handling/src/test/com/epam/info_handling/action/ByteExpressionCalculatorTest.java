@@ -5,30 +5,22 @@ import com.epam.info_handling.interpretator.ByteExpression;
 import com.epam.info_handling.interpretator.ByteExpressionCalculator;
 import com.epam.info_handling.interpretator.PolishNotationParser;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class PolishNotationAnalyzerTest {
-    private PolishNotationAnalyzer notationAnalyzer;
-    private PolishNotationParser notationParser;
-    private ByteExpressionCalculator expressionCalculator;
-
-    @BeforeClass
-    public void init() {
-        notationParser = new PolishNotationParser();
-        notationAnalyzer = new PolishNotationAnalyzer();
-        expressionCalculator = new ByteExpressionCalculator();
-    }
+/**
+ * Test class for polish notation creator and interpretator.
+ */
+public class ByteExpressionCalculatorTest {
 
     /**
-     * Data provider for volume calculating.
+     * Data provider for byte expression calc.
      *
      * @return expressions and expected values.
      */
-    @DataProvider(name = "provide expression for analyzer")
+    @DataProvider(name = "provide expression for calculating")
     public Object[][] createDataForAnalyzer() {
         return new Object[][]{
                 {"5|(1&2&(3|(4&(25^5|6&47)|3)|2)|1)", 5.0},
@@ -44,10 +36,21 @@ public class PolishNotationAnalyzerTest {
         };
     }
 
-    @Test(dataProvider = "provide expression for analyzer")
-    public void testAnalyzeAndGet(final String exp, final double expected) {
+    /**
+     * Method that checks positive script when expression calculated right.
+     *
+     * @param exp      expression to calc.
+     * @param expected expected value.
+     */
+    @Test(dataProvider = "provide expression for calculating")
+    public void testCalculating(final String exp, final double expected) {
+        PolishNotationParser notationParser = new PolishNotationParser();
+        PolishNotationAnalyzer notationAnalyzer = new PolishNotationAnalyzer();
+        ByteExpressionCalculator expressionCalculator
+                = new ByteExpressionCalculator();
         String polishNotation = notationAnalyzer.analyzeAndGet(exp);
-        List<ByteExpression> expressionList = notationParser.parse(polishNotation);
+        List<ByteExpression> expressionList
+                = notationParser.parse(polishNotation);
         double actual = expressionCalculator.handleExpression(expressionList);
         Assert.assertEquals(actual, expected);
     }
