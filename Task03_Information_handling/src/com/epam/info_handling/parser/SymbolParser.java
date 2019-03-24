@@ -9,10 +9,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class to parse components into symbols.
+ */
 public class SymbolParser extends AbstractTextParser {
+    /**
+     * Regex to parse.
+     */
     private static final String SYMBOL_SEPARATOR_REGEX = "";
+    /**
+     * Text element to set when parse.
+     */
     private static final TextElement ELEMENT = TextElement.SYMBOL;
 
+    /**
+     * Method parse data into symbols.
+     * @param textComponent text component.
+     * @param data          data to parse.
+     */
     @Override
     protected void parseComponent(final TextComponent textComponent,
                                   final String data) {

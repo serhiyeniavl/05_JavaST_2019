@@ -6,11 +6,28 @@ import com.epam.info_handling.entity.TextElement;
 import com.epam.info_handling.exception.InvalidIndexException;
 import com.epam.info_handling.exception.UnsupportedMethodException;
 
+/**
+ * Class for parse lexeme into three component - expression, word and
+ * punctuation mark.
+ */
 public class LexemeStructureParser extends AbstractTextParser {
-
+    /**
+     * Regex to check punctuation mark.
+     */
     private static final String PUNCTUATION_SEPARATOR_REGEX = "[^!;:.?]+";
+    /**
+     * Regexp to define expression.
+     */
     private static final String EXPRESSION_SEPARATOR_REGEX = "[0-9&^~|<>()]+";
 
+    /**
+     * Overriden method, that divides lexeme into three component. If defined
+     * an expression - add to text component, also - word. In both cases checks
+     * on punctuation marks.
+     *
+     * @param textComponent text component.
+     * @param data          data to parse.
+     */
     @Override
     protected void parseComponent(final TextComponent textComponent,
                                   final String data) {
@@ -44,6 +61,10 @@ public class LexemeStructureParser extends AbstractTextParser {
         }
     }
 
+    /**
+     * @param lexeme lexeme to define punctuation mark in it.
+     * @return punctuation marks from lexeme.
+     */
     private String[] acquirePunctuationMarksFromLexeme(final String lexeme) {
         return lexeme.split(PUNCTUATION_SEPARATOR_REGEX);
     }

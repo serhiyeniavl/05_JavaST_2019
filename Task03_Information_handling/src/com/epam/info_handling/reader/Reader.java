@@ -9,13 +9,11 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Class Reader was created for read data form file, expect a few situations
  * described in methods. Reader uses Stream API for reading: {@link Path},
- * {@link Stream}, {@link Files}
+ * {@link Files}
  *
  * @author Vladislav Sergienya
  * @version 1.0
@@ -35,7 +33,8 @@ public class Reader {
      * Also check on file path error: path is
      * directory, nonexistent file.
      *
-     * @return {@link List} of strings from file.
+     * @param filePath file path.
+     * @return file data.
      */
     public String readData(final String filePath) {
         Path path;

@@ -8,10 +8,21 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for handle requests into text. Finding specified components.
+ */
 public class TextCollector {
+    /**
+     * Logger for define exception.
+     */
     private static final Logger LOGGER = LogManager.getLogger(
             TextCollector.class);
 
+    /**
+     * Find all sentences in text component.
+     * @param textComponent component where find.
+     * @return list of sentences.
+     */
     public List<TextComponent> acquireSentences(
             final TextComponent textComponent) {
         try {
@@ -28,6 +39,11 @@ public class TextCollector {
         return new ArrayList<>();
     }
 
+    /**
+     * Find all lexemes in text component.
+     * @param textComponent component where find.
+     * @return list of lexemes.
+     */
     public List<TextComponent> acquireLexemes(
             final TextComponent textComponent) {
         try {

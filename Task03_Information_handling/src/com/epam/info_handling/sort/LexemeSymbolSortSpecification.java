@@ -7,7 +7,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Class for sorting lexeme which has more specified symbols.
+ */
 public class LexemeSymbolSortSpecification implements SortSpecification {
+    /**
+     * Method sorts lexemes by defined symbol count in each one.
+     *
+     * @param components text components to sort.
+     * @param symbol     symbol to sort.
+     * @return sorted list of lexemes.
+     */
     @Override
     public List<TextComponent> sort(final TextComponent components,
                                     final char symbol) {
@@ -22,6 +32,10 @@ public class LexemeSymbolSortSpecification implements SortSpecification {
         return lexemes;
     }
 
+    /**
+     * @param components text components to sort.
+     * @return empty list.
+     */
     @Override
     public List<TextComponent> sort(final TextComponent components) {
         return new ArrayList<>();

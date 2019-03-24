@@ -9,11 +9,25 @@ import com.epam.info_handling.exception.UnsupportedMethodException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class parse that paragraphs into sentences.
+ */
 public class SentenceParser extends AbstractTextParser {
+    /**
+     * Regex to split.
+     */
     private static final String SENTENCE_SEPARATOR_REGEX
             = "[^.?!]+?(?:\\.{3}|\\.|!{3}|!|\\?)";
+    /**
+     * Text element to set when parse.
+     */
     private static final TextElement ELEMENT = TextElement.SENTENCE;
 
+    /**
+     * Method parses paragraphs into sentences using Pattern and Matcher.
+     * @param textComponent text component.
+     * @param data          data to parse.
+     */
     @Override
     public void parseComponent(final TextComponent textComponent,
                                final String data) {

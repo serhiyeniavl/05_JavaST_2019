@@ -12,31 +12,76 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract class that defined pattern Chain of Responsibility.
+ */
 public abstract class AbstractTextParser {
+    /**
+     * Logger for logging exceptions.
+     */
     static final Logger LOGGER = LogManager
             .getLogger(AbstractTextParser.class);
+    /**
+     * Error message when index is invalid.
+     */
     static final String INVALID_INDEX_MSG = "Invalid component index.";
+    /**
+     * Error message when method does not support by class.
+     */
     static final String INVALID_METHOD_MSG = "Trying to call invalid method.";
 
+    /**
+     * Reference to the next parser.
+     */
     private AbstractTextParser next;
+    /**
+     * Text component chat parsers create.
+     */
     private TextComponent entireTextComponent;
 
+    /**
+     * @return whole created text component.
+     */
     public TextComponent getParsedText() {
         return entireTextComponent;
     }
 
+    /**
+     * Starts chain of parsers.
+     *
+     * @param fullText text to be parsed.
+     */
     public void parseText(final String fullText) {
         entireTextComponent = new TextComponentImpl(TextElement.TEXT);
         invokeNext(entireTextComponent, fullText);
     }
 
+    /**
+     * Sets next parser.
+     *
+     * @param nextParser parser to set.
+     */
     public void setNext(final AbstractTextParser nextParser) {
         this.next = nextParser;
     }
 
+    /**
+     * Method that each parser have to override.
+     *
+     * @param textComponent text component.
+     * @param data          data to parse.
+     */
     protected abstract void parseComponent(TextComponent textComponent,
                                            String data);
 
+    /**
+     * Parses text component and invoke next parser on parsed data.
+     *
+     * @param textComponent     text component.
+     * @param parsePatternRegex regex by it data will be split.
+     * @param element           text element.
+     * @param data              data to split and parse.
+     */
     void parseComponent(final TextComponent textComponent,
                         final String parsePatternRegex,
                         final TextElement element,
@@ -62,6 +107,12 @@ public abstract class AbstractTextParser {
 
     }
 
+    /**
+     * Invokes next parser if it exists.
+     *
+     * @param textComponent text component to parse.
+     * @param data          data to parse.
+     */
     void invokeNext(final TextComponent textComponent, final String data) {
         if (next != null) {
             next.parseComponent(textComponent, data);

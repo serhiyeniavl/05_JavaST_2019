@@ -12,12 +12,27 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Class that sorts each sentence by lexemes length it has.
+ */
 public class WordLengthSortSpecification implements SortSpecification {
+    /**
+     * Logger for logging exceptions.
+     */
     private static final Logger LOGGER
             = LogManager.getLogger(WordLengthSortSpecification.class);
+    /**
+     * Error message when method is not support.
+     */
     private static final String ERROR_MSG
             = "Error when try to get components from text.";
 
+    /**
+     * Sorts each sentence by lexemes length it has.
+     *
+     * @param components text components to sort.
+     * @return list of sorted text components.
+     */
     @Override
     public List<TextComponent> sort(final TextComponent components) {
         TextCollector textCollector = new TextCollector();
@@ -33,6 +48,12 @@ public class WordLengthSortSpecification implements SortSpecification {
         return sentences;
     }
 
+    /**
+     * Sorts lexemes in sentence by length.
+     *
+     * @param sentence sentence for sort.
+     * @return sorted lexemes.
+     */
     private List<TextComponent> sortByLen(final TextComponent sentence) {
         try {
             List<TextComponent> lexemes = sentence.getComponents();
@@ -61,6 +82,11 @@ public class WordLengthSortSpecification implements SortSpecification {
         return new ArrayList<>();
     }
 
+    /**
+     * @param components text components to sort.
+     * @param symbol     symbol to define.
+     * @return empty list.
+     */
     @Override
     public List<TextComponent> sort(final TextComponent components,
                                     final char symbol) {
