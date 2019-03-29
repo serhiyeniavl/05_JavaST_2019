@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.by/candies"
+        xmlns:tns="http://www.epam.by/candies"
+        elementFormDefault="qualified">
+    <element name="candies">
+        <complexType>
+            <sequence>
+                <element ref="tns:candie"
+                         minOccurs="2"
+                         maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="Candie">
+        <sequence>
+            <element name="energy" type="nonNegativeInteger"/>
+            <element name="ingredients" type="tns:Ingredients"/>
+            <element name="value" type="tns:Value"/>
+            <element name="date" type="tns:Date"/>
+        </sequence>
+        <attribute name="production" type="string" use="required"/>
+        <attribute name="filling" type="string" use="optional" default="none"/>
+        <attribute name="name" type="tns:Name"
+                   use="required"/>
+    </complexType>
+
+    <complexType name="chocolate-candie">
+        <complexContent>
+            <extension base="tns:Candie">
+                <sequence>
+                    <element name="chocolate-type" type="tns:Chocolate-type"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="fruit-candie">
+        <complexContent>
+            <extension base="tns:Candie">
+                <sequence>
+                    <element name="fruit-type" type="tns:Fruit-type"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Ingredients">
+        <sequence>
+            <element name="water" type="nonNegativeInteger"/>
+            <element name="sugar" type="positiveInteger"/>
+            <element name="fructose" type="positiveInteger"/>
+            <element name="vanillin" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="Value">
+        <sequence>
+            <element name="protein" type="decimal"/>
+            <element name="carbohydrates" type="decimal"/>
+            <element name="fats" type="decimal"/>
+        </sequence>
+    </complexType>
+    <simpleType name="Name">
+        <restriction base="ID">
+            <pattern value=".{100}"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="Date">
+        <restriction base="string">
+            <pattern value="[0-9]{2}[-][0-9]{2}[-][0-9]{4}"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="Chocolate-type">
+            <restriction base="string">
+                <enumeration value="Шоколодная глазурь"/>
+                <enumeration value="Какао-шоколад"/>
+            </restriction>
+    </simpleType>
+
+    <element name="candie" type="tns:Candie" abstract="true"/>
+    <element name="chocolate-candie" type="tns:chocolate-candie"
+             substitutionGroup="tns:candie"/>
+    <element name="fruit-candie" type="tns:fruit-candie"
+             substitutionGroup="tns:candie"/>
+    <simpleType name="Fruit-type">
+            <restriction base="string">
+                <enumeration value="Фруктовое желе"/>
+                <enumeration value="Сгущенка"/>
+            </restriction>
+    </simpleType>
+</schema>

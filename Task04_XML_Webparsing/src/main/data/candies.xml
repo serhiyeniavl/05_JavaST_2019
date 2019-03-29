@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<candies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.epam.by/candies"
+         xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
+
+    <chocolate-candie production="Коммунарка" name="Столичные-элит" filling="liquor">
+        <energy>405</energy>
+        <ingredients>
+            <water>13</water>
+            <sugar>12</sugar>
+            <fructose>9</fructose>
+            <vanillin>5</vanillin>
+        </ingredients>
+        <value>
+            <protein>3.4</protein>
+            <carbohydrates>69.5</carbohydrates>
+            <fats>14.3</fats>
+        </value>
+        <date>06-03-2019</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Коммунарка" name="Беловежская пуща" filling="fruit mush">
+        <energy>422</energy>
+        <ingredients>
+            <water>10</water>
+            <sugar>13</sugar>
+            <fructose>7</fructose>
+            <vanillin>6</vanillin>
+        </ingredients>
+        <value>
+            <protein>1.7</protein>
+            <carbohydrates>71.0</carbohydrates>
+            <fats>12.4</fats>
+        </value>
+        <date>08-02-2019</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Спартак" name="Аленка" filling="Слой вафли">
+        <energy>550</energy>
+        <ingredients>
+            <water>9</water>
+            <sugar>15</sugar>
+            <fructose>16</fructose>
+            <vanillin>3</vanillin>
+        </ingredients>
+        <value>
+            <protein>6.0</protein>
+            <carbohydrates>56</carbohydrates>
+            <fats>33</fats>
+        </value>
+        <date>09-03-2019</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Коммунарка" name="Минский грильяж" filling="Орехи">
+        <energy>388</energy>
+        <ingredients>
+            <water>6</water>
+            <sugar>4</sugar>
+            <fructose>16</fructose>
+            <vanillin>5</vanillin>
+        </ingredients>
+        <value>
+            <protein>2.5</protein>
+            <carbohydrates>74</carbohydrates>
+            <fats>10.4</fats>
+        </value>
+        <date>09-03-2019</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Спартак" name="Вишенка" filling="Вишня заспиртованная">
+        <energy>423</energy>
+        <ingredients>
+            <water>7</water>
+            <sugar>5</sugar>
+            <fructose>12</fructose>
+            <vanillin>3</vanillin>
+        </ingredients>
+        <value>
+            <protein>4.4</protein>
+            <carbohydrates>51.4</carbohydrates>
+            <fats>23</fats>
+        </value>
+        <date>09-03-2019</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Спартак" name="Аэрофлотские" filling="Вафля">
+        <energy>543</energy>
+        <ingredients>
+            <water>2</water>
+            <sugar>6</sugar>
+            <fructose>13</fructose>
+            <vanillin>6</vanillin>
+        </ingredients>
+        <value>
+            <protein>3.9</protein>
+            <carbohydrates>58</carbohydrates>
+            <fats>33.7</fats>
+        </value>
+        <date>14-03-2019</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <fruit-candie production="Roshen" name="Бешеные пчелки" filling="Желе">
+        <energy>402</energy>
+        <ingredients>
+            <water>2</water>
+            <sugar>6</sugar>
+            <fructose>3</fructose>
+            <vanillin>2</vanillin>
+        </ingredients>
+        <value>
+            <protein>1.6</protein>
+            <carbohydrates>79</carbohydrates>
+            <fats>15</fats>
+        </value>
+        <date>12-03-2019</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+</candies>
