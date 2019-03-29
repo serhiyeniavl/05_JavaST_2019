@@ -21,9 +21,9 @@
             <element name="date" type="tns:Date"/>
         </sequence>
         <attribute name="production" type="string" use="required"/>
-        <attribute name="filling" type="string" use="optional" default="none"/>
         <attribute name="name" type="tns:Name"
                    use="required"/>
+        <attribute name="filling" type="string" use="optional" default="none"/>
     </complexType>
 
     <complexType name="chocolate-candie">
