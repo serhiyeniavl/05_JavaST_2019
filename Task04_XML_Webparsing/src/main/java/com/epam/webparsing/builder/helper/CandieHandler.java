@@ -3,7 +3,6 @@ package com.epam.webparsing.builder.helper;
 import com.epam.webparsing.entity.*;
 import com.epam.webparsing.xml_tag.CandieEnum;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
@@ -55,8 +54,6 @@ public class CandieHandler extends DefaultHandler {
 
     @Override
     public void characters(char[] ch, int start, int length) {
-        Ingredients ingredients = new Ingredients();
-        Value value = new Value();
         String s = new String(ch, start, length).trim();
         if (currentEnum != null) {
             switch (currentEnum) {
