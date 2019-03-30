@@ -62,9 +62,7 @@
         </sequence>
     </complexType>
     <simpleType name="Name">
-        <restriction base="ID">
-            <pattern value=".{100}"/>
-        </restriction>
+        <restriction base="string"/>
     </simpleType>
     <simpleType name="Date">
         <restriction base="string">
