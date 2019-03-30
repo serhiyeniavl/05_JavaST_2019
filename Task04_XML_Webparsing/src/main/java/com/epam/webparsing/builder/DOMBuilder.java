@@ -27,7 +27,7 @@ public class DOMBuilder extends ParserBuilder {
     }
 
     @Override
-    Candie buildCandie(final Candie candie, final Element candieElement) {
+    void buildCandie(final Candie candie, final Element candieElement) {
         candie.setProduction(candieElement.getAttribute("production"));
         candie.setName(candieElement.getAttribute("name"));
         if (candieElement.getAttribute("filling") != null) {
@@ -61,7 +61,6 @@ public class DOMBuilder extends ParserBuilder {
                 Double.valueOf(getElementTextContent(
                         candieElement, "fats")));
         candie.setValue(value);
-        return candie;
     }
 
     private Candie buildChocolateCandie(final Element candieElement) {

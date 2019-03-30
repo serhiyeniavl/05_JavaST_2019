@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,14 @@ public abstract class ParserBuilder {
         return new ArrayList<>(candies);
     }
 
-    abstract Candie buildCandie(Candie candie, Element candieElement);
+    Candie buildCandie(final Candie candie,
+                     final XMLStreamReader xmlStreamReader) throws XMLStreamException {
+        return null;
+    }
 
-    public abstract void buildCandies(String fileName);
+    void buildCandie(final Candie candie, final Element candieElement) {
+
+    }
+
+    public abstract void buildCandies(final String fileName);
 }
