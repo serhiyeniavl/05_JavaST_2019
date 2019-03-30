@@ -22,24 +22,20 @@ import javax.xml.namespace.QName;
  */
 @XmlRegistry
 public class ObjectFactory {
-    private static final String namespaceUrl = "http://www.epam.by/candies";
+    private static final String NAMESPACE_URL = "http://www.epam.by/candies";
 
-    private static final QName _FruitCandie_QNAME = new QName(namespaceUrl, "fruit-candie");
-    private static final QName _ChocolateCandie_QNAME = new QName(namespaceUrl, "chocolate-candie");
-    private static final QName _Candie_QNAME = new QName(namespaceUrl, "candie");
+    private static final QName _FruitCandie_QNAME = new QName(NAMESPACE_URL,
+            "fruit-candie");
+    private static final QName _ChocolateCandie_QNAME = new QName(NAMESPACE_URL,
+            "chocolate-candie");
+    private static final QName _Candie_QNAME = new QName(NAMESPACE_URL,
+            "candie");
 
     /**
      * Create an instance of {@link ChocolateCandie }
      */
     public ChocolateCandie createChocolateCandie() {
         return new ChocolateCandie();
-    }
-
-    /**
-     * Create an instance of {@link Candie }
-     */
-    public Candie createCandie() {
-        return new Candie();
     }
 
     /**

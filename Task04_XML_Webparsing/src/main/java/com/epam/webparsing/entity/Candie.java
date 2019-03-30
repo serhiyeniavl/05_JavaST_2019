@@ -3,6 +3,7 @@ package com.epam.webparsing.entity;
 
 import javax.xml.bind.annotation.*;
 import java.math.BigInteger;
+import java.util.Optional;
 
 
 /**
@@ -39,15 +40,15 @@ import java.math.BigInteger;
         ChocolateCandie.class,
         FruitCandie.class
 })
-public class Candie {
+public abstract class Candie {
 
     @XmlElement(namespace = "http://www.epam.by/candies", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected Integer energy;
     @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Ingredients ingredients;
+    protected Ingredients ingredients = new Ingredients();
     @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Value value;
+    protected Value value = new Value();
     @XmlElement(namespace = "http://www.epam.by/candies", required = true)
     protected String date;
     @XmlAttribute(name = "production", required = true)
@@ -199,6 +200,20 @@ public class Candie {
      */
     public void setFilling(final String value) {
         this.filling = value;
+    }
+
+    public void setChocolateType(final ChocolateType chocolateType) {
+    }
+
+    public void setFruitType(final FruitType fruitType) {
+    }
+
+    public ChocolateType getChocolateType() {
+        return null;
+    }
+
+    public FruitType getFruitType() {
+        return null;
     }
 
     @Override

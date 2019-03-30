@@ -29,8 +29,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Chocolate-candie", namespace = "http://www.epam.by/candies", propOrder = {
         "chocolateType"
 })
-public class ChocolateCandie
-        extends Candie {
+public class ChocolateCandie extends Candie {
 
     @XmlElement(name = "chocolate-type", namespace = "http://www.epam.by/candies", required = true)
     @XmlSchemaType(name = "string")
