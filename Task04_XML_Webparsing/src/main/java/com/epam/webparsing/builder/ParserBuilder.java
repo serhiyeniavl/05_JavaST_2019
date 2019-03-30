@@ -11,30 +11,78 @@ import javax.xml.stream.XMLStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract parser builder. Contains common logger, candies list and
+ * object factory.
+ */
 public abstract class ParserBuilder {
-    protected static final Logger LOGGER = LogManager
+    /**
+     * Logger.
+     */
+    static final Logger LOGGER = LogManager
             .getLogger(ParserBuilder.class);
 
-    protected List<Candie> candies;
-    protected ObjectFactory objectFactory;
+    /**
+     * List of candies.
+     */
+    private List<Candie> candies;
+    /**
+     * Object factory. Creates entities form xml file.
+     */
+    static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
-    public ParserBuilder() {
+    /**
+     * Constructor - initialize candies list.
+     */
+    ParserBuilder() {
         candies = new ArrayList<>();
-        objectFactory = new ObjectFactory();
     }
 
+    /**
+     * @return list of candies.
+     */
     public List<Candie> getCandies() {
         return new ArrayList<>(candies);
     }
 
-    Candie buildCandie(final Candie candie,
-                     final XMLStreamReader xmlStreamReader) throws XMLStreamException {
-        return null;
+    /**
+     * Adds candies to candies list.
+     * @param candie candies to add.
+     */
+    protected void addCandie(final Candie candie) {
+        candies.add(candie);
     }
 
+    /**
+     * Add whole list to candies.
+     * @param candieList list to add.
+     */
+    protected void addCandies(final List<Candie> candieList) {
+        candies.addAll(candieList);
+    }
+
+    /**
+     * Empty method. Should be realized in successor class.
+     * @param candie candie to create.
+     * @param xmlStreamReader xml reader for StAX parser.
+     * @throws XMLStreamException when tag in invalid.
+     */
+    void buildCandie(final Candie candie,
+                     final XMLStreamReader xmlStreamReader)
+            throws XMLStreamException {
+    }
+
+    /**
+     * Empty method. Should be realized in successor class.
+     * @param candie candie to create.
+     * @param candieElement candie element.
+     */
     void buildCandie(final Candie candie, final Element candieElement) {
-
     }
 
-    public abstract void buildCandies(final String fileName);
+    /**
+     * Builds whole list of candies.
+     * @param fileName file path.
+     */
+    public abstract void buildCandies(String fileName);
 }

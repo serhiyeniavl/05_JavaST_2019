@@ -1,6 +1,12 @@
 package com.epam.webparsing.builder;
 
-import com.epam.webparsing.entity.*;
+import com.epam.webparsing.entity.Candie;
+import com.epam.webparsing.entity.ChocolateCandie;
+import com.epam.webparsing.entity.ChocolateType;
+import com.epam.webparsing.entity.FruitCandie;
+import com.epam.webparsing.entity.FruitType;
+import com.epam.webparsing.entity.Ingredients;
+import com.epam.webparsing.entity.Value;
 import com.epam.webparsing.xml_tag.CandieEnum;
 
 import javax.xml.stream.XMLInputFactory;
@@ -12,15 +18,30 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Parser based on StAX model parsing.
+ */
 public class StAXBuilder extends ParserBuilder {
+    /**
+     * String to identify error msg.
+     */
     private static final String ERROR_MSG = "Unknown element in tag.";
+    /**
+     * @see XMLInputFactory
+     */
     private XMLInputFactory xmlInputFactory;
 
+    /**
+     * Constructor - initializes {@link XMLInputFactory}.
+     */
     public StAXBuilder() {
-        super();
         xmlInputFactory = XMLInputFactory.newInstance();
     }
 
+    /**
+     * Builds whole list of candies.
+     * @param fileName file path.
+     */
     @Override
     public void buildCandies(final String fileName) {
         XMLStreamReader streamReader;
@@ -33,9 +54,9 @@ public class StAXBuilder extends ParserBuilder {
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = streamReader.getLocalName();
                     if ("chocolate-candie".equals(name)) {
-                        candies.add(buildChocolateCandie(streamReader));
+                        addCandie(buildChocolateCandie(streamReader));
                     } else if ("fruit-candie".equals(name)) {
-                        candies.add(buildFruitCandie(streamReader));
+                        addCandie(buildFruitCandie(streamReader));
                     }
                 }
             }
@@ -48,22 +69,40 @@ public class StAXBuilder extends ParserBuilder {
         }
     }
 
+    /**
+     * Builds chocolate candie, adds specific tags values to candie.
+     * @param xmlStreamReader xml reader.
+     * @return chocolate candie.
+     * @throws XMLStreamException when xml tag in invalid.
+     */
     private Candie buildChocolateCandie(final XMLStreamReader xmlStreamReader)
             throws XMLStreamException {
-        ChocolateCandie candie = objectFactory.createChocolateCandie();
+        ChocolateCandie candie = OBJECT_FACTORY.createChocolateCandie();
         buildCandie(candie, xmlStreamReader);
         return candie;
     }
 
+    /**
+     * Builds fruit candie, adds specific tags values to candie.
+     * @param xmlStreamReader xml reader.
+     * @return fruit candie.
+     * @throws XMLStreamException when xml tag in invalid.
+     */
     private Candie buildFruitCandie(final XMLStreamReader xmlStreamReader)
             throws XMLStreamException {
-        FruitCandie candie = objectFactory.createFruitCandie();
+        FruitCandie candie = OBJECT_FACTORY.createFruitCandie();
         buildCandie(candie, xmlStreamReader);
         return candie;
     }
 
+    /**
+     * Builds candie. Creates common tags values from abstract candie.
+     *
+     * @param candie        candie to create.
+     * @param xmlStreamReader xml reader.
+     */
     @Override
-    Candie buildCandie(final Candie candie,
+    void buildCandie(final Candie candie,
                        final XMLStreamReader xmlStreamReader)
             throws XMLStreamException {
         candie.setProduction(xmlStreamReader.getAttributeValue(null,
@@ -116,7 +155,7 @@ public class StAXBuilder extends ParserBuilder {
                     name = xmlStreamReader.getLocalName();
                     if ("chocolate-candie".equals(name)
                             || "fruit-candie".equals(name)) {
-                        return candie;
+                        return;
                     }
                 default:
             }
@@ -124,7 +163,12 @@ public class StAXBuilder extends ParserBuilder {
         throw new XMLStreamException(ERROR_MSG);
     }
 
-    private String getXMLText(XMLStreamReader reader)
+    /**
+     * @param reader xml reader.
+     * @return text form current tag.
+     * @throws XMLStreamException when tag in invalid.
+     */
+    private String getXMLText(final XMLStreamReader reader)
             throws XMLStreamException {
         String text = null;
         if (reader.hasNext()) {
@@ -134,6 +178,12 @@ public class StAXBuilder extends ParserBuilder {
         return text;
     }
 
+    /**
+     * Read and creates data from tag ingredients.
+     * @param xmlStreamReader xml reader.
+     * @return created ingredients.
+     * @throws XMLStreamException when tag is invalid.
+     */
     private Ingredients getXMLIngredients(
             final XMLStreamReader xmlStreamReader) throws XMLStreamException {
         Ingredients ingredients = new Ingredients();
@@ -180,6 +230,12 @@ public class StAXBuilder extends ParserBuilder {
         throw new XMLStreamException(ERROR_MSG);
     }
 
+    /**
+     * Read and creates data from tag value.
+     * @param xmlStreamReader xml reader.
+     * @return created value.
+     * @throws XMLStreamException when tag is invalid.
+     */
     private Value getXMLValue(final XMLStreamReader xmlStreamReader)
             throws XMLStreamException {
         Value value = new Value();
