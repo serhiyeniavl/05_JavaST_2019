@@ -1,42 +1,14 @@
 
 package com.epam.webparsing.entity;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * <p>Java class for Fruit-candie complex type.
- *
- * <p>The following schema fragment specifies the expected content contained
- * within this class.
- *
- * <pre>
- * &lt;complexType name="Fruit-candie">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.epam.by/candies}Candie">
- *       &lt;sequence>
- *         &lt;element name="fruit-type" type="{http://www.epam.by/candies}
- *         Fruit-type"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Fruit-candie", namespace = "http://www.epam.by/candies",
-        propOrder = {
-                "fruitType"
-        })
 public class FruitCandie extends Candie {
 
-    @XmlElement(name = "fruit-type", namespace = "http://www.epam.by/candies",
-            required = true)
-    @XmlSchemaType(name = "string")
+    /**
+     * Fruit type this candie has.
+     */
     private FruitType fruitType;
 
     /**

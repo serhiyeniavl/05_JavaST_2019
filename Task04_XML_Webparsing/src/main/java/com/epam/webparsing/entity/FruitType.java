@@ -1,46 +1,47 @@
 
 package com.epam.webparsing.entity;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * <p>Java class for Fruit-type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * <p>
- * <pre>
- * &lt;simpleType name="Fruit-type">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Фруктовое желе"/>
- *     &lt;enumeration value="Сгущенка"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
- * </pre>
- * 
  */
-@XmlType(name = "Fruit-type", namespace = "http://www.epam.by/candies")
-@XmlEnum
 public enum FruitType {
 
-    @XmlEnumValue("\u0424\u0440\u0443\u043a\u0442\u043e\u0432\u043e\u0435 \u0436\u0435\u043b\u0435")
-    ФРУКТОВОЕ_ЖЕЛЕ("\u0424\u0440\u0443\u043a\u0442\u043e\u0432\u043e\u0435 \u0436\u0435\u043b\u0435"),
-    @XmlEnumValue("\u0421\u0433\u0443\u0449\u0435\u043d\u043a\u0430")
-    СГУЩЕНКА("\u0421\u0433\u0443\u0449\u0435\u043d\u043a\u0430");
+    /**
+     * Field describes tag content.
+     */
+    ФРУКТОВОЕ_ЖЕЛЕ("ФРУКТОВОЕ ЖЕЛЕ"),
+    /**
+     * Field describes tag content.
+     */
+    СГУЩЕНКА("СГУЩЕНКА");
+
+    /**
+     * Enum constant value.
+     */
     private final String value;
 
-    FruitType(String v) {
+    /**
+     * Constructor - initializes value.
+     *
+     * @param v const value.
+     */
+    FruitType(final String v) {
         value = v;
     }
 
+    /**
+     * @return value of constant.
+     */
     public String value() {
         return value;
     }
 
-    public static FruitType fromValue(String v) {
-        for (FruitType c: FruitType.values()) {
+    /**
+     * @param v string to convert in enum constant.
+     * @return enum constant from input string.
+     */
+    public static FruitType fromValue(final String v) {
+        for (FruitType c : FruitType.values()) {
             if (c.value.equalsIgnoreCase(v)) {
                 return c;
             }
@@ -48,9 +49,13 @@ public enum FruitType {
         throw new IllegalArgumentException(v);
     }
 
+    /**
+     * @return string representation.
+     */
     @Override
     public String toString() {
         return "FruitType{"
                 + "value='" + value + '\''
                 + '}';
-    }}
+    }
+}

@@ -1,68 +1,47 @@
 
 package com.epam.webparsing.entity;
 
-import javax.xml.bind.annotation.*;
-import java.math.BigInteger;
-import java.util.Optional;
-
-
 /**
  * <p>Java class for Candie complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Candie">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="energy" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
- *         &lt;element name="ingredients" type="{http://www.epam.by/candies}Ingredients"/>
- *         &lt;element name="value" type="{http://www.epam.by/candies}Value"/>
- *         &lt;element name="date" type="{http://www.epam.by/candies}Date"/>
- *       &lt;/sequence>
- *       &lt;attribute name="production" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="filling" type="{http://www.w3.org/2001/XMLSchema}string" default="none" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Candie", namespace = "http://www.epam.by/candies", propOrder = {
-        "energy",
-        "ingredients",
-        "value",
-        "date"
-})
-@XmlSeeAlso({
-        ChocolateCandie.class,
-        FruitCandie.class
-})
 public abstract class Candie {
 
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected Integer energy;
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Ingredients ingredients = new Ingredients();
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Value value = new Value();
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected String date;
-    @XmlAttribute(name = "production", required = true)
-    protected String production;
-    @XmlAttribute(name = "name", required = true)
-    protected String name;
-    @XmlAttribute(name = "filling")
-    protected String filling;
+    /**
+     * Candie energy.
+     */
+    private Integer energy;
+    /**
+     * Candie ingredients.
+     * @see Ingredients
+     */
+    private Ingredients ingredients = new Ingredients();
+    /**
+     * Candie value.
+     * @see Value
+     */
+    private Value value = new Value();
+    /**
+     * Candie date.
+     */
+    private String date;
+    /**
+     * Candie production.
+     */
+    private String production;
+    /**
+     * Candie name.
+     */
+    private String name;
+    /**
+     * Candie filling.
+     */
+    private String filling;
 
     /**
      * Gets the value of the energy property.
      *
      * @return possible object is
-     * {@link BigInteger }
+     * {@link Integer }
      */
     public Integer getEnergy() {
         return energy;
@@ -71,11 +50,11 @@ public abstract class Candie {
     /**
      * Sets the value of the energy property.
      *
-     * @param value allowed object is
-     *              {@link BigInteger }
+     * @param val allowed object is
+     *              {@link Integer }
      */
-    public void setEnergy(Integer value) {
-        this.energy = value;
+    public void setEnergy(final Integer val) {
+        this.energy = val;
     }
 
     /**
@@ -91,11 +70,11 @@ public abstract class Candie {
     /**
      * Sets the value of the ingredients property.
      *
-     * @param value allowed object is
+     * @param val allowed object is
      *              {@link Ingredients }
      */
-    public void setIngredients(Ingredients value) {
-        this.ingredients = value;
+    public void setIngredients(final Ingredients val) {
+        this.ingredients = val;
     }
 
     /**
@@ -111,11 +90,11 @@ public abstract class Candie {
     /**
      * Sets the value of the value property.
      *
-     * @param value allowed object is
-     *              {@link Value }
+     * @param val allowed object is
+     *            {@link Value }
      */
-    public void setValue(Value value) {
-        this.value = value;
+    public void setValue(final Value val) {
+        this.value = val;
     }
 
     /**
@@ -131,11 +110,11 @@ public abstract class Candie {
     /**
      * Sets the value of the date property.
      *
-     * @param value allowed object is
+     * @param val allowed object is
      *              {@link String }
      */
-    public void setDate(String value) {
-        this.date = value;
+    public void setDate(final String val) {
+        this.date = val;
     }
 
     /**
@@ -151,11 +130,11 @@ public abstract class Candie {
     /**
      * Sets the value of the production property.
      *
-     * @param value allowed object is
+     * @param val allowed object is
      *              {@link String }
      */
-    public void setProduction(String value) {
-        this.production = value;
+    public void setProduction(final String val) {
+        this.production = val;
     }
 
     /**
@@ -171,11 +150,11 @@ public abstract class Candie {
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
+     * @param val allowed object is
      *              {@link String }
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setName(final String val) {
+        this.name = val;
     }
 
     /**
@@ -195,27 +174,44 @@ public abstract class Candie {
     /**
      * Sets the value of the filling property.
      *
-     * @param value allowed object is
+     * @param val allowed object is
      *              {@link String }
      */
-    public void setFilling(final String value) {
-        this.filling = value;
+    public void setFilling(final String val) {
+        this.filling = val;
     }
 
+    /**
+     * Sets candie chocolate type.
+     * @param chocolateType type to set.
+     */
     public void setChocolateType(final ChocolateType chocolateType) {
     }
 
+    /**
+     * Sets candie fruit type.
+     * @param fruitType type to set.
+     */
     public void setFruitType(final FruitType fruitType) {
     }
 
+    /**
+     * @return candie type.
+     */
     public ChocolateType getChocolateType() {
         return null;
     }
 
+    /**
+     * @return candie type.
+     */
     public FruitType getFruitType() {
         return null;
     }
 
+    /**
+     * @return string representation.
+     */
     @Override
     public String toString() {
         return "Candie{"

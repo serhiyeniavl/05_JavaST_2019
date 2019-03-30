@@ -1,45 +1,23 @@
 
 package com.epam.webparsing.entity;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * <p>Java class for Value complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="Value">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="protein" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *         &lt;element name="carbohydrates" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *         &lt;element name="fats" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Value", namespace = "http://www.epam.by/candies", propOrder = {
-        "protein",
-        "carbohydrates",
-        "fats"
-})
 public class Value {
 
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Double protein;
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Double carbohydrates;
-    @XmlElement(namespace = "http://www.epam.by/candies", required = true)
-    protected Double fats;
+    /**
+     * Data from tag protein.
+     */
+    private Double protein;
+    /**
+     * Data from tag carbohydrates.
+     */
+    private Double carbohydrates;
+    /**
+     * Data from tag fats.
+     */
+    private Double fats;
 
     /**
      * Gets the value of the protein property.
@@ -101,6 +79,9 @@ public class Value {
         this.fats = value;
     }
 
+    /**
+     * @return string representation.
+     */
     @Override
     public String toString() {
         return "Value{"
