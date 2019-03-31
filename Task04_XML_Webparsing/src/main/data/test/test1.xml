@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<candies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.epam.by/candies"
+         xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
+
+    <chocolate-candie production="Коммунарка" name="Столичные-элит" filling="liquor">
+        <energy>405</energy>
+        <ingredients>
+            <water>13</water>
+            <sugar>12</sugar>
+            <fructose>9</fructose>
+            <vanillin>5</vanillin>
+        </ingredients>
+        <value>
+            <protein>3.4</protein>
+            <carbohydrates>69.5</carbohydrates>
+            <fats>14.3</fats>
+        </value>
+        <date>06-03-2019</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Коммунарка" name="Беловежская пуща" filling="fruit mush">
+        <energy>422</energy>
+        <ingredients>
+            <water>10</water>
+            <sugar>13</sugar>
+            <fructose>7</fructose>
+            <vanillin>6</vanillin>
+        </ingredients>
+        <value>
+            <protein>1.7</protein>
+            <carbohydrates>71.0</carbohydrates>
+            <fats>12.4</fats>
+        </value>
+        <date>08-02-2019</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+</candies>

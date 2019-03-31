@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<candies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.epam.by/candies"
+         xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
+
+    <chocolate-candie production="Спартак" name="Вишенка">
+        <energy>423</energy>
+        <ingredients>
+            <water>7</water>
+            <sugar>5</sugar>
+            <fructose>12</fructose>
+            <vanillin>3</vanillin>
+        </ingredients>
+        <value>
+            <protein>4.4</protein>
+            <carbohydrates>51.4</carbohydrates>
+            <fats>23</fats>
+        </value>
+        <date>09-03-2019</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <fruit-candie production="Roshen" name="Бешеные пчелки" filling="Желе">
+        <energy>402</energy>
+        <ingredients>
+            <water>2</water>
+            <sugar>6</sugar>
+            <fructose>3</fructose>
+            <vanillin>2</vanillin>
+        </ingredients>
+        <value>
+            <protein>1.6</protein>
+            <carbohydrates>79</carbohydrates>
+            <fats>15</fats>
+        </value>
+        <date>12-03-2019</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+</candies>
