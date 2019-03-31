@@ -1,6 +1,8 @@
 
 package com.epam.webparsing.entity;
 
+import java.util.Objects;
+
 /**
  * <p>Java class for Ingredients complex type.
  */
@@ -101,6 +103,34 @@ public class Ingredients {
      */
     public void setVanillin(final String value) {
         this.vanillin = value;
+    }
+
+    /**
+     * Comparing objects on coincidence.
+     * @param object object to compare.
+     * @return true if objects are equal.
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Ingredients that = (Ingredients) object;
+        return Objects.equals(water, that.water)
+                && Objects.equals(sugar, that.sugar)
+                && Objects.equals(fructose, that.fructose)
+                && Objects.equals(vanillin, that.vanillin);
+    }
+
+    /**
+     * @return hash code of this obj.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(water, sugar, fructose, vanillin);
     }
 
     /**

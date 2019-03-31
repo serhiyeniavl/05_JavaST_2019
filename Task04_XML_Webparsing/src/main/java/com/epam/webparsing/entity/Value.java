@@ -1,6 +1,8 @@
 
 package com.epam.webparsing.entity;
 
+import java.util.Objects;
+
 /**
  * <p>Java class for Value complex type.
  */
@@ -77,6 +79,33 @@ public class Value {
      */
     public void setFats(final Double value) {
         this.fats = value;
+    }
+
+    /**
+     * Comparing objects on coincidence.
+     * @param object object to compare.
+     * @return true if objects are equal.
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Value value = (Value) object;
+        return Objects.equals(protein, value.protein)
+                && Objects.equals(carbohydrates, value.carbohydrates)
+                && Objects.equals(fats, value.fats);
+    }
+
+    /**
+     * @return hash code of this obj.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(protein, carbohydrates, fats);
     }
 
     /**

@@ -1,6 +1,8 @@
 
 package com.epam.webparsing.entity;
 
+import java.util.Objects;
+
 /**
  * <p>Java class for Candie complex type.
  */
@@ -12,11 +14,13 @@ public abstract class Candie {
     private Integer energy;
     /**
      * Candie ingredients.
+     *
      * @see Ingredients
      */
     private Ingredients ingredients = new Ingredients();
     /**
      * Candie value.
+     *
      * @see Value
      */
     private Value value = new Value();
@@ -35,7 +39,7 @@ public abstract class Candie {
     /**
      * Candie filling.
      */
-    private String filling;
+    private String filling = "none";
 
     /**
      * Gets the value of the energy property.
@@ -51,7 +55,7 @@ public abstract class Candie {
      * Sets the value of the energy property.
      *
      * @param val allowed object is
-     *              {@link Integer }
+     *            {@link Integer }
      */
     public void setEnergy(final Integer val) {
         this.energy = val;
@@ -71,7 +75,7 @@ public abstract class Candie {
      * Sets the value of the ingredients property.
      *
      * @param val allowed object is
-     *              {@link Ingredients }
+     *            {@link Ingredients }
      */
     public void setIngredients(final Ingredients val) {
         this.ingredients = val;
@@ -111,7 +115,7 @@ public abstract class Candie {
      * Sets the value of the date property.
      *
      * @param val allowed object is
-     *              {@link String }
+     *            {@link String }
      */
     public void setDate(final String val) {
         this.date = val;
@@ -131,7 +135,7 @@ public abstract class Candie {
      * Sets the value of the production property.
      *
      * @param val allowed object is
-     *              {@link String }
+     *            {@link String }
      */
     public void setProduction(final String val) {
         this.production = val;
@@ -151,7 +155,7 @@ public abstract class Candie {
      * Sets the value of the name property.
      *
      * @param val allowed object is
-     *              {@link String }
+     *            {@link String }
      */
     public void setName(final String val) {
         this.name = val;
@@ -164,18 +168,14 @@ public abstract class Candie {
      * {@link String }
      */
     public String getFilling() {
-        if (filling == null) {
-            return "none";
-        } else {
-            return filling;
-        }
+        return filling;
     }
 
     /**
      * Sets the value of the filling property.
      *
      * @param val allowed object is
-     *              {@link String }
+     *            {@link String }
      */
     public void setFilling(final String val) {
         this.filling = val;
@@ -183,6 +183,7 @@ public abstract class Candie {
 
     /**
      * Sets candie chocolate type.
+     *
      * @param chocolateType type to set.
      */
     public void setChocolateType(final ChocolateType chocolateType) {
@@ -190,6 +191,7 @@ public abstract class Candie {
 
     /**
      * Sets candie fruit type.
+     *
      * @param fruitType type to set.
      */
     public void setFruitType(final FruitType fruitType) {
@@ -207,6 +209,39 @@ public abstract class Candie {
      */
     public FruitType getFruitType() {
         return null;
+    }
+
+    /**
+     * Comparing objects on coincidence.
+     *
+     * @param object object to compare.
+     * @return true if objects are equal.
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Candie candie = (Candie) object;
+        return Objects.equals(energy, candie.energy)
+                && Objects.equals(ingredients, candie.ingredients)
+                && Objects.equals(value, candie.value)
+                && Objects.equals(date, candie.date)
+                && Objects.equals(production, candie.production)
+                && Objects.equals(name, candie.name)
+                && Objects.equals(filling, candie.filling);
+    }
+
+    /**
+     * @return hash code of this obj.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                energy, ingredients, value, date, production, name, filling);
     }
 
     /**
