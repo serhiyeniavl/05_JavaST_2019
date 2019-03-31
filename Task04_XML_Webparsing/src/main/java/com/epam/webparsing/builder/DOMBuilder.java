@@ -49,7 +49,7 @@ public class DOMBuilder extends ParserBuilder {
     void buildCandie(final Candie candie, final Element candieElement) {
         candie.setProduction(candieElement.getAttribute("production"));
         candie.setName(candieElement.getAttribute("name"));
-        if (candieElement.getAttribute("filling") != null) {
+        if (!candieElement.getAttribute("filling").isEmpty()) {
             candie.setFilling(candieElement.getAttribute("filling"));
         }
         candie.setEnergy(Integer.valueOf(

@@ -40,6 +40,7 @@ public class StAXBuilder extends ParserBuilder {
 
     /**
      * Builds whole list of candies.
+     *
      * @param fileName file path.
      */
     @Override
@@ -71,6 +72,7 @@ public class StAXBuilder extends ParserBuilder {
 
     /**
      * Builds chocolate candie, adds specific tags values to candie.
+     *
      * @param xmlStreamReader xml reader.
      * @return chocolate candie.
      * @throws XMLStreamException when xml tag in invalid.
@@ -84,6 +86,7 @@ public class StAXBuilder extends ParserBuilder {
 
     /**
      * Builds fruit candie, adds specific tags values to candie.
+     *
      * @param xmlStreamReader xml reader.
      * @return fruit candie.
      * @throws XMLStreamException when xml tag in invalid.
@@ -98,12 +101,12 @@ public class StAXBuilder extends ParserBuilder {
     /**
      * Builds candie. Creates common tags values from abstract candie.
      *
-     * @param candie        candie to create.
+     * @param candie          candie to create.
      * @param xmlStreamReader xml reader.
      */
     @Override
     void buildCandie(final Candie candie,
-                       final XMLStreamReader xmlStreamReader)
+                     final XMLStreamReader xmlStreamReader)
             throws XMLStreamException {
         candie.setProduction(xmlStreamReader.getAttributeValue(null,
                 "production"));
@@ -124,31 +127,32 @@ public class StAXBuilder extends ParserBuilder {
                         candie.setChocolateType(
                                 ChocolateType.fromValue(
                                         getXMLText(xmlStreamReader)));
-                        continue;
+
                     } else if (name.equals("fruit-type")) {
                         candie.setFruitType(
                                 FruitType.fromValue(
                                         getXMLText(xmlStreamReader)));
-                        continue;
-                    }
-                    switch (CandieEnum.valueOf(name.toUpperCase())) {
-                        case ENERGY:
-                            candie.setEnergy(
-                                    Integer.valueOf(
-                                            getXMLText(xmlStreamReader)));
-                            break;
-                        case DATE:
-                            candie.setDate(getXMLText(xmlStreamReader));
-                            break;
-                        case INGREDIENTS:
-                            candie.setIngredients(
-                                    getXMLIngredients(xmlStreamReader));
-                            break;
-                        case VALUE:
-                            candie.setValue(
-                                    getXMLValue(xmlStreamReader));
-                            break;
-                        default:
+
+                    } else {
+                        switch (CandieEnum.valueOf(name.toUpperCase())) {
+                            case ENERGY:
+                                candie.setEnergy(
+                                        Integer.valueOf(
+                                                getXMLText(xmlStreamReader)));
+                                break;
+                            case DATE:
+                                candie.setDate(getXMLText(xmlStreamReader));
+                                break;
+                            case INGREDIENTS:
+                                candie.setIngredients(
+                                        getXMLIngredients(xmlStreamReader));
+                                break;
+                            case VALUE:
+                                candie.setValue(
+                                        getXMLValue(xmlStreamReader));
+                                break;
+                            default:
+                        }
                     }
                     break;
                 case XMLStreamConstants.END_ELEMENT:
@@ -159,6 +163,7 @@ public class StAXBuilder extends ParserBuilder {
                     }
                 default:
             }
+
         }
         throw new XMLStreamException(ERROR_MSG);
     }
@@ -180,6 +185,7 @@ public class StAXBuilder extends ParserBuilder {
 
     /**
      * Read and creates data from tag ingredients.
+     *
      * @param xmlStreamReader xml reader.
      * @return created ingredients.
      * @throws XMLStreamException when tag is invalid.
@@ -232,6 +238,7 @@ public class StAXBuilder extends ParserBuilder {
 
     /**
      * Read and creates data from tag value.
+     *
      * @param xmlStreamReader xml reader.
      * @return created value.
      * @throws XMLStreamException when tag is invalid.
