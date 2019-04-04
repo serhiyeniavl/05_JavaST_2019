@@ -29,7 +29,7 @@ public class Van implements Callable<Optional<Object>> {
     /**
      * Van id.
      */
-    private int vanId;
+    private long vanId;
 
     /**
      * Field shows target to arrive in base.
@@ -62,17 +62,7 @@ public class Van implements Callable<Optional<Object>> {
      */
     public Van(final String arriveTarget, final String vanStatus)
             throws InvalidArgumentException, NullArgumentException {
-        if (arriveTarget == null || vanStatus == null) {
-            throw new NullArgumentException("Vans argument is null");
-        }
-        if ((!arriveTarget.equals("load"))
-                && (!arriveTarget.equals("unload"))) {
-            throw new InvalidArgumentException("Invalid string target.");
-        }
-        if (!vanStatus.equals(COMMON_STATUS)
-                && (!vanStatus.equals(EXPRESS_STATUS))) {
-            throw new InvalidArgumentException("Invalid string status.");
-        }
+        validate(arriveTarget, vanStatus);
         this.target = arriveTarget;
         this.status = vanStatus;
         vanId = ++idCounter;
@@ -134,6 +124,29 @@ public class Van implements Callable<Optional<Object>> {
         } catch (InterruptedException e) {
             LOGGER.error("The thread is interrupted when sleep.", e);
             Thread.currentThread().interrupt();
+        }
+    }
+
+    /**
+     * Checks input data to be valid.
+     *
+     * @param arriveTarget arrive target.
+     * @param vanStatus    van status.
+     * @throws InvalidArgumentException when target or status is invalid.
+     * @throws NullArgumentException    when target or status is null pointer.
+     */
+    private void validate(final String arriveTarget, final String vanStatus)
+            throws InvalidArgumentException, NullArgumentException {
+        if (arriveTarget == null || vanStatus == null) {
+            throw new NullArgumentException("Vans argument is null");
+        }
+        if ((!arriveTarget.equals("load"))
+                && (!arriveTarget.equals("unload"))) {
+            throw new InvalidArgumentException("Invalid string target.");
+        }
+        if (!vanStatus.equals(COMMON_STATUS)
+                && (!vanStatus.equals(EXPRESS_STATUS))) {
+            throw new InvalidArgumentException("Invalid string status.");
         }
     }
 }
