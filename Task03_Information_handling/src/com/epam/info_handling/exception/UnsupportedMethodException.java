@@ -5,6 +5,12 @@ package com.epam.info_handling.exception;
  */
 public class UnsupportedMethodException extends Exception {
     /**
+     * Constructor.
+     */
+    public UnsupportedMethodException() {
+    }
+
+    /**
      * Set a message for logging exception.
      *
      * @param message exception message.

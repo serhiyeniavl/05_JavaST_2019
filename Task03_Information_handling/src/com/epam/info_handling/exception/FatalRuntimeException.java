@@ -5,6 +5,12 @@ package com.epam.info_handling.exception;
  */
 public class FatalRuntimeException extends RuntimeException {
     /**
+     * Constructor.
+     */
+    public FatalRuntimeException() {
+    }
+
+    /**
      * Constructor - creates exception with error message and cause of that
      * exception.
      *

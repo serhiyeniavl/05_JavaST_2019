@@ -5,6 +5,12 @@ package com.epam.info_handling.exception;
  */
 public class InvalidIndexException extends Exception {
     /**
+     * Constructor.
+     */
+    public InvalidIndexException() {
+    }
+
+    /**
      * Set a message for logging exception.
      *
      * @param message exception message.
