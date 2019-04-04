@@ -5,6 +5,12 @@ package com.epam.threads.exception;
  */
 public class EmptyFileException extends Exception {
     /**
+     * Constructor.
+     */
+    public EmptyFileException() {
+    }
+
+    /**
      * Set a message for logging exception.
      * @param message exception message.
      */

@@ -5,6 +5,12 @@ package com.epam.threads.exception;
  */
 public class FatalErrorRuntimeException extends RuntimeException {
     /**
+     * Constructor.
+     */
+    public FatalErrorRuntimeException() {
+    }
+
+    /**
      * Constructor - creates exception with error message.
      *
      * @param message exception message.

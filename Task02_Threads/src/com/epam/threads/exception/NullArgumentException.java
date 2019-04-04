@@ -5,7 +5,14 @@ package com.epam.threads.exception;
  */
 public class NullArgumentException extends Exception {
     /**
+     * Constructor.
+     */
+    public NullArgumentException() {
+    }
+
+    /**
      * Set a message for logging exception.
+     *
      * @param message exception message.
      */
     public NullArgumentException(final String message) {

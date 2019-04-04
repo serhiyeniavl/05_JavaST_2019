@@ -5,6 +5,12 @@ package com.epam.threads.exception;
  */
 public class InvalidArgumentException extends Exception {
     /**
+     * Constructor.
+     */
+    public InvalidArgumentException() {
+    }
+
+    /**
      * Set a message for logging exception.
      *
      * @param message exception message.

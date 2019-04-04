@@ -5,6 +5,12 @@ package com.epam.threads.exception;
  */
 public class IllegalCallException extends Exception {
     /**
+     * Constructor.
+     */
+    public IllegalCallException() {
+    }
+
+    /**
      * Set a message for logging exception.
      *
      * @param message exception message.
