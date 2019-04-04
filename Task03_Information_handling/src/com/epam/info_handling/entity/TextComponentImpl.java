@@ -93,9 +93,7 @@ public class TextComponentImpl implements TextComponent {
      */
     public TextComponent getChild(final int index)
             throws InvalidIndexException {
-        if (index < 0 || index >= components.size()) {
-            throw new InvalidIndexException("Index out of bound.");
-        }
+        validate(index);
         return components.get(index);
     }
 
@@ -144,5 +142,11 @@ public class TextComponentImpl implements TextComponent {
             default:
         }
         return builder.toString();
+    }
+
+    private void validate(final int index) throws InvalidIndexException {
+        if (index < 0 || index >= components.size()) {
+            throw new InvalidIndexException("Index out of bound.");
+        }
     }
 }
