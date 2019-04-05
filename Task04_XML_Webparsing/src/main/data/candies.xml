@@ -4,7 +4,7 @@
          xmlns="http://www.epam.by/candies"
          xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
 
-    <chocolate-candie production="Коммунарка" name="Столичные-элит" filling="liquor">
+    <chocolate-candie production="Коммунарка" name="Столичные-элит" filling="Ликер">
         <energy>405</energy>
         <ingredients>
             <water>13</water>
@@ -17,11 +17,11 @@
             <carbohydrates>69.5</carbohydrates>
             <fats>14.3</fats>
         </value>
-        <date>06-03-2019</date>
+        <date>2019-06-03</date>
         <chocolate-type>Шоколодная глазурь</chocolate-type>
     </chocolate-candie>
 
-    <chocolate-candie production="Коммунарка" name="Беловежская пуща" filling="fruit mush">
+    <chocolate-candie production="Коммунарка" name="Беловежская пуща" filling="Фруктовое пюре">
         <energy>422</energy>
         <ingredients>
             <water>10</water>
@@ -34,7 +34,7 @@
             <carbohydrates>71.0</carbohydrates>
             <fats>12.4</fats>
         </value>
-        <date>08-02-2019</date>
+        <date>2019-08-02</date>
         <chocolate-type>Шоколодная глазурь</chocolate-type>
     </chocolate-candie>
 
@@ -51,7 +51,7 @@
             <carbohydrates>56</carbohydrates>
             <fats>33</fats>
         </value>
-        <date>09-03-2019</date>
+        <date>2019-03-09</date>
         <chocolate-type>Шоколодная глазурь</chocolate-type>
     </chocolate-candie>
 
@@ -68,7 +68,7 @@
             <carbohydrates>74</carbohydrates>
             <fats>10.4</fats>
         </value>
-        <date>09-03-2019</date>
+        <date>2019-03-09</date>
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
@@ -85,7 +85,7 @@
             <carbohydrates>51.4</carbohydrates>
             <fats>23</fats>
         </value>
-        <date>09-03-2019</date>
+        <date>2019-03-09</date>
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
@@ -102,7 +102,7 @@
             <carbohydrates>58</carbohydrates>
             <fats>33.7</fats>
         </value>
-        <date>14-03-2019</date>
+        <date>2019-03-14</date>
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
@@ -119,7 +119,160 @@
             <carbohydrates>79</carbohydrates>
             <fats>15</fats>
         </value>
-        <date>12-03-2019</date>
+        <date>2019-03-12</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+
+    <chocolate-candie production="Коммунарка" name="Нежное суфле" filling="Суфле">
+        <energy>413</energy>
+        <ingredients>
+            <water>4</water>
+            <sugar>7</sugar>
+            <fructose>11</fructose>
+            <vanillin>10</vanillin>
+        </ingredients>
+        <value>
+            <protein>2.4</protein>
+            <carbohydrates>62</carbohydrates>
+            <fats>18.3</fats>
+        </value>
+        <date>2019-04-01</date>
+        <chocolate-type>Шоколодная глазурь</chocolate-type>
+    </chocolate-candie>
+
+    <fruit-candie production="Богатырь" name="Shoko Fruko" filling="Желе">
+        <energy>420</energy>
+        <ingredients>
+            <water>3</water>
+            <sugar>8</sugar>
+            <fructose>8</fructose>
+            <vanillin>2</vanillin>
+        </ingredients>
+        <value>
+            <protein>2</protein>
+            <carbohydrates>75.7</carbohydrates>
+            <fats>12.6</fats>
+        </value>
+        <date>2019-03-28</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+
+    <chocolate-candie production="Эссен Продакшн АГ" name="Трюфель оригинальный" filling="Трюфель">
+        <energy>590</energy>
+        <ingredients>
+            <water>5</water>
+            <sugar>8</sugar>
+            <fructose>10</fructose>
+            <vanillin>4</vanillin>
+        </ingredients>
+        <value>
+            <protein>4</protein>
+            <carbohydrates>50</carbohydrates>
+            <fats>42</fats>
+        </value>
+        <date>2019-02-28</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <fruit-candie production="КДВ Нижний Тагил" name="Нильс" filling="Фруктово-ягодная">
+        <energy>406</energy>
+        <ingredients>
+            <water>3</water>
+            <sugar>5</sugar>
+            <fructose>8</fructose>
+            <vanillin>3</vanillin>
+        </ingredients>
+        <value>
+            <protein>0.04</protein>
+            <carbohydrates>92</carbohydrates>
+            <fats>5.3</fats>
+        </value>
+        <date>2019-02-24</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+
+    <fruit-candie production="Ван Мелле" name="Mentos">
+        <energy>390</energy>
+        <ingredients>
+            <water>4</water>
+            <sugar>10</sugar>
+            <fructose>9</fructose>
+            <vanillin>2</vanillin>
+        </ingredients>
+        <value>
+            <protein>0</protein>
+            <carbohydrates>92</carbohydrates>
+            <fats>2</fats>
+        </value>
+        <date>2019-03-20</date>
+        <fruit-type>Фруктовое желе</fruit-type>
+    </fruit-candie>
+
+    <chocolate-candie production="НП-сервис" name="Azorika" filling="Орех">
+        <energy>530</energy>
+        <ingredients>
+            <water>3</water>
+            <sugar>5</sugar>
+            <fructose>3</fructose>
+            <vanillin>5</vanillin>
+        </ingredients>
+        <value>
+            <protein>8.5</protein>
+            <carbohydrates>53</carbohydrates>
+            <fats>31</fats>
+        </value>
+        <date>2019-03-03</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Storck" name="TOFFIFFEE" filling="Орех, нуга, шоколад">
+        <energy>516</energy>
+        <ingredients>
+            <water>2</water>
+            <sugar>7</sugar>
+            <fructose>3</fructose>
+            <vanillin>4</vanillin>
+        </ingredients>
+        <value>
+            <protein>5.9</protein>
+            <carbohydrates>58.5</carbohydrates>
+            <fats>28.7</fats>
+        </value>
+        <date>2019-02-16</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <chocolate-candie production="Конти" name="Золотая лилия" filling="Шоколад">
+        <energy>501</energy>
+        <ingredients>
+            <water>4</water>
+            <sugar>8</sugar>
+            <fructose>3</fructose>
+            <vanillin>5</vanillin>
+        </ingredients>
+        <value>
+            <protein>4.4</protein>
+            <carbohydrates>60.2</carbohydrates>
+            <fats>28.2</fats>
+        </value>
+        <date>2019-02-27</date>
+        <chocolate-type>Какао-шоколад</chocolate-type>
+    </chocolate-candie>
+
+    <fruit-candie production="Roshen" name="Рошен джус-микс" filling="Фруктово-ягодная">
+        <energy>380</energy>
+        <ingredients>
+            <water>2</water>
+            <sugar>9</sugar>
+            <fructose>6</fructose>
+            <vanillin>2</vanillin>
+        </ingredients>
+        <value>
+            <protein>1</protein>
+            <carbohydrates>94</carbohydrates>
+            <fats>2</fats>
+        </value>
+        <date>2019-03-18</date>
         <fruit-type>Фруктовое желе</fruit-type>
     </fruit-candie>
 </candies>

@@ -17,7 +17,7 @@
             <carbohydrates>58</carbohydrates>
             <fats>33.7</fats>
         </value>
-        <date>14-03-2019</date>
+        <date>2019-03-14</date>
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
@@ -34,7 +34,7 @@
             <carbohydrates>79</carbohydrates>
             <fats>15</fats>
         </value>
-        <date>12-03-2019</date>
+        <date>2019-03-12</date>
         <fruit-type>Фруктовое желе</fruit-type>
     </fruit-candie>
 </candies>
