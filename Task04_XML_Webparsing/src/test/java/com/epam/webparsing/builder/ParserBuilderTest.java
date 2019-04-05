@@ -7,6 +7,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +54,7 @@ public class ParserBuilderTest {
      * Method is preparing data for provider.
      */
     @BeforeClass
-    public void setUp() {
+    public void setUp() throws ParseException {
         candies1 = new ArrayList<>();
         candies2 = new ArrayList<>();
         candies3 = new ArrayList<>();
@@ -64,7 +66,8 @@ public class ParserBuilderTest {
         chocolateCandie1.setName("Столичные-элит");
         chocolateCandie1.setFilling("liquor");
         chocolateCandie1.setEnergy(405);
-        chocolateCandie1.setDate("06-03-2019");
+        chocolateCandie1.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                .parse("2019-03-06"));
         chocolateCandie1.setChocolateType(ChocolateType.ШОКОЛОДНАЯ_ГЛАЗУРЬ);
         chocolateCandie1.getValue().setProtein(3.4);
         chocolateCandie1.getValue().setCarbohydrates(69.5);
@@ -78,7 +81,8 @@ public class ParserBuilderTest {
         chocolateCandie2.setName("Беловежская пуща");
         chocolateCandie2.setFilling("fruit mush");
         chocolateCandie2.setEnergy(422);
-        chocolateCandie2.setDate("08-02-2019");
+        chocolateCandie2.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                .parse("2019-02-08"));
         chocolateCandie2.setChocolateType(ChocolateType.ШОКОЛОДНАЯ_ГЛАЗУРЬ);
         chocolateCandie2.getValue().setProtein(1.7);
         chocolateCandie2.getValue().setCarbohydrates(71.0);
@@ -97,7 +101,8 @@ public class ParserBuilderTest {
         chocolateCandie3.setName("Аэрофлотские");
         chocolateCandie3.setFilling("Вафля");
         chocolateCandie3.setEnergy(543);
-        chocolateCandie3.setDate("14-03-2019");
+        chocolateCandie3.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                .parse("2019-03-14"));
         chocolateCandie3.setChocolateType(ChocolateType.КАКАО_ШОКОЛАД);
         chocolateCandie3.getValue().setProtein(3.9);
         chocolateCandie3.getValue().setCarbohydrates(58.0);
@@ -111,7 +116,8 @@ public class ParserBuilderTest {
         fruitCandie1.setName("Бешеные пчелки");
         fruitCandie1.setFilling("Желе");
         fruitCandie1.setEnergy(402);
-        fruitCandie1.setDate("12-03-2019");
+        fruitCandie1.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                .parse("2019-03-12"));
         fruitCandie1.setFruitType(FruitType.ФРУКТОВОЕ_ЖЕЛЕ);
         fruitCandie1.getValue().setProtein(1.6);
         fruitCandie1.getValue().setCarbohydrates(79.0);
@@ -128,7 +134,8 @@ public class ParserBuilderTest {
         chocolateCandie4.setProduction("Спартак");
         chocolateCandie4.setName("Вишенка");
         chocolateCandie4.setEnergy(423);
-        chocolateCandie4.setDate("09-03-2019");
+        chocolateCandie4.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                .parse("2019-03-09"));
         chocolateCandie4.setChocolateType(ChocolateType.КАКАО_ШОКОЛАД);
         chocolateCandie4.getValue().setProtein(4.4);
         chocolateCandie4.getValue().setCarbohydrates(51.4);

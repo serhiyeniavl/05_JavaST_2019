@@ -16,23 +16,23 @@ public enum FruitType {
     СГУЩЕНКА("СГУЩЕНКА");
 
     /**
-     * Enum constant value.
+     * Enum constant getValue.
      */
     private final String value;
 
     /**
-     * Constructor - initializes value.
+     * Constructor - initializes getValue.
      *
-     * @param v const value.
+     * @param v const getValue.
      */
     FruitType(final String v) {
         value = v;
     }
 
     /**
-     * @return value of constant.
+     * @return getValue of constant.
      */
-    public String value() {
+    public String getValue() {
         return value;
     }
 
@@ -55,7 +55,7 @@ public enum FruitType {
     @Override
     public String toString() {
         return "FruitType{"
-                + "value='" + value + '\''
+                + "getValue='" + value + '\''
                 + '}';
     }
 }

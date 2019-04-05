@@ -14,7 +14,7 @@ public class FruitCandie extends Candie {
     private FruitType fruitType;
 
     /**
-     * Gets the value of the fruitType property.
+     * Gets the getValue of the fruitType property.
      *
      * @return possible object is
      * {@link FruitType }
@@ -25,7 +25,7 @@ public class FruitCandie extends Candie {
     }
 
     /**
-     * Sets the value of the fruitType property.
+     * Sets the getValue of the fruitType property.
      *
      * @param value allowed object is
      *              {@link FruitType }

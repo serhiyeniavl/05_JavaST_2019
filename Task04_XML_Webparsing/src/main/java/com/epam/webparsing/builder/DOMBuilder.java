@@ -16,6 +16,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Parser based on DOM model parsing.
@@ -54,7 +56,12 @@ public class DOMBuilder extends ParserBuilder {
         }
         candie.setEnergy(Integer.valueOf(
                 getElementTextContent(candieElement, "energy")));
-        candie.setDate(getElementTextContent(candieElement, "date"));
+        try {
+            candie.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                    .parse(getElementTextContent(candieElement, "date")));
+        } catch (ParseException e) {
+            LOGGER.error("Date parse error", e);
+        }
         Element ingredientsElement = (Element) candieElement
                 .getElementsByTagName("ingredients").item(0);
         Ingredients ingredients = OBJECT_FACTORY.createIngredients();

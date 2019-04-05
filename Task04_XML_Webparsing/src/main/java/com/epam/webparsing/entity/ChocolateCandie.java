@@ -14,7 +14,7 @@ public class ChocolateCandie extends Candie {
     private ChocolateType chocolateType;
 
     /**
-     * Gets the value of the chocolateType property.
+     * Gets the getValue of the chocolateType property.
      *
      * @return possible object is
      * {@link ChocolateType }
@@ -25,7 +25,7 @@ public class ChocolateCandie extends Candie {
     }
 
     /**
-     * Sets the value of the chocolateType property.
+     * Sets the getValue of the chocolateType property.
      *
      * @param value allowed object is
      *              {@link ChocolateType }

@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Parser based on StAX model parsing.
@@ -141,7 +143,14 @@ public class StAXBuilder extends ParserBuilder {
                                                 getXMLText(xmlStreamReader)));
                                 break;
                             case DATE:
-                                candie.setDate(getXMLText(xmlStreamReader));
+                                try {
+                                    candie.setDate(
+                                            new SimpleDateFormat("yyyy-MM-dd")
+                                            .parse(getXMLText(
+                                                    xmlStreamReader)));
+                                } catch (ParseException e) {
+                                    LOGGER.error("Date parse error", e);
+                                }
                                 break;
                             case INGREDIENTS:
                                 candie.setIngredients(
@@ -237,10 +246,10 @@ public class StAXBuilder extends ParserBuilder {
     }
 
     /**
-     * Read and creates data from tag value.
+     * Read and creates data from tag getValue.
      *
      * @param xmlStreamReader xml reader.
-     * @return created value.
+     * @return created getValue.
      * @throws XMLStreamException when tag is invalid.
      */
     private Value getXMLValue(final XMLStreamReader xmlStreamReader)

@@ -6,9 +6,13 @@ import com.epam.webparsing.entity.ChocolateType;
 import com.epam.webparsing.entity.FruitCandie;
 import com.epam.webparsing.entity.FruitType;
 import com.epam.webparsing.xml_tag.CandieEnum;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -19,6 +23,8 @@ import java.util.List;
  * @see DefaultHandler
  */
 public class CandieHandler extends DefaultHandler {
+    private static final Logger LOGGER
+            = LogManager.getLogger(CandieHandler.class);
     /**
      * Candies from xml file.
      */
@@ -129,7 +135,12 @@ public class CandieHandler extends DefaultHandler {
                     current.getValue().setFats(Double.valueOf(s));
                     break;
                 case DATE:
-                    current.setDate(s);
+                    try {
+                        current.setDate(new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(s));
+                    } catch (ParseException e) {
+                        LOGGER.error("Date parse error", e);
+                    }
                     break;
                 case CHOCOLATE_TYPE:
                     current.setChocolateType(ChocolateType.fromValue(s));

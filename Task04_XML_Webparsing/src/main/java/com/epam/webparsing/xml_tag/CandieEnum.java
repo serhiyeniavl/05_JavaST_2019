@@ -17,7 +17,7 @@ public enum CandieEnum {
      */
     INGREDIENTS("ingredients"),
     /**
-     * Tag value.
+     * Tag getValue.
      */
     VALUE("value"),
     /**
@@ -70,21 +70,21 @@ public enum CandieEnum {
     FRUIT_TYPE("fruit-type");
 
     /**
-     * Enum constant value.
+     * Enum constant getValue.
      */
     private String value;
 
     /**
-     * Constructor - initializes value.
+     * Constructor - initializes getValue.
      *
-     * @param val const value.
+     * @param val const getValue.
      */
     CandieEnum(final String val) {
         this.value = val;
     }
 
     /**
-     * @return value of constant.
+     * @return getValue of constant.
      */
     public String getValue() {
         return value;

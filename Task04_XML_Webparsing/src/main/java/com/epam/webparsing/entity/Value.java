@@ -22,7 +22,7 @@ public class Value {
     private Double fats;
 
     /**
-     * Gets the value of the protein property.
+     * Gets the getValue of the protein property.
      *
      * @return possible object is
      * {@link Double }
@@ -32,7 +32,7 @@ public class Value {
     }
 
     /**
-     * Sets the value of the protein property.
+     * Sets the getValue of the protein property.
      *
      * @param value allowed object is
      *              {@link Double }
@@ -42,7 +42,7 @@ public class Value {
     }
 
     /**
-     * Gets the value of the carbohydrates property.
+     * Gets the getValue of the carbohydrates property.
      *
      * @return possible object is
      * {@link Double }
@@ -52,7 +52,7 @@ public class Value {
     }
 
     /**
-     * Sets the value of the carbohydrates property.
+     * Sets the getValue of the carbohydrates property.
      *
      * @param value allowed object is
      *              {@link Double }
@@ -62,7 +62,7 @@ public class Value {
     }
 
     /**
-     * Gets the value of the fats property.
+     * Gets the getValue of the fats property.
      *
      * @return possible object is
      * {@link Double }
@@ -72,7 +72,7 @@ public class Value {
     }
 
     /**
-     * Sets the value of the fats property.
+     * Sets the getValue of the fats property.
      *
      * @param value allowed object is
      *              {@link Double }

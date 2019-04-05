@@ -4,7 +4,8 @@
          xmlns="http://www.epam.by/candies"
          xsi:schemaLocation="http://www.epam.by/candies candies.xsd">
 
-    <chocolate-candie production="Коммунарка" name="Столичные-элит" filling="Ликер">
+    <chocolate-candie production="Коммунарка" name="Столичные-элит"
+                      filling="Ликер">
         <energy>405</energy>
         <ingredients>
             <water>13</water>
@@ -21,7 +22,8 @@
         <chocolate-type>Шоколодная глазурь</chocolate-type>
     </chocolate-candie>
 
-    <chocolate-candie production="Коммунарка" name="Беловежская пуща" filling="Фруктовое пюре">
+    <chocolate-candie production="Коммунарка" name="Беловежская пуща"
+                      filling="Фруктовое пюре">
         <energy>422</energy>
         <ingredients>
             <water>10</water>
@@ -55,7 +57,8 @@
         <chocolate-type>Шоколодная глазурь</chocolate-type>
     </chocolate-candie>
 
-    <chocolate-candie production="Коммунарка" name="Минский грильяж" filling="Орехи">
+    <chocolate-candie production="Коммунарка" name="Минский грильяж"
+                      filling="Орехи">
         <energy>388</energy>
         <ingredients>
             <water>6</water>
@@ -72,7 +75,8 @@
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
-    <chocolate-candie production="Спартак" name="Вишенка" filling="Вишня заспиртованная">
+    <chocolate-candie production="Спартак" name="Вишенка"
+                      filling="Вишня заспиртованная">
         <energy>423</energy>
         <ingredients>
             <water>7</water>
@@ -123,7 +127,8 @@
         <fruit-type>Фруктовое желе</fruit-type>
     </fruit-candie>
 
-    <chocolate-candie production="Коммунарка" name="Нежное суфле" filling="Суфле">
+    <chocolate-candie production="Коммунарка" name="Нежное суфле"
+                      filling="Суфле">
         <energy>413</energy>
         <ingredients>
             <water>4</water>
@@ -157,7 +162,8 @@
         <fruit-type>Фруктовое желе</fruit-type>
     </fruit-candie>
 
-    <chocolate-candie production="Эссен Продакшн АГ" name="Трюфель оригинальный" filling="Трюфель">
+    <chocolate-candie production="Эссен Продакшн АГ" name="Трюфель оригинальный"
+                      filling="Трюфель">
         <energy>590</energy>
         <ingredients>
             <water>5</water>
@@ -174,7 +180,8 @@
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
-    <fruit-candie production="КДВ Нижний Тагил" name="Нильс" filling="Фруктово-ягодная">
+    <fruit-candie production="КДВ Нижний Тагил" name="Нильс"
+                  filling="Фруктово-ягодная">
         <energy>406</energy>
         <ingredients>
             <water>3</water>
@@ -225,7 +232,8 @@
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
-    <chocolate-candie production="Storck" name="TOFFIFFEE" filling="Орех, нуга, шоколад">
+    <chocolate-candie production="Storck" name="TOFFIFFEE"
+                      filling="Орех, нуга, шоколад">
         <energy>516</energy>
         <ingredients>
             <water>2</water>
@@ -259,7 +267,8 @@
         <chocolate-type>Какао-шоколад</chocolate-type>
     </chocolate-candie>
 
-    <fruit-candie production="Roshen" name="Рошен джус-микс" filling="Фруктово-ягодная">
+    <fruit-candie production="Roshen" name="Рошен джус-микс"
+                  filling="Фруктово-ягодная">
         <energy>380</energy>
         <ingredients>
             <water>2</water>

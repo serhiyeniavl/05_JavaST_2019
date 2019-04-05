@@ -16,22 +16,22 @@ public enum ChocolateType {
     КАКАО_ШОКОЛАД("КАКАО-ШОКОЛАД");
 
     /**
-     * Enum constant value.
+     * Enum constant getValue.
      */
     private final String value;
 
     /**
-     * Constructor - initializes value.
-     * @param v const value.
+     * Constructor - initializes getValue.
+     * @param v const getValue.
      */
     ChocolateType(final String v) {
         value = v;
     }
 
     /**
-     * @return value of constant.
+     * @return getValue of constant.
      */
-    public String value() {
+    public String getValue() {
         return value;
     }
 

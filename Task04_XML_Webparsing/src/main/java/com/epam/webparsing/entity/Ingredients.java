@@ -26,7 +26,7 @@ public class Ingredients {
     private String vanillin;
 
     /**
-     * Gets the value of the water property.
+     * Gets the getValue of the water property.
      *
      * @return possible object is
      * {@link Integer }
@@ -36,7 +36,7 @@ public class Ingredients {
     }
 
     /**
-     * Sets the value of the water property.
+     * Sets the getValue of the water property.
      *
      * @param value allowed object is
      *              {@link Integer }
@@ -46,7 +46,7 @@ public class Ingredients {
     }
 
     /**
-     * Gets the value of the sugar property.
+     * Gets the getValue of the sugar property.
      *
      * @return possible object is
      * {@link Integer }
@@ -56,7 +56,7 @@ public class Ingredients {
     }
 
     /**
-     * Sets the value of the sugar property.
+     * Sets the getValue of the sugar property.
      *
      * @param value allowed object is
      *              {@link Integer }
@@ -66,7 +66,7 @@ public class Ingredients {
     }
 
     /**
-     * Gets the value of the fructose property.
+     * Gets the getValue of the fructose property.
      *
      * @return possible object is
      * {@link Integer }
@@ -76,7 +76,7 @@ public class Ingredients {
     }
 
     /**
-     * Sets the value of the fructose property.
+     * Sets the getValue of the fructose property.
      *
      * @param value allowed object is
      *              {@link Integer }
@@ -86,7 +86,7 @@ public class Ingredients {
     }
 
     /**
-     * Gets the value of the vanillin property.
+     * Gets the getValue of the vanillin property.
      *
      * @return possible object is
      * {@link String }
@@ -96,7 +96,7 @@ public class Ingredients {
     }
 
     /**
-     * Sets the value of the vanillin property.
+     * Sets the getValue of the vanillin property.
      *
      * @param value allowed object is
      *              {@link String }

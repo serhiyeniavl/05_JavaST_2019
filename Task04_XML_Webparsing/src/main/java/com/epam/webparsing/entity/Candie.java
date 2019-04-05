@@ -1,6 +1,7 @@
 
 package com.epam.webparsing.entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,7 @@ public abstract class Candie {
      */
     private Ingredients ingredients = new Ingredients();
     /**
-     * Candie value.
+     * Candie getValue.
      *
      * @see Value
      */
@@ -27,7 +28,7 @@ public abstract class Candie {
     /**
      * Candie date.
      */
-    private String date;
+    private Date date;
     /**
      * Candie production.
      */
@@ -42,7 +43,7 @@ public abstract class Candie {
     private String filling = "none";
 
     /**
-     * Gets the value of the energy property.
+     * Gets the getValue of the energy property.
      *
      * @return possible object is
      * {@link Integer }
@@ -52,7 +53,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the energy property.
+     * Sets the getValue of the energy property.
      *
      * @param val allowed object is
      *            {@link Integer }
@@ -62,7 +63,7 @@ public abstract class Candie {
     }
 
     /**
-     * Gets the value of the ingredients property.
+     * Gets the getValue of the ingredients property.
      *
      * @return possible object is
      * {@link Ingredients }
@@ -72,7 +73,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the ingredients property.
+     * Sets the getValue of the ingredients property.
      *
      * @param val allowed object is
      *            {@link Ingredients }
@@ -82,7 +83,7 @@ public abstract class Candie {
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the getValue of the getValue property.
      *
      * @return possible object is
      * {@link Value }
@@ -92,7 +93,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the getValue of the getValue property.
      *
      * @param val allowed object is
      *            {@link Value }
@@ -102,27 +103,27 @@ public abstract class Candie {
     }
 
     /**
-     * Gets the value of the date property.
+     * Gets the getValue of the date property.
      *
      * @return possible object is
      * {@link String }
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     /**
-     * Sets the value of the date property.
+     * Sets the getValue of the date property.
      *
      * @param val allowed object is
      *            {@link String }
      */
-    public void setDate(final String val) {
+    public void setDate(final Date val) {
         this.date = val;
     }
 
     /**
-     * Gets the value of the production property.
+     * Gets the getValue of the production property.
      *
      * @return possible object is
      * {@link String }
@@ -132,7 +133,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the production property.
+     * Sets the getValue of the production property.
      *
      * @param val allowed object is
      *            {@link String }
@@ -142,7 +143,7 @@ public abstract class Candie {
     }
 
     /**
-     * Gets the value of the name property.
+     * Gets the getValue of the name property.
      *
      * @return possible object is
      * {@link String }
@@ -152,7 +153,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the getValue of the name property.
      *
      * @param val allowed object is
      *            {@link String }
@@ -162,7 +163,7 @@ public abstract class Candie {
     }
 
     /**
-     * Gets the value of the filling property.
+     * Gets the getValue of the filling property.
      *
      * @return possible object is
      * {@link String }
@@ -172,7 +173,7 @@ public abstract class Candie {
     }
 
     /**
-     * Sets the value of the filling property.
+     * Sets the getValue of the filling property.
      *
      * @param val allowed object is
      *            {@link String }
@@ -218,21 +219,17 @@ public abstract class Candie {
      * @return true if objects are equal.
      */
     @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
         Candie candie = (Candie) object;
-        return Objects.equals(energy, candie.energy)
-                && Objects.equals(ingredients, candie.ingredients)
-                && Objects.equals(value, candie.value)
-                && Objects.equals(date, candie.date)
-                && Objects.equals(production, candie.production)
-                && Objects.equals(name, candie.name)
-                && Objects.equals(filling, candie.filling);
+        return Objects.equals(energy, candie.energy) &&
+                Objects.equals(ingredients, candie.ingredients) &&
+                Objects.equals(value, candie.value) &&
+                Objects.equals(date, candie.date) &&
+                Objects.equals(production, candie.production) &&
+                Objects.equals(name, candie.name) &&
+                Objects.equals(filling, candie.filling);
     }
 
     /**
@@ -240,8 +237,7 @@ public abstract class Candie {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(
-                energy, ingredients, value, date, production, name, filling);
+        return Objects.hash(energy, ingredients, value, date, production, name, filling);
     }
 
     /**
@@ -252,7 +248,7 @@ public abstract class Candie {
         return "Candie{"
                 + "energy=" + energy
                 + ", ingredients=" + ingredients
-                + ", value=" + value
+                + ", getValue=" + value
                 + ", date='" + date + '\''
                 + ", production='" + production + '\''
                 + ", name='" + name + '\''
