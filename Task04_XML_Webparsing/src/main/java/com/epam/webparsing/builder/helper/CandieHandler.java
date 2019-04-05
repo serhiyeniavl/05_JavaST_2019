@@ -23,6 +23,9 @@ import java.util.List;
  * @see DefaultHandler
  */
 public class CandieHandler extends DefaultHandler {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER
             = LogManager.getLogger(CandieHandler.class);
     /**

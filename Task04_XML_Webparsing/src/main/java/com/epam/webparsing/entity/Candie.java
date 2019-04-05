@@ -219,17 +219,21 @@ public abstract class Candie {
      * @return true if objects are equal.
      */
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
         Candie candie = (Candie) object;
-        return Objects.equals(energy, candie.energy) &&
-                Objects.equals(ingredients, candie.ingredients) &&
-                Objects.equals(value, candie.value) &&
-                Objects.equals(date, candie.date) &&
-                Objects.equals(production, candie.production) &&
-                Objects.equals(name, candie.name) &&
-                Objects.equals(filling, candie.filling);
+        return Objects.equals(energy, candie.energy)
+                && Objects.equals(ingredients, candie.ingredients)
+                && Objects.equals(value, candie.value)
+                && Objects.equals(date, candie.date)
+                && Objects.equals(production, candie.production)
+                && Objects.equals(name, candie.name)
+                && Objects.equals(filling, candie.filling);
     }
 
     /**
@@ -237,7 +241,8 @@ public abstract class Candie {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(energy, ingredients, value, date, production, name, filling);
+        return Objects.hash(
+                energy, ingredients, value, date, production, name, filling);
     }
 
     /**
