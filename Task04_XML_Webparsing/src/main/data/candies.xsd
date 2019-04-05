@@ -18,7 +18,7 @@
             <element name="energy" type="nonNegativeInteger"/>
             <element name="ingredients" type="tns:Ingredients"/>
             <element name="value" type="tns:Value"/>
-            <element name="date" type="tns:Date"/>
+            <element name="date" type="date"/>
         </sequence>
         <attribute name="production" type="string" use="required"/>
         <attribute name="name" type="tns:Name"
@@ -63,11 +63,6 @@
     </complexType>
     <simpleType name="Name">
         <restriction base="string"/>
-    </simpleType>
-    <simpleType name="Date">
-        <restriction base="string">
-            <pattern value="[0-9]{2}[-][0-9]{2}[-][0-9]{4}"/>
-        </restriction>
     </simpleType>
     <simpleType name="Chocolate-type">
             <restriction base="string">
