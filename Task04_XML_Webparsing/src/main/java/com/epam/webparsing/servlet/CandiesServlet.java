@@ -47,7 +47,7 @@ public class CandiesServlet extends HttpServlet {
         req.getSession().setAttribute("locale",
                 Objects.requireNonNullElse(lang, "en"));
         try {
-            req.getRequestDispatcher(
+            req.getServletContext().getRequestDispatcher(
                     "/jsp/parser_choice.jsp").forward(req, resp);
         } catch (ServletException e) {
             LOGGER.error("Candies servlet exception.", e);
@@ -68,6 +68,7 @@ public class CandiesServlet extends HttpServlet {
                           final HttpServletResponse resp) {
         String parser = req.getParameter("parser");
         setParser(req, parser);
+
         try {
             req.getServletContext().getRequestDispatcher(
                     "/jsp/candies_table.jsp").forward(req, resp);
