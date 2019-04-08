@@ -1,0 +1,54 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.main__title {
+    font-weight: 700;
+    font-size: 35px;
+
+    width: 100%;
+    padding-top: 30px;
+}
+
+.parser_choice {
+    margin-top: 40px;
+}
+
+.parser__opt {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.select__button {
+    display: inline;
+    font-size: 20px;
+    width: 100px;
+}
+
+.load__file {
+    text-align: center;
+    display: inline;
+    margin-top: 20px;
+    font-size: 20px;
+    width: 250px;
+}
+
+.lang_choice {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+
+    margin-bottom: 30px;
+}
+
+.lang_select {
+    font-size: 15px
+}
+
+.lang_sub_button {
+    font-size: 15px;
+
+}
