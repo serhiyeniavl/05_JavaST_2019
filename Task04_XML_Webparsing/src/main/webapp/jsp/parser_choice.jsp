@@ -30,7 +30,7 @@
                         <select name="parser" id="parser" class="parser__opt">
                             <option disabled><fmt:message
                                     key="title_pars"/></option>
-                            <option value="dom">DOM</option>
+                            <option value="dom" selected>DOM</option>
                             <option value="sax">SAX</option>
                             <option value="stax">StAX</option>
                         </select>

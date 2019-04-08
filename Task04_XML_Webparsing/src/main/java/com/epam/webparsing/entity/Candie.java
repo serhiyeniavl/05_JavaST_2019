@@ -1,6 +1,7 @@
 
 package com.epam.webparsing.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -108,8 +109,8 @@ public abstract class Candie {
      * @return possible object is
      * {@link String }
      */
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
     /**
