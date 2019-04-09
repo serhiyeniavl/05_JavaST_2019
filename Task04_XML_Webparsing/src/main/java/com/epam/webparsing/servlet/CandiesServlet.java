@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -32,13 +29,6 @@ public class CandiesServlet extends HttpServlet {
      */
     private static final Logger LOGGER
             = LogManager.getLogger(CandiesServlet.class);
-
-    /**
-     * Path to source xml file.
-     */
-    private static final String FILE_PATH
-            = "/Users/uladzislau/Documents/EpamTrainingJava/"
-            + "05_JavaST_2019/Task04_XML_Webparsing/src/main/data/candies.xml";
 
     /**
      * Get HTTP method. Gets a chosen language and set it.
@@ -64,7 +54,7 @@ public class CandiesServlet extends HttpServlet {
 
     /**
      * Post HTTP method. Gets a chosen parser and parser the xml document with
-     * help that parser.
+     * help that parser. Resend user on home page if didnt get a xml file.
      *
      * @param req  request.
      * @param resp response.
@@ -74,6 +64,12 @@ public class CandiesServlet extends HttpServlet {
                           final HttpServletResponse resp) {
         try {
             Part filePart = req.getPart("fload");
+            if (filePart.getSubmittedFileName().length() == 0) {
+                LOGGER.info("File haven't been chosen");
+                req.getServletContext().getRequestDispatcher(
+                        "/jsp/parser_choice.jsp").forward(req, resp);
+                return;
+            }
             InputStream fileContent = filePart.getInputStream();
             String newFilePath = "/Users/uladzislau/Documents/EpamTrainingJava/"
                     + "05_JavaST_2019/Task04_XML_Webparsing/src/main/"
@@ -83,10 +79,7 @@ public class CandiesServlet extends HttpServlet {
             fileContent.transferTo(outputStream);
 
             String parser = req.getParameter("parser");
-            setParser(req, parser,
-                    "/Users/uladzislau/Documents/EpamTrainingJava/"
-                            + "05_JavaST_2019/Task04_XML_Webparsing/"
-                            + "src/main/data/uploaded.xml");
+            setParser(req, parser, newFilePath);
 
             req.getServletContext().getRequestDispatcher(
                     "/jsp/candies_table.jsp").forward(req, resp);
