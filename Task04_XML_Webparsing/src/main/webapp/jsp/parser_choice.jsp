@@ -25,7 +25,8 @@
         <div class="parser_choice">
             <div class="parser__opt">
                 <form method="post"
-                      action="http://localhost:8080/web-parsing/candies_table">
+                      action="http://localhost:8080/web-parsing/candies_table"
+                      enctype="multipart/form-data">
                     <label for="parser">
                         <select name="parser" id="parser" class="parser__opt">
                             <option disabled><fmt:message

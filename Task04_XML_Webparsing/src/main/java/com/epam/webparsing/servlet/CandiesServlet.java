@@ -8,11 +8,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 /**
@@ -20,6 +25,7 @@ import java.util.Objects;
  * Redirect on page with a table of objects in xml document.
  */
 @WebServlet("/candies_table")
+@MultipartConfig
 public class CandiesServlet extends HttpServlet {
     /**
      * Logger.
@@ -66,10 +72,22 @@ public class CandiesServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp) {
-        String parser = req.getParameter("parser");
-        setParser(req, parser);
-
         try {
+            Part filePart = req.getPart("fload");
+            InputStream fileContent = filePart.getInputStream();
+            String newFilePath = "/Users/uladzislau/Documents/EpamTrainingJava/"
+                    + "05_JavaST_2019/Task04_XML_Webparsing/src/main/"
+                    + "data/uploaded.xml";
+            OutputStream outputStream = new FileOutputStream(newFilePath);
+
+            fileContent.transferTo(outputStream);
+
+            String parser = req.getParameter("parser");
+            setParser(req, parser,
+                    "/Users/uladzislau/Documents/EpamTrainingJava/"
+                            + "05_JavaST_2019/Task04_XML_Webparsing/"
+                            + "src/main/data/uploaded.xml");
+
             req.getServletContext().getRequestDispatcher(
                     "/jsp/candies_table.jsp").forward(req, resp);
         } catch (ServletException e) {
@@ -82,19 +100,21 @@ public class CandiesServlet extends HttpServlet {
     /**
      * Checks what parser was chosen.
      *
-     * @param req    request.
-     * @param parser chosen parser.
+     * @param req      request.
+     * @param parser   chosen parser.
+     * @param filePath path to file.
      */
-    private void setParser(final HttpServletRequest req, final String parser) {
+    private void setParser(final HttpServletRequest req, final String parser,
+                           final String filePath) {
         if ("DOM".equalsIgnoreCase(parser)) {
             req.setAttribute("res", Director.createCandies(
-                    new DOMBuilder(), FILE_PATH));
+                    new DOMBuilder(), filePath));
         } else if ("sax".equalsIgnoreCase(parser)) {
             req.setAttribute("res", Director.createCandies(
-                    new SAXBuilder(), FILE_PATH));
+                    new SAXBuilder(), filePath));
         } else {
             req.setAttribute("res", Director.createCandies(
-                    new StAXBuilder(), FILE_PATH));
+                    new StAXBuilder(), filePath));
         }
     }
 }
