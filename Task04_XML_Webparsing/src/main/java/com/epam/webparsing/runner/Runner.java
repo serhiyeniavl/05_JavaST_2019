@@ -8,7 +8,6 @@ import com.epam.webparsing.builder.StAXBuilder;
 import com.epam.webparsing.entity.Candie;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
