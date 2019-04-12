@@ -3,6 +3,7 @@ package by.training.info_system.dao;
 import by.training.info_system.dao.helper.DaoHelper;
 import by.training.info_system.db_connection.ConnectionPool;
 import by.training.info_system.entity.User;
+import by.training.info_system.entity.data.UserData;
 import by.training.info_system.entity.role.Role;
 import lombok.extern.log4j.Log4j2;
 
@@ -57,11 +58,13 @@ public class UserDaoImpl implements Dao<User> {
             resultSet = statement.executeQuery(SQL_FIND_ALL_USERS);
             while (resultSet.next()) {
                 User user = new User();
-                user.setFName(resultSet.getString("fname"));
-                user.setLName(resultSet.getString("lname"));
-                user.setPassportData(resultSet.getString("passport_data"));
-                user.setOrdersQuantity(resultSet.getInt("orders_quantity"));
+                UserData userData = new UserData();
+                userData.setFName(resultSet.getString("fname"));
+                userData.setLName(resultSet.getString("lname"));
+                userData.setPassportData(resultSet.getString("passport_data"));
+                userData.setOrdersQuantity(resultSet.getInt("orders_quantity"));
                 user.setRole(Role.fromValue(resultSet.getString("role")));
+                user.setUserData(userData);
                 users.add(user);
             }
             return Optional.of(users);
