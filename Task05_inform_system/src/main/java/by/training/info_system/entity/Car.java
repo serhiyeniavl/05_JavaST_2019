@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Car extends Entity {
     @NonNull private String vinCode;
     @NonNull private String brandName;
-    @NonNull private String description;
+    private String description;
     @NonNull private String regNumber;
     @NonNull private Short yearMade;
     @NonNull private Integer run;
@@ -23,5 +23,6 @@ public class Car extends Entity {
     @NonNull private Short rentPrice;
     @NonNull private Integer mechanicCode;
     @NonNull private Character carClass;
+    private String imagePath;
 
 }

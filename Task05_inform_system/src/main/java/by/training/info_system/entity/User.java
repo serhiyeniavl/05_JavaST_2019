@@ -14,10 +14,5 @@ import lombok.ToString;
 public class User extends Entity {
     @NonNull private String login;
     @NonNull private String password;
-    @NonNull private String fName;
-    @NonNull private String lName;
-    @NonNull private String passportData;
-    @NonNull private Integer ordersQuantity;
     @NonNull private Role role;
-    @NonNull private Address address;
 }
