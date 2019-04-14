@@ -23,9 +23,10 @@
                 <h1 class="text-center login-title">Sign in to continue to Freeride</h1>
                 <img style="margin-top: 20px;" class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                      alt="">
-                <form class="form-signin">
-                    <input type="text" class="form-control" placeholder="Email" required autofocus>
-                    <input type="password" class="form-control" placeholder="Password" required>
+                <form class="form-signin" method="post" action="http://localhost:8080/freeride/freeride">
+                    <input type="hidden" name="command" value="signin"/>
+                    <input name="email" type="email" class="form-control" placeholder="Email" required autofocus>
+                    <input name="pass" type="password" class="form-control" placeholder="Password" required>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">
                         Sign in</button>
                     <label class="checkbox pull-left" style="margin-top: 7px;">
