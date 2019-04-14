@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public class UserDaoImpl implements Dao<User> {
+public class UserDaoImpl implements UserDao {
     //language=SQL
     private static final String SQL_FIND_ALL_USERS = "SELECT fname, lname, passport_data, orders_quantity, role"
             + " FROM Users INNER JOIN User_data ON Users.ID = User_data.user_id";
 
-    private Connection connection;
+    //language=SQL
+    private static final String SQL_FIND_USERS_LOGIN = "SELECT login, password FROM Users";
 
+    private Connection connection;
     private DaoHelper helper;
 
     public UserDaoImpl() {
@@ -70,6 +72,34 @@ public class UserDaoImpl implements Dao<User> {
             return Optional.of(users);
         } catch (SQLException e) {
             log.error("SQL exception when find all users", e);
+        } finally {
+            helper.close(resultSet);
+            helper.close(statement);
+            helper.close(connection);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findUserToSignIn(final String email, final String pass) {
+        List<User> users = new ArrayList<>();
+        connection = ConnectionPool.getInstance().getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL_FIND_USERS_LOGIN);
+            while (resultSet.next()) {
+                User user = new User();
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                users.add(user);
+            }
+            return users.stream()
+                    .filter(user -> user.getLogin().equals(email) && user.getPassword().equals(pass))
+                    .findFirst();
+        } catch (SQLException e) {
+            log.error("SQL exception when find user to login", e);
         } finally {
             helper.close(resultSet);
             helper.close(statement);
