@@ -1,34 +1,22 @@
 package by.training.info_system.db_connection;
 
+import by.training.info_system.resource.DBConfigurationProvider;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 @Log4j2
 public class ConnectionPool {
-    private Properties properties;
 
     private static BasicDataSource dataSource = new BasicDataSource();
     private static ConnectionPool instance;
 
 
     private ConnectionPool() {
-        try {
-            properties = new Properties();
-            properties.load(new FileInputStream(
-                    "src/main/resources/db_connection.properties"));
             setProp();
-        } catch (FileNotFoundException e) {
-            log.error("Error reading properties file", e);
-        } catch (IOException e) {
-            log.error("Load property error", e);
-        }
     }
 
     public static ConnectionPool getInstance() {
@@ -50,9 +38,13 @@ public class ConnectionPool {
     }
 
     private void setProp() {
-        dataSource.setUrl(properties.getProperty("db.url"));
-        dataSource.setUsername(properties.getProperty("db.manual_user"));
-        dataSource.setPassword(properties.getProperty("db.manual_user_pass"));
+//        dataSource.setUrl(DBConfigurationProvider.getProperty("db.url"));
+//        dataSource.setUsername(DBConfigurationProvider.getProperty("db.manual_user"));
+//        dataSource.setPassword(DBConfigurationProvider.getProperty("db.manual_user_pass"));
+        dataSource.setDriverClassName(DBConfigurationProvider.dbDriver);
+        dataSource.setUrl(DBConfigurationProvider.dbUrl);
+        dataSource.setUsername(DBConfigurationProvider.dbUser);
+        dataSource.setPassword(DBConfigurationProvider.dbPassword);
         dataSource.setMinIdle(5);
         dataSource.setMaxOpenPreparedStatements(100);
         dataSource.setMaxIdle(10);
