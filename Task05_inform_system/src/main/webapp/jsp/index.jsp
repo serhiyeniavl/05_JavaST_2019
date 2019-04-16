@@ -56,7 +56,7 @@
                     <a class="nav-link" href="#">User orders</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="http://localhost:8080/freeride/jsp/contact.jsp">Contact</a>
                 </li>
                 <%--<li class="nav-item">--%>
                     <%--<input value="Sign in" type="button" onclick="window.location='http://localhost:8080/freeride/jsp/signin.jsp'"--%>
