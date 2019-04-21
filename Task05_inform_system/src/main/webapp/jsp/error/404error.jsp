@@ -4,6 +4,9 @@
 <html>
 <head>
     <title>Free ride</title>
+    <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
+          type="image/jpg">
+
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="icon" href="http://localhost:8080/freeride/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="http://localhost:8080/freeride/css/error/error.css" type="text/css"/>

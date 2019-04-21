@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="https://www.teslarati.com/wp-content/uploads/2018/03/tesla-twin-turbine-21in-wheel-silver.jpg"
+    <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
           type="image/jpg">
     <link rel="stylesheet" href="http://localhost:8080/freeride/css/index.css"
           type="text/css"/>
@@ -31,6 +31,9 @@
 
 <body style="background: url(https://cdn1.savepice.ru/uploads/2019/4/16/5b0d7dae051d4532ef4e60fa8e560142-full.jpg) no-repeat; background-size: 100%;">
 
+<c:url value="/jsp/cars.jsp" var="anton"/>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
         <a class="navbar-brand" href="" style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
@@ -47,7 +50,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/freeride/jsp/cars.jsp">Cars</a>
+                    <a class="nav-link" href="${anton}">Cars</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8080/freeride/jsp/managers.jsp">Mangers</a>
@@ -72,7 +75,7 @@
                     <div class="btn-group dropup">
                         <input type="button" value="Vladislav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 12px;"/>
                         <div class="dropdown-menu" style="background-color: rgb(52,57,62);">
-                            <a class="dropdown-item a01" href="#">Profile</a>
+                            <a class="dropdown-item a01" href="http://localhost:8080/freeride/jsp/profile.jsp">Profile</a>
                             <a class="dropdown-item a01" href="#">Your orders</a>
                             <p class="dropdown-item a01">Your discount: 15%</p>
                             <div class="dropdown-divider"></div>

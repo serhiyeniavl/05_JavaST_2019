@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="http://localhost:8080/freeride/css/sign_in.css"
           type="text/css"/>
-    <link rel="icon" href="https://www.teslarati.com/wp-content/uploads/2018/03/tesla-twin-turbine-21in-wheel-silver.jpg"
+    <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
           type="image/jpg">
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
@@ -17,7 +17,7 @@
     </title>
 </head>
 
-<body style="background: url(../img/background.jpg) no-repeat; background-size: 100%;">
+<body style="background: url(https://cdn1.savepice.ru/uploads/2019/4/17/c7994e2db99daa99566ce32cce7ddeb0-full.jpg) no-repeat; background-size: 100%;">
 <div class="container" style="margin-top: 55px;">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
