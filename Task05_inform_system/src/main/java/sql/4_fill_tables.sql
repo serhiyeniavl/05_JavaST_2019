@@ -2,9 +2,9 @@ USE `car_rent_system_db`;
 
 
 INSERT INTO Users(login, password, role)
-VALUES ('marshal@gmail.com', 'qwerty007', '1'),
-       ('neadrd@gmail.com', 'qwerty008', '2'),
-       ('hach@mail.ru', 'qwerty009', '1');
+VALUES ('marshal@gmail.com', '$2a$12$W/cFqbDwELpvG0HpwIagXOXMo9iA.KCpVwlA3A50rpRR9nHTBaif2', '1'),
+       ('neadrd@gmail.com', '$2a$12$zrFEei3e62gzWxERGqtquuUmijcmYy7KuRatDEL.CmK.wnewQW4Za', '2'),
+       ('hach@mail.ru', '$2a$12$RLr65fglUuCn4tuMEp5IUuyZjmZ4NLi4ujzK7sUzb1jfCE.GKI22y', '1');
 
 INSERT INTO User_data (user_id, fname, lname, passport_id,
                        address)

@@ -21,7 +21,7 @@ CREATE TABLE `Car_info` (
 CREATE TABLE `Users` (
                        `id` int(11) NOT NULL AUTO_INCREMENT,
                        `login` varchar(30) NOT NULL UNIQUE,
-                       `password` varchar(50) NOT NULL,
+                       `password` varchar(255) NOT NULL,
                        `role` tinyint NOT NULL,
                        PRIMARY KEY (`id`)
 );
@@ -69,13 +69,16 @@ CREATE TABLE `Passport` (
 
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
 
-ALTER TABLE `Black_list` ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
-
-ALTER TABLE `User_data` ADD CONSTRAINT `User_data_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
-
-ALTER TABLE `Car_info` ADD CONSTRAINT `Car_info_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`);
-
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`);
 
-ALTER TABLE `Passport` ADD CONSTRAINT `Passport_fk0` FOREIGN KEY (`id`) REFERENCES `User_data`(`passport_id`);
+ALTER TABLE `Black_list` ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
+
+ALTER TABLE `User_data` ADD CONSTRAINT `User_data_fk0`
+  FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE cascade ON UPDATE CASCADE;
+
+ALTER TABLE `Car_info` ADD CONSTRAINT `Car_info_fk0`
+  FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `Passport` ADD CONSTRAINT `Passport_fk0`
+  FOREIGN KEY (`id`) REFERENCES `User_data`(`passport_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
