@@ -1,78 +1,81 @@
 USE `car_rent_system_db`;
 
-CREATE TABLE `Users`
-(
-  `ID`       int         NOT NULL AUTO_INCREMENT,
-  `login`    varchar(30) NOT NULL UNIQUE,
-  `password` varchar(50) NOT NULL,
-  `role`     varchar(30) NOT NULL,
-  PRIMARY KEY (`ID`)
+CREATE TABLE `User_data` (
+                           `user_id` int(11) NOT NULL AUTO_INCREMENT,
+                           `fname` varchar(30) NOT NULL,
+                           `lname` varchar(30) NOT NULL,
+                           `passport_id` int(30) NOT NULL UNIQUE,
+                           `address` varchar(40) NOT NULL,
+                           PRIMARY KEY (`user_id`)
 );
 
-CREATE TABLE `Orders`
-(
-  `ID`          int       NOT NULL AUTO_INCREMENT,
-  `car_id`      int       NOT NULL,
-  `user_id`     int       NOT NULL,
-  `issue_date`  TIMESTAMP NOT NULL,
-  `return_date` TIMESTAMP NOT NULL,
-  PRIMARY KEY (`ID`)
+CREATE TABLE `Car_info` (
+                          `car_id` int(11) NOT NULL AUTO_INCREMENT,
+                          `description` varchar(40),
+                          `year_made` smallint NOT NULL,
+                          `run` int NOT NULL,
+                          `last_maintenance` smallint NOT NULL,
+                          PRIMARY KEY (`car_id`)
 );
 
-CREATE TABLE `Addresses`
-(
-  `ID`     int         NOT NULL AUTO_INCREMENT,
-  `city`   varchar(30) NOT NULL,
-  `street` varchar(30) NOT NULL,
-  PRIMARY KEY (`ID`)
+CREATE TABLE `Users` (
+                       `id` int(11) NOT NULL AUTO_INCREMENT,
+                       `login` varchar(30) NOT NULL UNIQUE,
+                       `password` varchar(50) NOT NULL,
+                       `role` tinyint NOT NULL,
+                       PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Black_list`
-(
-  `locked_user`   int         NOT NULL AUTO_INCREMENT,
-  `passport_data` varchar(30) NOT NULL UNIQUE,
-  PRIMARY KEY (`locked_user`)
+CREATE TABLE `Orders` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `car_id` int NOT NULL,
+                        `user_id` int NOT NULL,
+                        `issue_date` TIMESTAMP NOT NULL,
+                        `return_date` TIMESTAMP NOT NULL,
+                        `real_return_date` TIMESTAMP NOT NULL,
+                        `final_price` smallint NOT NULL,
+                        PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Cars`
-(
-  `ID`               int         NOT NULL AUTO_INCREMENT,
-  `vin_code`         varchar(30) NOT NULL UNIQUE,
-  `brand_name`       varchar(30) NOT NULL,
-  `description`      varchar(50),
-  `reg_number`       varchar(10) NOT NULL UNIQUE,
-  `year_made`        int     NOT NULL,
-  `run`              int         NOT NULL,
-  `last_maintenance` int        NOT NULL,
-  `rent_price`       int     NOT NULL,
-  `mechanic_code`    int,
-  `class_auto`       char        NOT NULL,
-  `image_path`       varchar(50),
-  PRIMARY KEY (`ID`)
+CREATE TABLE `Black_list` (
+                            `user_id` int NOT NULL AUTO_INCREMENT,
+                            `reason` varchar(30) NOT NULL,
+                            `lock_date` TIMESTAMP NOT NULL,
+                            `unlock_date` TIMESTAMP NOT NULL,
+                            PRIMARY KEY (`user_id`)
 );
 
-CREATE TABLE `User_data`
-(
-  `user_id`         int         NOT NULL AUTO_INCREMENT,
-  `fname`           varchar(30) NOT NULL,
-  `lname`           varchar(30) NOT NULL,
-  `passport_data`   varchar(30) NOT NULL UNIQUE,
-  `orders_quantity` int         NOT NULL,
-  `address_id`      int         NOT NULL UNIQUE,
-  PRIMARY KEY (`user_id`)
+CREATE TABLE `Cars` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `vin_code` varchar(30) NOT NULL UNIQUE,
+                      `brand_name` varchar(30) NOT NULL,
+                      `reg_number` varchar(10) NOT NULL,
+                      `rent_price` smallint NOT NULL,
+                      `class_auto` char NOT NULL,
+                      `image_path` varchar(1024) NOT NULL,
+                      PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `Orders`
-  ADD CONSTRAINT `Orders_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars` (`ID`);
+CREATE TABLE `Passport` (
+                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                          `serie` varchar(2) NOT NULL,
+                          `number` int NOT NULL UNIQUE,
+                          `id_number` varchar(20) NOT NULL UNIQUE,
+                          `issue_date` DATE NOT NULL,
+                          `end_date` DATE NOT NULL,
+                          PRIMARY KEY (`id`)
+);
 
-ALTER TABLE `Orders`
-  ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`ID`);
 
-ALTER TABLE `Black_list`
-  ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`locked_user`) REFERENCES `Users` (`ID`);
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
 
-ALTER TABLE `Black_list`
-  ADD CONSTRAINT `Black_list_fk1` FOREIGN KEY (`passport_data`) REFERENCES `User_data` (`passport_data`);
+ALTER TABLE `Black_list` ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
 
-ALTER TABLE `User_data`
-  ADD CONSTRAINT `User_data_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users` (`ID`);
+ALTER TABLE `User_data` ADD CONSTRAINT `User_data_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
+
+ALTER TABLE `Car_info` ADD CONSTRAINT `Car_info_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`);
+
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`);
+
+ALTER TABLE `Passport` ADD CONSTRAINT `Passport_fk0` FOREIGN KEY (`id`) REFERENCES `User_data`(`passport_id`);
+
