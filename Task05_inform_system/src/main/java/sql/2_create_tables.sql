@@ -32,7 +32,7 @@ CREATE TABLE `Orders` (
                         `user_id` int NOT NULL,
                         `issue_date` TIMESTAMP NOT NULL,
                         `return_date` TIMESTAMP NOT NULL,
-                        `real_return_date` TIMESTAMP NOT NULL,
+                        `real_return_date` TIMESTAMP default null,
                         `final_price` smallint NOT NULL,
                         PRIMARY KEY (`id`)
 );
