@@ -25,7 +25,10 @@ VALUES ('452829faJF3', 'Audi', '5859AB-7', '40', 'C', 'audi'),
        ('412356ANgf9', 'Citroen',  '4829HR-2', '30','B', 'citroen');
 
 INSERT INTO Orders(CAR_ID, USER_ID, ISSUE_DATE, RETURN_DATE, REAL_RETURN_DATE, FINAL_PRICE) VALUES
-('1', '2', '2019-04-24 15:00:00', '2019-04-25 17:00:00', '2019-04-25 13:25:00', '85');
+('1', '2', '2019-04-24 15:00:00', '2019-04-25 17:00:00', '2019-04-25 13:25:00', '85'),
+('2', '2', '2019-04-21 12:00:00', '2019-04-22 17:00:00', '2019-04-22 14:30:00', '65'),
+('1', '2', '2019-04-12 13:00:00', '2019-04-13 15:00:00', '2019-04-13 14:50:00', '85'),
+('2', '2', '2019-04-14 15:00:00', '2019-04-15 19:00:00', '2019-04-15 17:25:00', '65');
 
 INSERT INTO Orders(CAR_ID, USER_ID, ISSUE_DATE, RETURN_DATE, FINAL_PRICE) VALUES
 ('2', '3', '2019-04-24 11:00:00', '2019-04-27 19:00:00', '65');
@@ -36,5 +39,3 @@ INSERT INTO Car_info(description, year_made, run, last_maintenance) VALUES
 
 INSERT INTO Black_list(user_id, reason, lock_date, unlock_date) VALUES
 ('4', 'Didn\'t return a car in time', '2019-04-23', '2019-05-10');
-
-
