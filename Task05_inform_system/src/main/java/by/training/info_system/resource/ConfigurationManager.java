@@ -1,18 +1,35 @@
 package by.training.info_system.resource;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import lombok.extern.log4j.Log4j2;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+@Log4j2
 public class ConfigurationManager {
-//    private static final ResourceBundle resource = ResourceBundle.getBundle("WEB-INF/classes/app_config");
-//
-//    private ConfigurationManager() {
-//
-//    }
-//
-//    public static String getProperty(final String key) {
-//        return resource.getString(key);
-//    }
-    public static final String indexPage = "/jsp/index.jsp";
-    public static final String signinPage = "/jsp/signin.jsp";
+    private static Properties properties;
+    private static ConfigurationManager instance;
+
+    public static ConfigurationManager getInstance() {
+        if (instance == null) {
+            properties = new Properties();
+            instance = new ConfigurationManager();
+        }
+        return instance;
+    }
+
+    private ConfigurationManager() {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("app_config.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            log.error("Error loading property file.", e);
+        }
+    }
+
+    public String getProperty(final String key) {
+        return properties.getProperty(key);
+    }
 }
