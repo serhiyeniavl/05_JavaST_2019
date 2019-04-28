@@ -1,13 +1,8 @@
 package by.training.info_system.entity;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,6 +13,6 @@ public class Passport extends Entity {
     @NonNull private String serie;
     @NonNull private Integer number;
     @NonNull private String idNumber;
-    @NonNull private LocalDate issueDate;
-    @NonNull private LocalDate endDate;
+    @NonNull private Date issueDate;
+    @NonNull private Date endDate;
 }

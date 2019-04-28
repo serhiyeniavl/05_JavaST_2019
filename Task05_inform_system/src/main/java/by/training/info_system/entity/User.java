@@ -16,7 +16,7 @@ import lombok.ToString;
 @Builder
 public class User extends Entity {
     @NonNull private String login;
-    @NonNull private String password;
+    private String password;
     @NonNull private Role role;
     private UserData userData;
 }

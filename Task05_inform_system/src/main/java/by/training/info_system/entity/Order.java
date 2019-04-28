@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -17,8 +18,8 @@ import java.time.LocalDate;
 public class Order extends Entity {
     @NonNull private User user;
     @NonNull private Car car;
-    @NonNull private LocalDate issueDate;
-    @NonNull private LocalDate returnDate;
+    @NonNull private Date issueDate;
+    @NonNull private Date returnDate;
     private LocalDate realReturnDate;
     private Long finalPrice;
 }

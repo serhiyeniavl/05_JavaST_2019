@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,6 +18,6 @@ import java.time.LocalDate;
 public class BlackList {
     @NonNull private User user;
     @NonNull private String reason;
-    @NonNull private LocalDate lockDate;
-    @NonNull private LocalDate unlockDate;
+    @NonNull private Date lockDate;
+    @NonNull private Date unlockDate;
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,5 +20,5 @@ public class CarInfo {
     private String description;
     @NonNull private Short yearMade;
     @NonNull private Integer run;
-    @NonNull private LocalDate lastMaintenance;
+    @NonNull private Date lastMaintenance;
 }
