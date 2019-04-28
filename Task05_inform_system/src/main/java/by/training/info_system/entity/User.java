@@ -18,5 +18,5 @@ public class User extends Entity {
     @NonNull private String login;
     @NonNull private String password;
     @NonNull private Role role;
-    @NonNull private UserData userData;
+    private UserData userData;
 }
