@@ -1,8 +1,8 @@
-package by.training.info_system.action;
+package by.training.info_system.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class PasswordHasher {
+public final class PasswordHasher {
 
     private PasswordHasher() {
     }
