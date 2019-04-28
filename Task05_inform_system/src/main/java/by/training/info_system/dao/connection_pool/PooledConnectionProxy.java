@@ -256,7 +256,7 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      */
     @Override
     public void close() throws SQLException {
-        ConnectionPool.getInstance().closeConnection(this);
+        ConnectionPool.getInstance().returnInPool(this);
     }
 
     /**

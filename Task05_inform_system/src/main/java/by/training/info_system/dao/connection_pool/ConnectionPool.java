@@ -86,7 +86,7 @@ public class ConnectionPool {
         return connection;
     }
 
-    void closeConnection(final PooledConnectionProxy connection) {
+    void returnInPool(final PooledConnectionProxy connection) {
         lock.lock();
         try {
             if (connection.isValid(Integer.parseInt(connectionTimeout.toString()))) {
