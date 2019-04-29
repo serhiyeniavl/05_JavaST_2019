@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -16,8 +15,9 @@ public abstract class AbstractDao {
 
     private Connection connection;
 
-    protected AbstractDao() {
-        this.connection = ConnectionPool.getInstance().getConnection();
+
+    public void setConnection(final Connection connection) {
+        this.connection = connection;
     }
 
     protected void returnConnectionInPool() {
@@ -38,7 +38,7 @@ public abstract class AbstractDao {
         return statement;
     }
 
-    public PreparedStatement createPreparedStatement(final String sql) {
+    protected PreparedStatement createPreparedStatement(final String sql) {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(sql);
@@ -67,15 +67,5 @@ public abstract class AbstractDao {
             log.error("Cannot close prepared statement", e);
         }
     }
-
-//    public void closeResultSet(final ResultSet resultSet) {
-//        try {
-//            if (resultSet != null) {
-//                resultSet.close();
-//            }
-//        } catch (SQLException e) {
-//            log.error("Cannot close result set", e);
-//        }
-//    }
 }
 
