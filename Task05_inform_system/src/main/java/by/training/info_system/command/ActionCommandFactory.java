@@ -1,18 +1,19 @@
-package by.training.info_system.factory;
+package by.training.info_system.command;
 
-import by.training.info_system.command.ActionCommand;
+import by.training.info_system.command.Command;
+import by.training.info_system.command.EmptyCommand;
 import by.training.info_system.command.client.CommandEnum;
 
 import javax.servlet.http.HttpServletRequest;
 
 
-public class ActionCommandFactory {
+public final class ActionCommandFactory {
 
     private ActionCommandFactory() {
     }
 
-    public static ActionCommand defineCommand(final HttpServletRequest request) {
-        ActionCommand current = null;
+    public static Command defineCommand(final HttpServletRequest request) {
+        Command current = new EmptyCommand();
 
         String action = request.getParameter("command");
 

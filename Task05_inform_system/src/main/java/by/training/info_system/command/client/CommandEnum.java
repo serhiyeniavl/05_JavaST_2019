@@ -1,18 +1,18 @@
 package by.training.info_system.command.client;
 
-import by.training.info_system.command.ActionCommand;
+import by.training.info_system.command.Command;
 import by.training.info_system.command.SignInCommand;
 
 public enum CommandEnum {
     SIGNIN(new SignInCommand());
 
-    ActionCommand command;
+    Command command;
 
-    CommandEnum(final ActionCommand command) {
+    CommandEnum(final Command command) {
         this.command = command;
     }
 
-    public ActionCommand getCommand() {
+    public Command getCommand() {
         return command;
     }
 }
