@@ -9,8 +9,6 @@ public interface Dao<T extends Entity> {
     boolean create(T entity);
     Optional<T> get(long id);
     Optional<List<T>> getAll();
-    boolean update(long id, T newEntity);
-    boolean update(T user, T newEntity);
+    boolean update(T entity);
     boolean delete(long id);
-    boolean delete(T entity);
 }

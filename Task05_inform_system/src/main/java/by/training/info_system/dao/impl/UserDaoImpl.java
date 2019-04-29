@@ -6,7 +6,6 @@ import by.training.info_system.entity.Passport;
 import by.training.info_system.entity.User;
 import by.training.info_system.entity.data.UserData;
 import by.training.info_system.entity.role.Role;
-import by.training.info_system.util.PasswordHasher;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.PreparedStatement;
@@ -67,7 +66,15 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return Optional.empty();
     }
 
-    public Optional<User> findUserToSignIn(final String email) {
+    public boolean update(final User entity) {
+        return false;
+    }
+
+    public boolean delete(final long id) {
+        return false;
+    }
+
+    public Optional<User> read(final String email) {
         String sql = "SELECT login, password, role FROM Users WHERE login = ?;";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
@@ -87,24 +94,18 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);
         } finally {
-            closeStatement(statement);
+            closePreparedStatement(statement);
         }
         return Optional.empty();
     }
 
-    public boolean update(final long id, final User newEntity) {
-        return false;
+    @Override
+    public Optional<List<User>> readBlackList() {
+        return Optional.empty();
     }
 
-    public boolean update(final User user, final User newEntity) {
-        return false;
-    }
-
-    public boolean delete(final long id) {
-        return false;
-    }
-
-    public boolean delete(final User entity) {
-        return false;
+    @Override
+    public Optional<List<User>> findAllWithDiscount() {
+        return Optional.empty();
     }
 }
