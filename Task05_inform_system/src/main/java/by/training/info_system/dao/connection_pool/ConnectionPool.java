@@ -26,7 +26,7 @@ public class ConnectionPool {
     private Set<PooledConnectionProxy> usedConnections;
 
     private Long connectionTimeout = 30L * 1000L; //30sec
-    private Integer maxPoolSize = 15;
+    private Integer maxPoolSize = 25;
     private Integer initialSize = 5;
 
     private static ConnectionPool instance;
@@ -91,7 +91,6 @@ public class ConnectionPool {
         try {
             if (connection.isValid(Integer.parseInt(connectionTimeout.toString()))) {
                 connection.clearWarnings();
-                connection.setAutoCommit(true);
                 usedConnections.remove(connection);
                 connectionQueue.add(connection);
             }
