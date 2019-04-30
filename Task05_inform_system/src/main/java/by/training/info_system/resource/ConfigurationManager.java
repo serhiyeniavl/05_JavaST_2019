@@ -1,5 +1,6 @@
 package by.training.info_system.resource;
 
+import by.training.info_system.resource.path.URIPath;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
@@ -31,5 +32,9 @@ public class ConfigurationManager {
 
     public String getProperty(final String key) {
         return properties.getProperty(key);
+    }
+
+    public String getPagePath(final String uri) {
+        return URIPath.valueOf(uri.toUpperCase()).getPath();
     }
 }
