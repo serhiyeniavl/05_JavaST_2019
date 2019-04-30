@@ -9,12 +9,14 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class User extends Entity {
+public class User extends Entity implements Serializable {
     @NonNull private String login;
     private String password;
     @NonNull private Role role;

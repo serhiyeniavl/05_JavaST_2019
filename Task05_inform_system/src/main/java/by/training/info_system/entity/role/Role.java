@@ -1,6 +1,8 @@
 package by.training.info_system.entity.role;
 
-public enum Role {
+import java.io.Serializable;
+
+public enum Role implements Serializable {
     USER(1),
     MANAGER(2),
     ADMIN(3);

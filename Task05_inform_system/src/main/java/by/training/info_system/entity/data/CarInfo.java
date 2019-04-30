@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @ToString
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class CarInfo {
+public class CarInfo implements Serializable {
     @NonNull private Long carId;
     private String description;
     @NonNull private Short yearMade;

@@ -8,12 +8,14 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class Car extends Entity {
+public class Car extends Entity implements Serializable {
     @NonNull private String vinCode;
     @NonNull private String brandName;
     @NonNull private String regNumber;

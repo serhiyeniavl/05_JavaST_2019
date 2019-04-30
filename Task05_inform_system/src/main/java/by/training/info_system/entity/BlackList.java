@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class BlackList {
+public class BlackList implements Serializable {
     @NonNull private User user;
     @NonNull private String reason;
     @NonNull private Date lockDate;

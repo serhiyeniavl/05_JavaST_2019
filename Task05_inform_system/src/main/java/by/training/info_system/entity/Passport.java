@@ -2,6 +2,7 @@ package by.training.info_system.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -9,7 +10,7 @@ import java.util.Date;
 @ToString
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class Passport extends Entity {
+public class Passport extends Entity implements Serializable {
     @NonNull private String serie;
     @NonNull private Integer number;
     @NonNull private String idNumber;

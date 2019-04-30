@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Builder
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public class Order extends Entity {
+public class Order extends Entity implements Serializable {
     @NonNull private User user;
     @NonNull private Car car;
     @NonNull private Date issueDate;
