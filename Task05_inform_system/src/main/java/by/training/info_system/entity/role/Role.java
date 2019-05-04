@@ -3,6 +3,7 @@ package by.training.info_system.entity.role;
 import java.io.Serializable;
 
 public enum Role implements Serializable {
+    UNAUTHORIZED_USER(0),
     USER(1),
     MANAGER(2),
     ADMIN(3);

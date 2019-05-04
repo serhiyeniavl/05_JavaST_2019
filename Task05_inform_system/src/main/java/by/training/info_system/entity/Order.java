@@ -17,10 +17,10 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 public class Order extends Entity implements Serializable {
-    @NonNull private User user;
-    @NonNull private Car car;
-    @NonNull private Date issueDate;
-    @NonNull private Date returnDate;
+    private User user;
+    private Car car;
+    private Date issueDate;
+    private Date returnDate;
     private LocalDate realReturnDate;
     private Long finalPrice;
 }

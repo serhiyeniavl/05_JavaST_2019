@@ -11,8 +11,8 @@ import java.io.Serializable;
 @ToString
 @Builder
 public class UserData implements Serializable {
-    @NonNull private String fName;
-    @NonNull private String lName;
-    @NonNull private String address;
-    @NonNull private Passport passport;
+    private String fName;
+    private String lName;
+    private String address;
+    private Passport passport;
 }

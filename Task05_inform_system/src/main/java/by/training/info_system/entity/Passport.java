@@ -11,9 +11,9 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 public class Passport extends Entity implements Serializable {
-    @NonNull private String serie;
-    @NonNull private Integer number;
-    @NonNull private String idNumber;
-    @NonNull private Date issueDate;
-    @NonNull private Date endDate;
+    private String serie;
+    private Integer number;
+    private String idNumber;
+    private Date issueDate;
+    private Date endDate;
 }

@@ -16,12 +16,12 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 public class Car extends Entity implements Serializable {
-    @NonNull private String vinCode;
-    @NonNull private String brandName;
-    @NonNull private String regNumber;
-    @NonNull private Short rentPrice;
-    @NonNull private Character carClass;
+    private String vinCode;
+    private String brandName;
+    private String regNumber;
+    private Short rentPrice;
+    private Character carClass;
     private String imagePath;
-    @NonNull private CarInfo carInfo;
+    private CarInfo carInfo;
 
 }

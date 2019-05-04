@@ -16,7 +16,6 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Entity {
-    @NonNull
     @EqualsAndHashCode.Exclude
     private Long id;
 }

@@ -17,8 +17,8 @@ import java.util.Date;
 @ToString
 @Builder
 public class BlackList implements Serializable {
-    @NonNull private User user;
-    @NonNull private String reason;
-    @NonNull private Date lockDate;
-    @NonNull private Date unlockDate;
+    private User user;
+    private String reason;
+    private Date lockDate;
+    private Date unlockDate;
 }
