@@ -1,19 +1,30 @@
 package by.training.info_system.controller;
 
-import by.training.info_system.command.ActionCommand;
-import by.training.info_system.factory.ActionCommandFactory;
+import by.training.info_system.command.ActionCommandFactory;
+import by.training.info_system.command.Command;
+import by.training.info_system.command.CommandManager;
+import by.training.info_system.command.CommandManagerFactory;
+import by.training.info_system.dao.connection_pool.ConnectionPool;
+import by.training.info_system.dao.impl.DaoCreatorImpl;
+import by.training.info_system.resource.page.JspPage;
+import by.training.info_system.resource.page.PageEnum;
+import by.training.info_system.resource.page.PageFactory;
+import by.training.info_system.service.impl.ServiceFactoryImpl;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Log4j2
-@WebServlet("/freeride")
 public class MainController extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        ConnectionPool.getInstance();
+    }
 
     @Override
     protected void doPost(final HttpServletRequest request,
@@ -29,21 +40,27 @@ public class MainController extends HttpServlet {
 
     private void processRequest(final HttpServletRequest req,
                                 final HttpServletResponse resp) {
-        String page;
+        Command command = ActionCommandFactory.defineCommand(req);
+        CommandManager commandManager = CommandManagerFactory.getManager(new ServiceFactoryImpl(new DaoCreatorImpl()));
 
-        ActionCommand command = ActionCommandFactory.defineCommand(req);
+        JspPage redirectPage = commandManager.execute(command, req, resp);
+        commandManager.close();
 
-        page = command.execute(req);
         try {
-            if (page != null) {
-                getServletContext().getRequestDispatcher(page).forward(req, resp);
+            if (redirectPage.isRedirect()) {
+                resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/" + redirectPage.getUri()));
             } else {
-                resp.sendRedirect(req.getContextPath() + page);
+                getServletContext().getRequestDispatcher(redirectPage.getJspPagePath()).forward(req, resp);
             }
         } catch (ServletException e) {
             log.error("Servlet exception when forward req and resp", e);
         } catch (IOException e) {
             log.error("Servlet IO exception", e);
         }
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPool.getInstance().finalizePool();
     }
 }
