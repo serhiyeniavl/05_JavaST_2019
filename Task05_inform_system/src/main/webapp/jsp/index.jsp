@@ -1,12 +1,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="by.training.info_system.entity.User" %>
+<%@ page import="by.training.info_system.entity.data.UserData" %>
+<%@ page import="by.training.info_system.entity.Passport" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:url value="/home" var="home"/>
+<c:url value="/cars" var="cars"/>
+<c:url value="/contact.html" var="contact"/>
+<c:url value="/managers.html" var="managers"/>
+<c:url value="/orders.html" var="orders"/>
+<c:url value="/user_orders.html" var="user_orders"/>
+<c:url value="/users.html" var="users"/>
+
+<c:url value="/signin" var="signin"/>
+<c:url value="/signup" var="signup"/>
+<c:url value="/profile.html" var="profile"/>
+
+<c:set var="user" value="${sessionScope.user}"/>
+<c:set var="discount" value="${sessionScope.discount}"/>
+
+<c:set var="url">${pageContext.request.requestURL}</c:set>
+<c:set var="ctx" value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
+
 
 <html>
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
           type="image/jpg">
-    <link rel="stylesheet" href="http://localhost:8080/freeride/css/index.css"
+    <link rel="stylesheet" href="${ctx}/css/index.css"
           type="text/css"/>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -31,12 +54,9 @@
 
 <body style="background: url(https://cdn1.savepice.ru/uploads/2019/4/16/5b0d7dae051d4532ef4e60fa8e560142-full.jpg) no-repeat; background-size: 100%;">
 
-<c:url value="/jsp/cars.jsp" var="anton"/>
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
-        <a class="navbar-brand" href="" style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
+        <a class="navbar-brand" href="${home}" style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -45,44 +65,57 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="">Home
+                    <a class="nav-link" href="${home}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${anton}">Cars</a>
+                    <a class="nav-link" href="${cars}">Cars</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/freeride/jsp/managers.jsp">Mangers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">User orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/freeride/jsp/contact.jsp">Contact</a>
-                </li>
-                <%--<li class="nav-item">--%>
-                    <%--<input value="Sign in" type="button" onclick="window.location='http://localhost:8080/freeride/jsp/signin.jsp'"--%>
-                            <%--class="btn btn-success navbar-btn btn-circle"--%>
-                            <%--style="margin-left: 12px;">--%>
-                <%--</li>--%>
-                <%--<li class="nav-item"><input value="Sign up" type="button"--%>
-                                            <%--class="btn btn-success navbar-btn btn-circle"--%>
-                                            <%--style="margin-left: 12px;"></li>--%>
+                    <a class="nav-link" href="${contact}">Contact</a>
 
-
-                <li>
-                    <div class="btn-group dropup">
-                        <input type="button" value="Vladislav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 12px;"/>
-                        <div class="dropdown-menu" style="background-color: rgb(52,57,62);">
-                            <a class="dropdown-item a01" href="http://localhost:8080/freeride/jsp/profile.jsp">Profile</a>
-                            <a class="dropdown-item a01" href="#">Your orders</a>
-                            <p class="dropdown-item a01">Your discount: 15%</p>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item a01" href="#">Logout</a>
-                        </div>
-                    </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${managers}">Mangers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${user_orders}">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${users}">Users</a>
+                </li>
+                
+                <c:choose>
+                    <c:when test="${user==null}">
+                        <li class="nav-item">
+                            <input value="Sign in" type="button" onclick="window.location='${signin}'"
+                                   class="btn btn-success navbar-btn btn-circle"
+                                   style="margin-left: 12px;">
+                        </li>
+                        <li class="nav-item"><input value="Sign up" type="button"
+                                                    onclick="window.location='${signup}'"
+                                                    class="btn btn-success navbar-btn btn-circle"
+                                                    style="margin-left: 12px;"></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <div class="btn-group dropup">
+                                <input type="button" value="${user.userData.FName}" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 12px;"/>
+                                <div class="dropdown-menu" style="background-color: rgb(52,57,62);">
+                                    <a class="dropdown-item a01" href="${profile}">Profile</a>
+                                    <a class="dropdown-item a01" href="${user_orders}">Your orders</a>
+                                    <p class="dropdown-item a01">Your discount: ${discount}</p>
+                                    <div class="dropdown-divider"></div>
+                                    <form style="margin-bottom: 0px;" action="${signin}" method="post">
+                                        <input type="hidden" name="command" value="signout"/>
+                                        <input type="submit" class="dropdown-item a01" value="Logout">
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
