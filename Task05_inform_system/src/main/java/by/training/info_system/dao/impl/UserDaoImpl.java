@@ -20,10 +20,37 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     public boolean create(final User entity) {
+        String sql1 = "INSERT INTO Users (login, password, role) VALUES (?,?,?)";
+        String sql3 = "INSERT INTO Passport (login, password, role) VALUES (?,?,?)";
+        String sql2 = "INSERT INTO User_data (fname, lname, address) VALUES (?,?,?)";
         return false;
     }
 
-    public Optional<User> get(long id) {
+    public Optional<User> get(final long id) {
+//        String sql = "SELECT login, role, fname, lname, address, serie, number, "
+//                + "id_number, issue_date, end_date from Users, User_data, "
+//                + "Passport where User_data.user_id = Users.id "
+//                + "and User_data.passport_id = Passport.id"
+//                + "Users.id = ?;";
+//        PreparedStatement statement = createPreparedStatement(sql);
+//        try {
+//            statement.setString(1, String.valueOf(id));
+//        } catch (SQLException e) {
+//            log.error("Cannot set argument in prepared statement.", e);
+//        }
+//
+//        try (ResultSet resultSet = statement.executeQuery(sql)) {
+//            resultSet.next();
+//            Role role = Role.fromValue(resultSet)
+//            User user = User.builder()
+//                    .login(resultSet.getString("login"))
+//                    .password("none")
+//                    .role()
+//        } catch (SQLException e) {
+//            log.error(RESULT_SET_ERROR, e);
+//        } finally {
+//            closePreparedStatement(statement);
+//        }
         return Optional.empty();
     }
 
@@ -36,26 +63,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         Statement statement = createStatement();
         try (ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                Passport passport = Passport.builder()
-                        .serie(resultSet.getString("serie"))
-                        .number(resultSet.getInt("number"))
-                        .idNumber(resultSet.getString("id_number"))
-                        .issueDate(resultSet.getDate("issue_date"))
-                        .endDate(resultSet.getDate("end_date"))
-                        .build();
-                UserData userData = UserData.builder()
-                        .fName(resultSet.getString("fname"))
-                        .lName(resultSet.getString("lname"))
-                        .address(resultSet.getString("address"))
-                        .passport(passport)
-                        .build();
-                Role role = Role.fromValue(resultSet.getInt("role"));
-                User user = User.builder()
-                        .login(resultSet.getString("login"))
-                        .role(role)
-                        .userData(userData)
-                        .build();
-                users.add(user);
+                users.add(createUser(resultSet));
             }
             return Optional.of(users);
         } catch (SQLException e) {
@@ -75,7 +83,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<User> read(final String email) {
-        String sql = "SELECT login, password, role FROM Users WHERE login = ?;";
+        String sql = "SELECT login, password, role, fname, lname, address, serie, number,"
+                + " id_number, issue_date, end_date FROM Users "
+                + "JOIN User_data ON Users.id=User_data.user_id "
+                + "JOIN Passport ON User_data.passport_id=Passport.id WHERE login = ?;";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setString(1, email);
@@ -84,13 +95,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         }
         try (ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
-            Role role = Role.fromValue(resultSet.getInt("role"));
-            User user = User.builder()
-                    .role(role)
-                    .login(resultSet.getString("login"))
-                    .password(resultSet.getString("password"))
-                    .build();
-            return Optional.of(user);
+            User user = createUser(resultSet);
+            return user != null ? Optional.of(user) : Optional.empty();
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);
         } finally {
@@ -107,5 +113,33 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public Optional<List<User>> findAllWithDiscount() {
         return Optional.empty();
+    }
+
+    private User createUser(final ResultSet resultSet) {
+        try {
+            Passport passport = Passport.builder()
+                    .serie(resultSet.getString("serie"))
+                    .number(resultSet.getInt("number"))
+                    .idNumber(resultSet.getString("id_number"))
+                    .issueDate(resultSet.getDate("issue_date"))
+                    .endDate(resultSet.getDate("end_date"))
+                    .build();
+            UserData userData = UserData.builder()
+                    .fName(resultSet.getString("fname"))
+                    .lName(resultSet.getString("lname"))
+                    .address(resultSet.getString("address"))
+                    .passport(passport)
+                    .build();
+            Role role = Role.fromValue(resultSet.getInt("role"));
+            return User.builder()
+                    .login(resultSet.getString("login"))
+                    .role(role)
+                    .password(resultSet.getString("password"))
+                    .userData(userData)
+                    .build();
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        }
+        return null;
     }
 }
