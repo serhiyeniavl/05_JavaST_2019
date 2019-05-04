@@ -5,18 +5,21 @@
          version="4.0">
     <request-character-encoding>UTF-8</request-character-encoding>
 
-    <welcome-file-list>
-        <welcome-file>/jsp/index.jsp</welcome-file>
-    </welcome-file-list>
-
     <servlet>
         <servlet-name>MainController</servlet-name>
         <servlet-class>by.training.info_system.controller.MainController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/cars</url-pattern>
+        <url-pattern>/signin</url-pattern>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
+
+    <session-config>
+        <session-timeout>10000</session-timeout>
+    </session-config>
 
     <jsp-config>
         <jsp-property-group>
@@ -47,11 +50,15 @@
 
     <filter>
         <filter-name>URIFilter</filter-name>
-        <filter-class>by.training.info_system.filter.URICommandFilter</filter-class>
+        <filter-class>by.training.info_system.filter.URIDefinerFilter</filter-class>
     </filter>
 
     <filter-mapping>
         <filter-name>URIFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/cars</url-pattern>
+        <url-pattern>/signin</url-pattern>
+        <url-pattern>/signup</url-pattern>
+
     </filter-mapping>
 </web-app>

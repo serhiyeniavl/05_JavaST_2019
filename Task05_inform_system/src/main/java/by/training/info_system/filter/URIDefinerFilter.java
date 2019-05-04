@@ -1,5 +1,7 @@
 package by.training.info_system.filter;
 
+import by.training.info_system.resource.page.JspPage;
+import by.training.info_system.resource.page.PageFactory;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
@@ -8,19 +10,20 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-public class URICommandFilter implements Filter {
+public class URIDefinerFilter implements Filter {
     private static final List<String> URI_LIST = new ArrayList<>();
 
     static {
         URI_LIST.add("/");
         URI_LIST.add("/home");
         URI_LIST.add("/cars");
+        URI_LIST.add("/signin");
+        URI_LIST.add("/signup");
     }
 
     @Override
@@ -32,18 +35,14 @@ public class URICommandFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             String requestedURI = request.getRequestURI();
 
-            int end = requestedURI.lastIndexOf('.');
-            String page;
-            if (end > 0) {
-                page = requestedURI.substring(request.getContextPath().length(), end);
-            } else {
-                page = requestedURI.substring(request.getContextPath().length());
-            }
+            String page = requestedURI.substring(request.getContextPath().length());;
+
             if (!URI_LIST.contains(page)) {
                 redirectToErrorPage(servletRequest, servletResponse);
                 return;
             }
-            request.setAttribute("page", page);
+            String requestedPage = page.substring(1);
+            request.setAttribute("requestedPage", requestedPage);
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             log.error("Cannot use HTTP filter");
