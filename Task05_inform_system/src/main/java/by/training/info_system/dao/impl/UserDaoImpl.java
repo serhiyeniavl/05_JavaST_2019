@@ -2,6 +2,7 @@ package by.training.info_system.dao.impl;
 
 import by.training.info_system.dao.AbstractDao;
 import by.training.info_system.dao.UserDao;
+import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.Passport;
 import by.training.info_system.entity.User;
 import by.training.info_system.entity.data.UserData;
@@ -180,7 +181,39 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public Optional<List<User>> readBlackList() {
+    public Optional<List<BlackListNode>> readBlackList() {
+        String sql = "SELECT reason, lock_date, unlock_date," +
+                " id, login, fname, lname FROM Black_list " +
+                "JOIN Users U on Black_list.user_id = U.id " +
+                "JOIN User_data Ud on U.id = Ud.user_id";
+        List<BlackListNode> usersBlackList = new ArrayList<>();
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                User user = User.builder()
+                        .login(resultSet.getString("login"))
+                        .userData(
+                                UserData.builder()
+                                        .fName(resultSet.getString("fname"))
+                                        .lName(resultSet.getString("lname"))
+                                .build()
+                        )
+                        .build();
+                user.setId((long)resultSet.getInt("id"));
+                BlackListNode node = BlackListNode.builder()
+                        .user(user)
+                        .reason(resultSet.getString("reason"))
+                        .lockDate(resultSet.getDate("lock_date").toLocalDate())
+                        .unlockDate(resultSet.getDate("unlock_date").toLocalDate())
+                        .build();
+                usersBlackList.add(node);
+            }
+            return Optional.of(usersBlackList);
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
         return Optional.empty();
     }
 
