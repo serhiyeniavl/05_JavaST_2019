@@ -1,11 +1,11 @@
 package by.training.info_system.service;
 
-import by.training.info_system.dao.DaoCreator;
+import by.training.info_system.dao.DaoManager;
 
 public abstract class AbstractService implements Service {
-    protected DaoCreator daoCreator;
+    protected DaoManager daoManager;
 
-    public void setDaoCreator(final DaoCreator daoCreator) {
-        this.daoCreator = daoCreator;
+    public void setDaoManager(final DaoManager daoManager) {
+        this.daoManager = daoManager;
     }
 }

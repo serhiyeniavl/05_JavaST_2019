@@ -1,6 +1,6 @@
 package by.training.info_system.service.impl;
 
-import by.training.info_system.dao.DaoCreator;
+import by.training.info_system.dao.DaoManager;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.CarService;
 import by.training.info_system.service.OrderService;
@@ -24,10 +24,10 @@ public class ServiceFactoryImpl implements ServiceFactory {
         SERVICES.put(OrderService.class, OrderServiceImpl.class);
     }
 
-    private DaoCreator creator;
+    private DaoManager creator;
 
 
-    public ServiceFactoryImpl(final DaoCreator creator) {
+    public ServiceFactoryImpl(final DaoManager creator) {
         this.creator = creator;
     }
 
@@ -37,7 +37,7 @@ public class ServiceFactoryImpl implements ServiceFactory {
         if (value != null) {
             try {
                 AbstractService service = value.getDeclaredConstructor(null).newInstance(null);
-                service.setDaoCreator(creator);
+                service.setDaoManager(creator);
                 return Optional.of((T)service);
             } catch (InstantiationException e) {
                 log.error("Error when triy to create an instance of a class", e);
