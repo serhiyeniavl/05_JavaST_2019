@@ -62,19 +62,10 @@ public class SignUpCommand extends Command {
         UserService service = factory.getService(UserService.class).orElseThrow();
         boolean isCreated = service.registerNewUser(user);
         if (isCreated) {
-            User sessionUser = User.builder()
-                    .login(user.getLogin())
-                    .role(user.getRole())
-                    .userData(UserData.builder().fName(userData.getFName()).build())
-                    .build();
-            HttpSession session = request.getSession(false);
-            session.setAttribute("user", sessionUser);
-
-            //TODO: make request to the db and count the discount
-            session.setAttribute("discount", "0");
-
-            page = PageFactory.defineAndGet(PageEnum.HOME);
-            page.setRedirect(true);
+            page = PageFactory.defineAndGet(PageEnum.SIGNIN);
+            putAttrInRequest(request,"signedUp",
+                    "You've successfully signed up!\nPlease, sign in" +
+                    " into your account.");
         }
         return page;
     }
