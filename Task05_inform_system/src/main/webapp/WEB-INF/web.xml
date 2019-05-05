@@ -15,6 +15,7 @@
         <url-pattern>/cars</url-pattern>
         <url-pattern>/signin</url-pattern>
         <url-pattern>/signup</url-pattern>
+        <url-pattern>/contact</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -59,6 +60,7 @@
         <url-pattern>/cars</url-pattern>
         <url-pattern>/signin</url-pattern>
         <url-pattern>/signup</url-pattern>
+        <url-pattern>/contact</url-pattern>
 
     </filter-mapping>
 </web-app>

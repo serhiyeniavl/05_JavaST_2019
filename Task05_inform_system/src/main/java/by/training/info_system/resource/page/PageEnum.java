@@ -3,7 +3,8 @@ package by.training.info_system.resource.page;
 public enum PageEnum {
     HOME("home"),
     SIGNIN("signin"),
-    SIGNUP("signup");
+    SIGNUP("signup"),
+    CONTACT("contact");
 
     private String uri;
 

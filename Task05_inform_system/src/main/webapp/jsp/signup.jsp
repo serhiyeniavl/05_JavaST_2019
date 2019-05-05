@@ -2,7 +2,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:url value="/home" var="home"/>
 <c:url value="/signin" var="signin"/>
 
 <c:set var="url">${pageContext.request.requestURL}</c:set>
@@ -34,7 +33,7 @@
                     <h4 class="card-title mt-2">Sign up</h4>
                 </header>
                 <article class="card-body">
-                    <form method="post" action="${home}">
+                    <form method="post" action="${signin}">
                         <input type="hidden" name="command" value="signup"/>
                         <div class="form-row">
                             <div class="col form-group">
