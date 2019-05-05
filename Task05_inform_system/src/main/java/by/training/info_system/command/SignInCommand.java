@@ -19,6 +19,7 @@ public class SignInCommand extends Command {
     public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNIN);
         page.setRedirect(true);
+
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         UserService service = factory.getService(UserService.class).orElseThrow();
@@ -26,7 +27,12 @@ public class SignInCommand extends Command {
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
             HttpSession session = request.getSession(false);
-            session.setAttribute("user", user.get());
+            User sessionUser = User.builder()
+                    .login(user.get().getLogin())
+                    .role(user.get().getRole())
+                    .userData(user.get().getUserData())
+                    .build();
+            session.setAttribute("user", sessionUser);
 
             //TODO: make request to the db and count the discount
             session.setAttribute("discount", "0");
