@@ -77,7 +77,7 @@
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Create password</label>
-                            <input name="password" type="text" class="form-control" placeholder="">
+                            <input name="password" type="password" class="form-control" placeholder="">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block"> Register  </button>
