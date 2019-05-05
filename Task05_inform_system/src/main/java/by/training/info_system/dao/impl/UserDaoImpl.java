@@ -20,10 +20,72 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     public boolean create(final User entity) {
-        String sql1 = "INSERT INTO Users (login, password, role) VALUES (?,?,?)";
-        String sql3 = "INSERT INTO Passport (login, password, role) VALUES (?,?,?)";
-        String sql2 = "INSERT INTO User_data (fname, lname, address) VALUES (?,?,?)";
-        return false;
+        String sql1 = "INSERT INTO Users (`id`, `login`, `password`, `role`) VALUES (?, ?, ?, ?)";
+        String sql2 = "INSERT INTO Passport (`id`, `serie`, `number`, `id_number`, `issue_date`, `end_date`)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
+        String sql3 = "INSERT INTO User_data (`user_id`, `fname`, `lname`, `passport_id`, `address`)" +
+                " VALUES (?, ?, ?, ?, ?)";
+
+        PreparedStatement statement1 = createPreparedStatement(sql1);
+        PreparedStatement statement2 = createPreparedStatement(sql2);
+        PreparedStatement statement3 = createPreparedStatement(sql3);
+
+        try {
+            int lastUserId = getLastPosition("Users", "id");
+            if (lastUserId == -1) {
+                throw new SQLException("Cannot count all users");
+            }
+            statement1.setInt(1, lastUserId);
+            statement1.setString(2, entity.getLogin());
+            statement1.setString(3, entity.getPassword());
+            statement1.setInt(4, entity.getRole().value());
+
+            int lastPassportId = getLastPosition("Passport", "id");
+            if (lastPassportId == -1) {
+                throw new SQLException("Error when try to calc last id");
+            }
+            statement2.setInt(1, lastPassportId);
+            statement2.setString(2, entity.getUserData()
+                    .getPassport().getSerie());
+            statement2.setInt(3, entity.getUserData()
+                    .getPassport().getNumber());
+            statement2.setString(4, entity.getUserData()
+                    .getPassport().getIdNumber());
+            statement2.setDate(5, java.sql.Date.valueOf(
+                    entity.getUserData().getPassport().getIssueDate()));
+            statement2.setDate(6, java.sql.Date.valueOf(
+                    entity.getUserData().getPassport().getEndDate()));
+
+            statement3.setInt(1, lastUserId);
+            statement3.setString(2, entity.getUserData()
+                    .getFName());
+            statement3.setString(3, entity.getUserData()
+                    .getLName());
+            statement3.setInt(4, lastPassportId);
+            statement3.setString(5, entity.getUserData()
+                    .getAddress());
+
+            int query1 = statement1.executeUpdate();
+            if (query1 < 1) {
+                throw new SQLException("Cannot execute insertion into users db");
+            }
+            int query2 = statement3.executeUpdate();
+            if (query2 < 1) {
+                throw new SQLException("Cannot execute insertion into users_data db");
+            }
+            int query3 = statement2.executeUpdate();
+            if (query3 < 1) {
+                throw new SQLException("Cannot execute insertion into passport db");
+            }
+        } catch (SQLException e) {
+            log.error("Cannot create a prepared statement", e);
+            return false;
+        } finally {
+            closePreparedStatement(statement1);
+            closePreparedStatement(statement2);
+            closePreparedStatement(statement3);
+        }
+        return true;
     }
 
     public Optional<User> get(final long id) {
@@ -46,6 +108,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 //                    .login(resultSet.getString("login"))
 //                    .password("none")
 //                    .role()
+//        return user != null ? Optional.of(user) : Optional.empty();
 //        } catch (SQLException e) {
 //            log.error(RESULT_SET_ERROR, e);
 //        } finally {
@@ -83,10 +146,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<User> read(final String email) {
-        String sql = "SELECT login, password, role, fname, lname, address, serie, number,"
-                + " id_number, issue_date, end_date FROM Users "
+        String sql = "SELECT login, password, role, fname"
+                + " FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
-                + "JOIN Passport ON User_data.passport_id=Passport.id WHERE login = ?;";
+                + "WHERE login = ?;";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setString(1, email);
@@ -94,9 +157,20 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             log.error("Cannot set argument in prepared statement.", e);
         }
         try (ResultSet resultSet = statement.executeQuery()) {
-            resultSet.next();
-            User user = createUser(resultSet);
-            return user != null ? Optional.of(user) : Optional.empty();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            UserData userData = UserData.builder()
+                    .fName(resultSet.getString("fname"))
+                    .build();
+            Role role = Role.fromValue(resultSet.getInt("role"));
+            User user = User.builder()
+                    .login(resultSet.getString("login"))
+                    .role(role)
+                    .password(resultSet.getString("password"))
+                    .userData(userData)
+                    .build();
+            return Optional.of(user);
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);
         } finally {
@@ -121,8 +195,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                     .serie(resultSet.getString("serie"))
                     .number(resultSet.getInt("number"))
                     .idNumber(resultSet.getString("id_number"))
-                    .issueDate(resultSet.getDate("issue_date"))
-                    .endDate(resultSet.getDate("end_date"))
+                    .issueDate(resultSet.getDate("issue_date").toLocalDate())
+                    .endDate(resultSet.getDate("end_date").toLocalDate())
                     .build();
             UserData userData = UserData.builder()
                     .fName(resultSet.getString("fname"))
@@ -141,5 +215,20 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             log.error(RESULT_SET_ERROR, e);
         }
         return null;
+    }
+
+    private int getLastPosition(final String tableName, final String colName) {
+        String sql = String.format("SELECT COUNT(%s) FROM %s", colName, tableName);
+        int last = -1;
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            resultSet.next();
+            last = resultSet.getInt(1) + 1;
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
+        return last;
     }
 }
