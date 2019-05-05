@@ -173,15 +173,15 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * counts and output parameters have been retrieved.
      * </ul>
      * <p>
-     * <B>NOTE:</B>  If this method is called during a daoCreator and the
-     * auto-commit mode is changed, the daoCreator is committed.  If
+     * <B>NOTE:</B>  If this method is called during a daoManager and the
+     * auto-commit mode is changed, the daoManager is committed.  If
      * <code>setAutoCommit</code> is called and the auto-commit mode is
      * not changed, the call is a no-op.
      *
      * @param autoComm <code>true</code> to enable auto-commit mode;
      *                 <code>false</code> to disable it
      * @throws SQLException if a database access error occurs,
-     *                      setAutoCommit(true) is called while participating in a distributed daoCreator,
+     *                      setAutoCommit(true) is called while participating in a distributed daoManager,
      *                      or this method is called on a closed connection
      * @see #getAutoCommit
      */
@@ -213,7 +213,7 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * used only when auto-commit mode has been disabled.
      *
      * @throws SQLException if a database access error occurs,
-     *                      this method is called while participating in a distributed daoCreator,
+     *                      this method is called while participating in a distributed daoManager,
      *                      if this method is called on a closed connection or this
      *                      <code>Connection</code> object is in auto-commit mode
      * @see #setAutoCommit
@@ -224,13 +224,13 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
     }
 
     /**
-     * Undoes all changes made in the current daoCreator
+     * Undoes all changes made in the current daoManager
      * and releases any database locks currently held
      * by this <code>Connection</code> object. This method should be
      * used only when auto-commit mode has been disabled.
      *
      * @throws SQLException if a database access error occurs,
-     *                      this method is called while participating in a distributed daoCreator,
+     *                      this method is called while participating in a distributed daoManager,
      *                      this method is called on a closed connection or this
      *                      <code>Connection</code> object is in auto-commit mode
      * @see #setAutoCommit
@@ -248,9 +248,9 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * object that is already closed is a no-op.
      * <p>
      * It is <b>strongly recommended</b> that an application explicitly
-     * commits or rolls back an active daoCreator prior to calling the
+     * commits or rolls back an active daoManager prior to calling the
      * <code>close</code> method.  If the <code>close</code> method is called
-     * and there is an active daoCreator, the results are implementation-defined.
+     * and there is an active daoManager, the results are implementation-defined.
      *
      * @throws SQLException if a database access error occurs
      */
@@ -303,13 +303,13 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * Puts this connection in read-only mode as a hint to the driver to enable
      * database optimizations.
      *
-     * <P><B>Note:</B> This method cannot be called during a daoCreator.
+     * <P><B>Note:</B> This method cannot be called during a daoManager.
      *
      * @param readOnly <code>true</code> enables read-only mode;
      *                 <code>false</code> disables it
      * @throws SQLException if a database access error occurs, this
      *                      method is called on a closed connection or this
-     *                      method is called during a daoCreator
+     *                      method is called during a daoManager
      */
     @Override
     public void setReadOnly(final boolean readOnly) throws SQLException {
@@ -370,12 +370,12 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
     }
 
     /**
-     * Attempts to change the daoCreator isolation level for this
+     * Attempts to change the daoManager isolation level for this
      * <code>Connection</code> object to the one given.
      * The constants defined in the interface <code>Connection</code>
-     * are the possible daoCreator isolation levels.
+     * are the possible daoManager isolation levels.
      * <p>
-     * <B>Note:</B> If this method is called during a daoCreator, the result
+     * <B>Note:</B> If this method is called during a daoManager, the result
      * is implementation-defined.
      *
      * @param level one of the following <code>Connection</code> constants:
@@ -399,9 +399,9 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
 
     /**
      * Retrieves this <code>Connection</code> object's current
-     * daoCreator isolation level.
+     * daoManager isolation level.
      *
-     * @return the current daoCreator isolation level, which will be one
+     * @return the current daoManager isolation level, which will be one
      * of the following constants:
      * <code>Connection.TRANSACTION_READ_UNCOMMITTED</code>,
      * <code>Connection.TRANSACTION_READ_COMMITTED</code>,
@@ -670,15 +670,15 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
     }
 
     /**
-     * Creates an unnamed savepoint in the current daoCreator and
+     * Creates an unnamed savepoint in the current daoManager and
      * returns the new <code>Savepoint</code> object that represents it.
      *
-     * <p> if setSavepoint is invoked outside of an active daoCreator, a daoCreator will be started at this newly created
+     * <p> if setSavepoint is invoked outside of an active daoManager, a daoManager will be started at this newly created
      * savepoint.
      *
      * @return the new <code>Savepoint</code> object
      * @throws SQLException                    if a database access error occurs,
-     *                                         this method is called while participating in a distributed daoCreator,
+     *                                         this method is called while participating in a distributed daoManager,
      *                                         this method is called on a closed connection
      *                                         or this <code>Connection</code> object is currently in
      *                                         auto-commit mode
@@ -693,16 +693,16 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
     }
 
     /**
-     * Creates a savepoint with the given name in the current daoCreator
+     * Creates a savepoint with the given name in the current daoManager
      * and returns the new <code>Savepoint</code> object that represents it.
      *
-     * <p> if setSavepoint is invoked outside of an active daoCreator, a daoCreator will be started at this newly created
+     * <p> if setSavepoint is invoked outside of an active daoManager, a daoManager will be started at this newly created
      * savepoint.
      *
      * @param name a <code>String</code> containing the name of the savepoint
      * @return the new <code>Savepoint</code> object
      * @throws SQLException                    if a database access error occurs,
-     *                                         this method is called while participating in a distributed daoCreator,
+     *                                         this method is called while participating in a distributed daoManager,
      *                                         this method is called on a closed connection
      *                                         or this <code>Connection</code> object is currently in
      *                                         auto-commit mode
@@ -724,7 +724,7 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      *
      * @param savepoint the <code>Savepoint</code> object to roll back to
      * @throws SQLException                    if a database access error occurs,
-     *                                         this method is called while participating in a distributed daoCreator,
+     *                                         this method is called while participating in a distributed daoManager,
      *                                         this method is called on a closed connection,
      *                                         the <code>Savepoint</code> object is no longer valid,
      *                                         or this <code>Connection</code> object is currently in
@@ -742,14 +742,14 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
 
     /**
      * Removes the specified <code>Savepoint</code>  and subsequent <code>Savepoint</code> objects from the current
-     * daoCreator. Any reference to the savepoint after it have been removed
+     * daoManager. Any reference to the savepoint after it have been removed
      * will cause an <code>SQLException</code> to be thrown.
      *
      * @param savepoint the <code>Savepoint</code> object to be removed
      * @throws SQLException                    if a database access error occurs, this
      *                                         method is called on a closed connection or
      *                                         the given <code>Savepoint</code> object is not a valid
-     *                                         savepoint in the current daoCreator
+     *                                         savepoint in the current daoManager
      * @throws SQLFeatureNotSupportedException if the JDBC driver does not support
      *                                         this method
      * @since 1.4
@@ -1112,7 +1112,7 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * this method is called.
      * <p>
      * The query submitted by the driver to validate the connection shall be
-     * executed in the context of the current daoCreator.
+     * executed in the context of the current daoManager.
      *
      * @param timeout -             The time in seconds to wait for the database operation
      *                used to validate the connection to complete.  If
@@ -1411,7 +1411,7 @@ public class PooledConnectionProxy implements Connection, Comparable<PooledConne
      * there is no administrator thread, or it has no access to the
      * connection. This method is severe in it's effects, and should be
      * given a high enough value so it is never triggered before any more
-     * normal timeouts, such as daoCreator timeouts.
+     * normal timeouts, such as daoManager timeouts.
      * <p>
      * JDBC driver implementations  may also choose to support the
      * {@code setNetworkTimeout} method to impose a limit on database

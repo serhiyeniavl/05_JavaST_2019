@@ -26,7 +26,7 @@ public class ConnectionPool {
     private Set<PooledConnectionProxy> usedConnections;
 
     private Long connectionTimeout = 30L * 1000L; //30sec
-    private Integer maxPoolSize = 25;
+    private Integer maxPoolSize = 50;
     private Integer initialSize = 5;
 
     private static ConnectionPool instance;
@@ -93,6 +93,7 @@ public class ConnectionPool {
                 connection.clearWarnings();
                 usedConnections.remove(connection);
                 connectionQueue.add(connection);
+
             }
         } catch (SQLException e) {
             log.warn("Cannot return connection in pool", e);
