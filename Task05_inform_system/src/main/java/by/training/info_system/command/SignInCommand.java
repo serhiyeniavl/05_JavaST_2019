@@ -18,7 +18,6 @@ public class SignInCommand extends Command {
     @Override
     public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-        page.setRedirect(true);
 
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
@@ -38,6 +37,9 @@ public class SignInCommand extends Command {
             session.setAttribute("discount", "0");
 
             page = PageFactory.defineAndGet(PageEnum.HOME);
+            page.setRedirect(true);
+        } else {
+            request.setAttribute("wrongAction", "Incorrect email or password");
         }
         return page;
     }

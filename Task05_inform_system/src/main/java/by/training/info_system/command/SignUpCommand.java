@@ -23,7 +23,6 @@ public class SignUpCommand extends Command {
     @Override
     public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNUP);
-        page.setRedirect(true);
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -75,6 +74,7 @@ public class SignUpCommand extends Command {
             session.setAttribute("discount", "0");
 
             page = PageFactory.defineAndGet(PageEnum.HOME);
+            page.setRedirect(true);
         }
         return page;
     }
