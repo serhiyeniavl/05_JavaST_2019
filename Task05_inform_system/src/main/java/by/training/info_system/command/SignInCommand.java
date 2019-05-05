@@ -25,6 +25,10 @@ public class SignInCommand extends Command {
         Optional<User> user = service.findByLogin(email);
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
+            if (service.isInBlackList(user.get())) {
+                putAttrInRequest(request, "blackList", "This account have been banned.");
+                return page;
+            }
             HttpSession session = request.getSession(false);
             User sessionUser = User.builder()
                     .login(user.get().getLogin())
@@ -39,7 +43,7 @@ public class SignInCommand extends Command {
             page = PageFactory.defineAndGet(PageEnum.HOME);
             page.setRedirect(true);
         } else {
-            request.setAttribute("wrongAction", "Incorrect email or password");
+            putAttrInRequest(request, "incorrectData", "Incorrect email or password");
         }
         return page;
     }
