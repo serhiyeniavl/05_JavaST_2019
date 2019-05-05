@@ -2,7 +2,7 @@ package by.training.info_system.dao;
 
 import java.util.Optional;
 
-public interface DaoCreator {
+public interface DaoManager {
     <T extends Dao<?>> Optional<T> createDao(final Class<T> key);
 
     void autoCommit(boolean commit);

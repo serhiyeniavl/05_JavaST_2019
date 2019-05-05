@@ -1,7 +1,7 @@
 package by.training.info_system.dao.impl;
 
 import by.training.info_system.dao.*;
-import by.training.info_system.dao.DaoCreator;
+import by.training.info_system.dao.DaoManager;
 import by.training.info_system.dao.connection_pool.ConnectionPool;
 import lombok.extern.log4j.Log4j2;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Log4j2
-public class DaoCreatorImpl implements DaoCreator {
+public class DaoManagerImpl implements DaoManager {
     private static final Map<Class<? extends Dao<?>>, Class<? extends AbstractDao>> CLASSES = new ConcurrentHashMap<>();
 
     static {
@@ -25,7 +25,7 @@ public class DaoCreatorImpl implements DaoCreator {
     private Connection connection;
 
 
-    public DaoCreatorImpl() {
+    public DaoManagerImpl() {
         this.connection = ConnectionPool.getInstance().getConnection();
     }
 

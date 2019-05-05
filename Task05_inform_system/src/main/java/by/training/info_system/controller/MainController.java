@@ -5,10 +5,8 @@ import by.training.info_system.command.Command;
 import by.training.info_system.command.CommandManager;
 import by.training.info_system.command.CommandManagerFactory;
 import by.training.info_system.dao.connection_pool.ConnectionPool;
-import by.training.info_system.dao.impl.DaoCreatorImpl;
+import by.training.info_system.dao.impl.DaoManagerImpl;
 import by.training.info_system.resource.page.JspPage;
-import by.training.info_system.resource.page.PageEnum;
-import by.training.info_system.resource.page.PageFactory;
 import by.training.info_system.service.impl.ServiceFactoryImpl;
 import lombok.extern.log4j.Log4j2;
 
@@ -41,7 +39,7 @@ public class MainController extends HttpServlet {
     private void processRequest(final HttpServletRequest req,
                                 final HttpServletResponse resp) {
         Command command = ActionCommandFactory.defineCommand(req);
-        CommandManager commandManager = CommandManagerFactory.getManager(new ServiceFactoryImpl(new DaoCreatorImpl()));
+        CommandManager commandManager = CommandManagerFactory.getManager(new ServiceFactoryImpl(new DaoManagerImpl()));
 
         JspPage redirectPage = commandManager.execute(command, req, resp);
         commandManager.close();
