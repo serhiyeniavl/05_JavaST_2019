@@ -51,6 +51,33 @@ public class DaoCreatorImpl implements DaoCreator {
     }
 
     @Override
+    public void autoCommit(boolean commit) {
+        try {
+            connection.setAutoCommit(commit);
+        } catch (SQLException e) {
+            log.error("Cannot to set auto commit argument", e);
+        }
+    }
+
+    @Override
+    public void commit() {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            log.error("Cannot commit", e);
+        }
+    }
+
+    @Override
+    public void rollback() {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            log.error("Cannot rollback", e);
+        }
+    }
+
+    @Override
     public void close() {
         try {
             connection.close();

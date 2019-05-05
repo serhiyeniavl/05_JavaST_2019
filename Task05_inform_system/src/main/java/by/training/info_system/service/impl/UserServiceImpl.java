@@ -16,6 +16,21 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public boolean registerNewUser(final User user) {
+        UserDao userDao = daoCreator.createDao(UserDao.class).orElseThrow();
+        daoCreator.autoCommit(false);
+        daoCreator.commit();
+        boolean isCreated = userDao.create(user);
+        if (!isCreated) {
+            daoCreator.rollback();
+        } else {
+            daoCreator.commit();
+        }
+        daoCreator.autoCommit(true);
+        return isCreated;
+    }
+
+    @Override
     public Optional<List<User>> readBlackList() {
         return Optional.empty();
     }

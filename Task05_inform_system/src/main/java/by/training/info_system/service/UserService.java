@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends Service {
-    Optional<User> findByLogin(final String email);
+    Optional<User> findByLogin(String email);
+    boolean registerNewUser(User user);
     Optional<List<User>> readBlackList();
     Optional<List<User>> findUsersWithDiscount();
 }
