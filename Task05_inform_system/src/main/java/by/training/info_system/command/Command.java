@@ -11,9 +11,13 @@ public abstract class Command {
     ServiceFactory factory;
 
 
-    void setFactory(final ServiceFactory factory) {
+    void setFactory(ServiceFactory factory) {
         this.factory = factory;
     }
 
-    public abstract JspPage execute(final HttpServletRequest request, final HttpServletResponse response);
+    public abstract JspPage execute(HttpServletRequest request, HttpServletResponse response);
+
+    void putAttrInRequest(HttpServletRequest request, String s, Object o) {
+        request.setAttribute(s, o);
+    }
 }
