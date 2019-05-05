@@ -52,13 +52,13 @@
                            placeholder="Password" required>
                     <c:if test="${not empty incorrectData}">
                         <h5 style="color: red; text-align: center">${incorrectData}
-                            <br>If you have any questions, please, contact us:
-                            <a href="${contact}"></a></h5>
+                            <br>If you have any questions, please,
+                            <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h5>
                     </c:if>
                     <c:if test="${not empty blackList}">
                         <h5 style="color: red; text-align: center">${blackList}
                             <br>If you have any questions, please,
-                            <a href="${contact}" style="color: red">contact</a> us.</h5>
+                            <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h5>
                     </c:if>
                     <c:if test="${not empty signedUp}">
                         <h5 style="color: green; text-align: center">${signedUp}</h5>
