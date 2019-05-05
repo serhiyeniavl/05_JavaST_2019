@@ -1,33 +1,43 @@
 package by.training.info_system.service.impl;
 
 import by.training.info_system.dao.UserDao;
+import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.User;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public Optional<User> findByLogin(String email) {
-        UserDao userDao = daoCreator.createDao(UserDao.class).orElseThrow();
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.read(email);
     }
 
     @Override
     public boolean registerNewUser(final User user) {
-        UserDao userDao = daoCreator.createDao(UserDao.class).orElseThrow();
-        daoCreator.autoCommit(false);
-        daoCreator.commit();
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        daoManager.autoCommit(false);
+        daoManager.commit();
         boolean isCreated = userDao.create(user);
         if (!isCreated) {
-            daoCreator.rollback();
+            daoManager.rollback();
         } else {
-            daoCreator.commit();
+            daoManager.commit();
         }
-        daoCreator.autoCommit(true);
+        daoManager.autoCommit(true);
         return isCreated;
+    }
+
+    @Override
+    public boolean isInBlackList(final User user) {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        List<BlackListNode> usersBlackList = dao.readBlackList().orElse(new ArrayList<>());
+        return usersBlackList.stream()
+                .anyMatch(user1 -> user1.getUser().getLogin().equals(user.getLogin()));
     }
 
     @Override
