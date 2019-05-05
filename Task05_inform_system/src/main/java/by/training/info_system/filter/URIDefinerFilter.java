@@ -24,6 +24,7 @@ public class URIDefinerFilter implements Filter {
         URI_LIST.add("/cars");
         URI_LIST.add("/signin");
         URI_LIST.add("/signup");
+        URI_LIST.add("/contact");
     }
 
     @Override
@@ -35,7 +36,7 @@ public class URIDefinerFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             String requestedURI = request.getRequestURI();
 
-            String page = requestedURI.substring(request.getContextPath().length());;
+            String page = requestedURI.substring(request.getContextPath().length());
 
             if (!URI_LIST.contains(page)) {
                 redirectToErrorPage(servletRequest, servletResponse);
