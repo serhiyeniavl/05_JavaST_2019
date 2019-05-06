@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface UserDao extends Dao<User> {
     Optional<User> read(final String email);
     Optional<List<BlackListNode>> readBlackList();
+    Optional<User> findByPassportNumber(Integer number, String idNumber);
     Optional<List<User>> findAllWithDiscount();
 }
