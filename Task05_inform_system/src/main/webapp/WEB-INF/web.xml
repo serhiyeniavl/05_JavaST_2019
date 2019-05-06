@@ -63,4 +63,19 @@
         <url-pattern>/contact</url-pattern>
 
     </filter-mapping>
+
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>by.training.info_system.filter.SecurityFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/cars</url-pattern>
+        <url-pattern>/signin</url-pattern>
+        <url-pattern>/signup</url-pattern>
+        <url-pattern>/contact</url-pattern>
+
+    </filter-mapping>
 </web-app>
