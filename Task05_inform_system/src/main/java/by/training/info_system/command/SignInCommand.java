@@ -1,5 +1,6 @@
 package by.training.info_system.command;
 
+import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.entity.User;
 import by.training.info_system.resource.ConfigurationManager;
 import by.training.info_system.resource.page.JspPage;
@@ -26,7 +27,8 @@ public class SignInCommand extends Command {
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
             if (service.isInBlackList(user.get())) {
-                putAttrInRequest(request, "blackList", "This account have been banned.");
+                putAttrInRequest(request, RequestAttribute.BLACK_LIST,
+                        "This account have been banned.");
                 return page;
             }
             HttpSession session = request.getSession(false);
@@ -43,7 +45,8 @@ public class SignInCommand extends Command {
             page = PageFactory.defineAndGet(PageEnum.HOME);
             page.setRedirect(true);
         } else {
-            putAttrInRequest(request, "incorrectData", "Incorrect email or password");
+            putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
+                    "Incorrect email or password");
         }
         return page;
     }
