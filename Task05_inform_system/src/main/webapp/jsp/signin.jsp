@@ -55,6 +55,11 @@
                             <br>If you have any questions, please,
                             <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h5>
                     </c:if>
+                    <c:if test="${not empty info}">
+                        <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
+                            <br>If you have any questions, please,
+                            <a href="${contact}" style="color: rgb(73, 160, 181); text-decoration: underline">contact</a> us.</h5>
+                    </c:if>
                     <c:if test="${not empty blackList}">
                         <h5 style="color: red; text-align: center">${blackList}
                             <br>If you have any questions, please,

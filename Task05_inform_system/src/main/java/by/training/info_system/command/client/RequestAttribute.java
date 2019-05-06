@@ -3,6 +3,7 @@ package by.training.info_system.command.client;
 public enum RequestAttribute {
     BLACK_LIST("blackList"),
     INCORRECT_DATA("incorrectData"),
+    INFO("info"),
     SIGNED_UP("signedUp");
 
     private String value;
