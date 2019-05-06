@@ -3,6 +3,7 @@ package by.training.info_system.service.impl;
 import by.training.info_system.dao.UserDao;
 import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.User;
+import by.training.info_system.entity.data.UserData;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.UserService;
 
@@ -38,6 +39,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
         List<BlackListNode> usersBlackList = dao.readBlackList().orElse(new ArrayList<>());
         return usersBlackList.stream()
                 .anyMatch(user1 -> user1.getUser().getLogin().equals(user.getLogin()));
+    }
+
+    @Override
+    public boolean isExist(final Integer passportNumber,
+                           final String idPassportNumber) {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        return dao.findByPassportNumber(passportNumber, idPassportNumber).isPresent();
     }
 
     @Override

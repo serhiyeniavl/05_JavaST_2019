@@ -9,6 +9,7 @@ public interface UserService extends Service {
     Optional<User> findByLogin(String email);
     boolean registerNewUser(User user);
     boolean isInBlackList(User user);
+    boolean isExist(Integer passportNumber, String idPassportNumber);
     Optional<List<User>> readBlackList();
     Optional<List<User>> findUsersWithDiscount();
 }
