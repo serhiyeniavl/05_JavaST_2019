@@ -15,9 +15,9 @@ VALUES ('3', 'Dmitry', 'Ivanov', '2', 'Minsk, Kurchatova 8'),
        ('4', 'Kirill', 'Petrov', '3', 'Minsk, Kurchatova 5');
 
 INSERT INTO Passport(serie, number, id_number, issue_date, end_date) VALUES
-('AB', '4959395', 'FGNBNR63cH3', '2015-08-23', '2025-08-23'),
-('AB', '5839392', 'FFBCNR63cH3', '2016-09-23', '2026-09-23'),
-('HK', '4435674', 'FVDDGB39jN2', '2014-02-21', '2024-02-21');
+('AB', '4959395', '4851723C758PB3', '2015-08-23', '2025-08-23'),
+('AB', '5839392', '5913484C354PD2', '2016-09-23', '2026-09-23'),
+('HK', '4435674', '5943856C451PD2', '2014-02-21', '2024-02-21');
 
 INSERT INTO Cars(vin_code, brand_name,  reg_number, rent_price, class_auto,
                  image_path)
