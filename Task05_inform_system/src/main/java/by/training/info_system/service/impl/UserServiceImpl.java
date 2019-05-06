@@ -24,10 +24,10 @@ public class UserServiceImpl extends AbstractService implements UserService {
         daoManager.autoCommit(false);
         daoManager.commit();
         boolean isCreated = userDao.create(user);
-        if (!isCreated) {
-            daoManager.rollback();
-        } else {
+        if (isCreated) {
             daoManager.commit();
+        } else {
+            daoManager.rollback();
         }
         daoManager.autoCommit(true);
         return isCreated;
