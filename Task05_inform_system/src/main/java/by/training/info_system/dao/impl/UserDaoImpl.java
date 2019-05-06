@@ -218,6 +218,32 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
+    public Optional<User> findByPassportNumber(final Integer number,
+                                               final String idNumber) {
+        String sql = "SELECT login, role, fname, lname, address, serie, number,"
+                + " id_number, issue_date, end_date FROM Users "
+                + "JOIN User_data ON Users.id=User_data.user_id "
+                + "JOIN Passport ON User_data.passport_id=Passport.id " +
+                "WHERE number = ? OR id_number = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setInt(1, number);
+            statement.setString(2, idNumber);
+        } catch (SQLException e) {
+            log.error("Cannot set argument in prepared statement.", e);
+        }
+        try (ResultSet resultSet = statement.executeQuery()) {
+            resultSet.next();
+            return Optional.ofNullable(createUser(resultSet));
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<List<User>> findAllWithDiscount() {
         return Optional.empty();
     }
@@ -241,7 +267,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             return User.builder()
                     .login(resultSet.getString("login"))
                     .role(role)
-                    .password(resultSet.getString("password"))
                     .userData(userData)
                     .build();
         } catch (SQLException e) {
