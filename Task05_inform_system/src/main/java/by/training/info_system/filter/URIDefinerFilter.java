@@ -1,7 +1,6 @@
 package by.training.info_system.filter;
 
-import by.training.info_system.resource.page.JspPage;
-import by.training.info_system.resource.page.PageFactory;
+import by.training.info_system.resource.ConfigurationManager;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.Filter;
@@ -54,6 +53,8 @@ public class URIDefinerFilter implements Filter {
     private void redirectToErrorPage(final ServletRequest request,
                                      final ServletResponse response)
             throws IOException, ServletException {
-        request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+        request.getRequestDispatcher(
+                ConfigurationManager.getInstance().getPagePath("error"))
+                .forward(request, response);
     }
 }

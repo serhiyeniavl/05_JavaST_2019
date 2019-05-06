@@ -35,12 +35,13 @@ public class SignUpCommand extends Command {
         String passportIssueDate = request.getParameter("ps_issue");
         String passportEndDate = request.getParameter("ps_end");
 
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         User user;
         Passport userPassport;
         UserData userData;
         try {
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
             userPassport = Passport.builder()
                     .serie(passportNumber.substring(0, 2))
                     .number(Integer.valueOf(passportNumber.substring(2)))
