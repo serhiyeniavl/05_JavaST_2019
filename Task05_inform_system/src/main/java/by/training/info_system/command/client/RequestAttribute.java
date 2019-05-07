@@ -4,6 +4,7 @@ public enum RequestAttribute {
     BLACK_LIST("blackList"),
     INCORRECT_DATA("incorrectData"),
     INFO("info"),
+    CARS("rental_cars"),
     SIGNED_UP("signedUp");
 
     private String value;
