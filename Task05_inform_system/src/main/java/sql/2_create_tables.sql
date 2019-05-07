@@ -11,7 +11,7 @@ CREATE TABLE `User_data` (
 
 CREATE TABLE `Car_info` (
                           `car_id` int(11) NOT NULL AUTO_INCREMENT,
-                          `description` varchar(40),
+                          `description` varchar(255),
                           `year_made` smallint NOT NULL,
                           `run` int NOT NULL,
                           `last_maintenance` smallint NOT NULL,
