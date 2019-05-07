@@ -1,14 +1,12 @@
 package by.training.info_system.command.client;
 
-import by.training.info_system.command.Command;
-import by.training.info_system.command.SignInCommand;
-import by.training.info_system.command.SignOutCommand;
-import by.training.info_system.command.SignUpCommand;
+import by.training.info_system.command.*;
 
 public enum CommandEnum {
     SIGNIN(new SignInCommand()),
     SIGNOUT(new SignOutCommand()),
-    SIGNUP(new SignUpCommand());
+    SIGNUP(new SignUpCommand()),
+    RENT_CAR(new RentCarCommand());
 
     Command command;
 
