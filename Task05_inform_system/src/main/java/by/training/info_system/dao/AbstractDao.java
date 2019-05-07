@@ -12,7 +12,6 @@ import java.sql.Statement;
 public abstract class AbstractDao {
     protected static final String RESULT_SET_ERROR = "Result set error: ";
 
-
     private Connection connection;
 
 
@@ -58,7 +57,7 @@ public abstract class AbstractDao {
         }
     }
 
-    public void closePreparedStatement(final PreparedStatement statement) {
+    protected void closePreparedStatement(final PreparedStatement statement) {
         try {
             if (statement != null) {
                 statement.close();
