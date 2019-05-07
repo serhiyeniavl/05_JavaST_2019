@@ -11,6 +11,9 @@ class SignInPage extends JspPage {
     SignInPage() {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.UNAUTHORIZED_USER);
+        roles.add(Role.USER);
+        roles.add(Role.MANAGER);
+        roles.add(Role.ADMIN);
         setUri("signin");
         setAllowedRoles(roles);
         setJspPagePath(ConfigurationManager.getInstance().getPagePath(getUri()));

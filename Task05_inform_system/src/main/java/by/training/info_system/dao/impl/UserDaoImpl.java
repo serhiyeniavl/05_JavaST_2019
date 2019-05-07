@@ -147,7 +147,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<User> read(final String email) {
-        String sql = "SELECT login, password, role, fname"
+        String sql = "SELECT id, login, password, role, fname"
                 + " FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
                 + "WHERE login = ?;";
@@ -171,6 +171,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                     .password(resultSet.getString("password"))
                     .userData(userData)
                     .build();
+            user.setId(resultSet.getLong("id"));
             return Optional.of(user);
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);

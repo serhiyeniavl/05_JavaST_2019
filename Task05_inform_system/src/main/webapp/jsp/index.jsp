@@ -7,27 +7,29 @@
 
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
-<c:url value="/contact.html" var="contact"/>
-<c:url value="/managers.html" var="managers"/>
-<c:url value="/orders.html" var="orders"/>
-<c:url value="/user_orders.html" var="user_orders"/>
-<c:url value="/users.html" var="users"/>
+<c:url value="/contact" var="contact"/>
+<c:url value="/managers" var="managers"/>
+<c:url value="/orders" var="orders"/>
+<c:url value="/my_orders" var="user_orders"/>
+<c:url value="/users" var="users"/>
 
 <c:url value="/signin" var="signin"/>
 <c:url value="/signup" var="signup"/>
-<c:url value="/profile.html" var="profile"/>
+<c:url value="/profile" var="profile"/>
 
 <c:set var="user" value="${sessionScope.user}"/>
 <c:set var="discount" value="${sessionScope.discount}"/>
 
 <c:set var="url">${pageContext.request.requestURL}</c:set>
-<c:set var="ctx" value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
+<c:set var="ctx"
+       value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
 
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
+    <link rel="icon"
+          href="${ctx}/img/wheel.png"
           type="image/jpg">
     <link rel="stylesheet" href="${ctx}/css/index.css"
           type="text/css"/>
@@ -36,27 +38,30 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700"
+          rel="stylesheet">
 
     <title>
         Free ride
     </title>
     <style>
         .a01 {
-            color: rgb(251,251,251);
+            color: rgb(251, 251, 251);
         }
+
         .a01:hover {
-            color: rgb(52,57,62);
+            color: rgb(52, 57, 62);
         }
     </style>
 
 </head>
 
-<body style="background: url(https://cdn1.savepice.ru/uploads/2019/4/16/5b0d7dae051d4532ef4e60fa8e560142-full.jpg) no-repeat; background-size: 100%;">
+<body style="background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%;">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
-        <a class="navbar-brand" href="${home}" style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
+        <a class="navbar-brand" href="${home}"
+           style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -74,42 +79,68 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${contact}">Contact</a>
+                </li>
+                <c:if test="${not empty user && user.role.value()==2}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${user_orders}">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${users}">Users</a>
+                    </li>
+                </c:if>
+                <c:if test="${not empty user && user.role.value()==3}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${user_orders}">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${users}">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${managers}">Mangers</a>
+                    </li>
+                </c:if>
 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${managers}">Mangers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${user_orders}">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${users}">Users</a>
-                </li>
-                
                 <c:choose>
                     <c:when test="${user==null}">
                         <li class="nav-item">
-                            <input value="Sign in" type="button" onclick="window.location='${signin}'"
+                            <input value="Sign in" type="button"
+                                   onclick="window.location='${signin}'"
                                    class="btn btn-success navbar-btn btn-circle"
                                    style="margin-left: 12px;">
                         </li>
-                        <li class="nav-item"><input value="Sign up" type="button"
+                        <li class="nav-item"><input value="Sign up"
+                                                    type="button"
                                                     onclick="window.location='${signup}'"
                                                     class="btn btn-success navbar-btn btn-circle"
-                                                    style="margin-left: 12px;"></li>
+                                                    style="margin-left: 12px;">
+                        </li>
                     </c:when>
                     <c:otherwise>
                         <li>
                             <div class="btn-group dropup">
-                                <input type="button" value="${user.userData.FName}" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 12px;"/>
-                                <div class="dropdown-menu" style="background-color: rgb(52,57,62);">
-                                    <a class="dropdown-item a01" href="${profile}">Profile</a>
-                                    <a class="dropdown-item a01" href="${user_orders}">Your orders</a>
-                                    <p class="dropdown-item a01">Your discount: ${discount}</p>
+                                <input type="button"
+                                       value="${user.userData.FName}"
+                                       class="btn btn-info dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       style="margin-left: 12px;"/>
+                                <div class="dropdown-menu"
+                                     style="background-color: rgb(52,57,62);">
+                                    <a class="dropdown-item a01"
+                                       href="${profile}">Profile</a>
+                                    <a class="dropdown-item a01"
+                                       href="${user_orders}">Your orders</a>
+                                    <p class="dropdown-item a01">Your
+                                        discount: ${discount}</p>
                                     <div class="dropdown-divider"></div>
-                                    <form style="margin-bottom: 0px;" action="${signin}" method="post">
-                                        <input type="hidden" name="command" value="signout"/>
-                                        <input type="submit" class="dropdown-item a01" value="Logout">
+                                    <form style="margin-bottom: 0px;"
+                                          action="${signin}" method="post">
+                                        <input type="hidden" name="command"
+                                               value="signout"/>
+                                        <input type="submit"
+                                               class="dropdown-item a01"
+                                               value="Logout">
                                     </form>
                                 </div>
                             </div>
@@ -127,8 +158,10 @@
         <div class="row">
             <div class="col-lg-6"
                  style="background-color: rgba(10,13,14,0.4); color: white;">
-                <h1 class="mt-2" style="color: rgb(241,284,71)">We appreciate your time</h1>
-                <p style="font-size: 23px">Vehicle rental the way it should be.</p>
+                <h1 class="mt-2" style="color: rgb(241,284,71)">We appreciate
+                    your time</h1>
+                <p style="font-size: 23px">Vehicle rental the way it should
+                    be.</p>
             </div>
         </div>
     </div>
@@ -139,7 +172,8 @@
                  style="background-color: rgba(10,13,14,0.4); color: white;">
                 <p style="font-size: 23px">Clear pricing and simple process.</p>
                 <br>
-                <a href="http://localhost:8080/freeride/jsp/cars.jsp" class="butt">Book online</a>
+                <a href="http://localhost:8080/freeride/jsp/cars.jsp"
+                   class="butt">Book online</a>
             </div>
         </div>
     </div>
