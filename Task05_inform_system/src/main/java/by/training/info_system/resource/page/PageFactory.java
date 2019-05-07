@@ -18,6 +18,9 @@ public final class PageFactory {
         if (uri.getUri().equals("contact")) {
             return new ContactPage();
         }
+        if (uri.getUri().equals("cars")) {
+            return new CarsPage();
+        }
         throw new IllegalStateException("Unknown uri: /" + uri);
     }
 }

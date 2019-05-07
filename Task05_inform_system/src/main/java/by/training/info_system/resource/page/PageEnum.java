@@ -4,7 +4,8 @@ public enum PageEnum {
     HOME("home"),
     SIGNIN("signin"),
     SIGNUP("signup"),
-    CONTACT("contact");
+    CONTACT("contact"),
+    CARS("cars");
 
     private String uri;
 
