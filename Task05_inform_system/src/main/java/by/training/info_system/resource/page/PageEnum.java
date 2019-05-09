@@ -5,6 +5,8 @@ public enum PageEnum {
     SIGNIN("signin"),
     SIGNUP("signup"),
     CONTACT("contact"),
+    ORDERS("orders"),
+    MY_ORDERS("my_orders"),
     CARS("cars");
 
     private String uri;
