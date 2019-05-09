@@ -12,8 +12,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class CarInfo implements Serializable {
     private Long carId;
-    private String description;
-    private Short yearMade;
+    private String vinCode;
+    private String regNumber;
     private Integer run;
     private Date lastMaintenance;
 }

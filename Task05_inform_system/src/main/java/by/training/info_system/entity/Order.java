@@ -1,15 +1,11 @@
 package by.training.info_system.entity;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import by.training.info_system.entity.status.OrderStatus;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -19,8 +15,9 @@ import java.util.Date;
 public class Order extends Entity implements Serializable {
     private User user;
     private Car car;
-    private Date issueDate;
-    private Date returnDate;
-    private LocalDate realReturnDate;
+    private OrderStatus status;
+    private LocalDateTime issueDate;
+    private LocalDateTime returnDate;
+    private LocalDateTime realReturnDate;
     private Long finalPrice;
 }
