@@ -44,7 +44,6 @@ public class SignInCommand extends Command {
             session.setAttribute("discount", "0");
 
             page = PageFactory.defineAndGet(PageEnum.HOME);
-            page.setRedirect(true);
         } else {
             putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
                     "Incorrect email or password");

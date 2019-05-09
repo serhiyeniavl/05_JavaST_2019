@@ -73,14 +73,24 @@
         }
 
         .button5:hover {
-            background-color: #555555;
-            color: white;
+            background-color: #F5F5F5;
+            /*color: white;*/
+        }
+
+        .car_img {
+            width: 65%;
+            height: 32%;
         }
 
         @media screen and (max-width: 768px) {
             .col-sm-4 {
                 text-align: center;
                 margin: 25px 0;
+            }
+
+            .car_img {
+                width: 40%;
+                height: 20%;
             }
         }
 
@@ -89,29 +99,45 @@
 </head>
 
 <body>
-<div class="jumbotron text-center">
-    <h1 style="font-size: 43px">FreeRide</h1>
+<div class="jumbotron text-center"
+     style="padding-bottom: 25px; padding-top: 25px;">
+    <h1 style="font-size: 43px;">FreeRide</h1>
     <p style="font-size: 23px">We specialize in rental cars</p>
+    <br><br>
+    <h4>If you new in here, you can learn more about how do we work</h4>
+    <a href="#info">
+        <button class="button button5" style="margin-top: 10px;">LEARN</button>
+    </a>
 </div>
 
+
 <div class="container-fluid text-center">
-    <h2>SERVICES</h2>
-    <h4>What we offer</h4>
-    <br>
-    <c:forEach var="car" items="${rental_cars}" step="3" varStatus="loop">
+    <c:if test="${not empty info}">
+    <h3 style="color: #008000; text-align: center">${info}
+        </c:if>
+        <c:if test="${not empty incorrectData}">
+        <h3 style="color: red; text-align: center">${incorrectData}
+            <br>If you have any questions, please,
+            <a href="${contact}" style="color: red; text-decoration: underline">contact</a>
+            us.</h3>
+        </c:if>
+        <h2>SERVICES</h2>
+        <h4>What we offer</h4>
+        <br>
+        <c:forEach var="car" items="${rental_cars}" step="3" varStatus="loop">
         <div class="row">
             <c:if test="${not empty rental_cars.get(loop.index)}">
                 <form class="col-sm-4" method="post" action="${cars}">
                     <input type="hidden" name="command" value="rent_car"/>
                     <img src="${ctx}/img/cars/${car.imagePath}"
-                         style="width: 65%; height: 32%;"
+                         class="car_img"
                          alt="${car.brandName}">
                     <h4>${car.brandName}</h4>
-                    <p>${car.carInfo.description}</p>
-                    <p>Year: ${car.carInfo.yearMade}</p>
+                    <p>${car.description}</p>
+                    <p>Year: ${car.yearMade}</p>
                     <p>Rent price: ${car.rentPrice}$</p>
                     <button type="submit" name="rent_butt"
-                            value="${car.vinCode}" class="button button5">RENT
+                            value="${car.id}" class="button button5">RENT
                     </button>
                 </form>
             </c:if>
@@ -122,14 +148,14 @@
                     <form class="col-sm-4" method="post" action="${cars}">
                         <input type="hidden" name="command" value="rent_car"/>
                         <img src="${ctx}/img/cars/${car.imagePath}"
-                             style="width: 65%; height: 32%;"
+                             class="car_img"
                              alt="${car.brandName}">
                         <h4>${car.brandName}</h4>
-                        <p>${car.carInfo.description}</p>
-                        <p>Year: ${car.carInfo.yearMade}</p>
+                        <p>${car.description}</p>
+                        <p>Year: ${car.yearMade}</p>
                         <p>Rent price: ${car.rentPrice}$</p>
                         <button type="submit" name="rent_butt"
-                                value="${car.vinCode}" class="button button5">
+                                value="${car.id}" class="button button5">
                             RENT
                         </button>
                     </form>
@@ -142,14 +168,14 @@
                     <form class="col-sm-4" method="post" action="${cars}">
                         <input type="hidden" name="command" value="rent_car"/>
                         <img src="${ctx}/img/cars/${car.imagePath}"
-                             style="width: 65%; height: 32%;"
+                             class="car_img"
                              alt="${car.brandName}">
                         <h4>${car.brandName}</h4>
-                        <p>${car.carInfo.description}</p>
-                        <p>Year: ${car.carInfo.yearMade}</p>
+                        <p>${car.description}</p>
+                        <p>Year: ${car.yearMade}</p>
                         <p>Rent price: ${car.rentPrice}$</p>
                         <button type="submit" name="rent_butt"
-                                value="${car.vinCode}" class="button button5">
+                                value="${car.id}" class="button button5">
                             RENT
                         </button>
                     </form>
@@ -157,7 +183,35 @@
             </c:if>
         </div>
         <br><br>
-    </c:forEach>
+        </c:forEach>
+</div>
+
+
+<div class="page-footer font-small teal pt-4"
+     style="background-color: #555555; color: white">
+    <div class="container-fluid text-center text-md-left">
+        <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <h5 class="text-uppercase font-weight-bold" id="info">How does
+                    it work?</h5>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Expedita sapiente sint, nulla, nihil
+                    repudiandae commodi voluptatibus corrupti animi sequi
+                    aliquid magnam debitis, maxime quam recusandae
+                    harum esse fugiat. Itaque, culpa?</p>
+            </div>
+            <hr class="clearfix w-100 d-md-none pb-3">
+            <div class="col-md-6 mb-md-0 mb-3">
+                <h5 class="text-uppercase font-weight-bold">What if?</h5>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Optio deserunt fuga perferendis modi earum
+                    commodi aperiam temporibus quod nulla nesciunt aliquid
+                    debitis ullam omnis quos ipsam, aspernatur id
+                    excepturi hic.</p>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -186,7 +240,7 @@
                 </li>
                 <c:if test="${not empty user && user.role.value()==2}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${user_orders}">Orders</a>
+                        <a class="nav-link" href="${orders}">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>
@@ -194,7 +248,7 @@
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${user_orders}">Orders</a>
+                        <a class="nav-link" href="${orders}">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>

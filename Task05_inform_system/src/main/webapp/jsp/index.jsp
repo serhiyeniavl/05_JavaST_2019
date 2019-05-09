@@ -82,7 +82,7 @@
                 </li>
                 <c:if test="${not empty user && user.role.value()==2}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${user_orders}">Orders</a>
+                        <a class="nav-link" href="${orders}">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>
@@ -90,7 +90,7 @@
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${user_orders}">Orders</a>
+                        <a class="nav-link" href="${orders}">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>
@@ -172,7 +172,7 @@
                  style="background-color: rgba(10,13,14,0.4); color: white;">
                 <p style="font-size: 23px">Clear pricing and simple process.</p>
                 <br>
-                <a href="http://localhost:8080/freeride/jsp/cars.jsp"
+                <a href="${cars}"
                    class="butt">Book online</a>
             </div>
         </div>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<c:url var="home" value="/home"/>
 <c:url var="signup" value="/signup"/>
 <c:url var="signin" value="/signin"/>
 <c:url var="contact" value="/contact"/>
@@ -44,7 +44,7 @@
                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                      alt="">
                 <form class="form-signin" method="post"
-                      action="${signin}">
+                      action="${home}">
                     <input type="hidden" name="command" value="signin"/>
                     <input name="email" type="email" class="form-control"
                            placeholder="Email" required autofocus>
