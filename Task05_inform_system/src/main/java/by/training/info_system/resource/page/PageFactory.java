@@ -1,26 +1,25 @@
 package by.training.info_system.resource.page;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public final class PageFactory {
+    private static final Map<PageEnum, JspPage> pages = new ConcurrentHashMap<>();
+
+    static {
+        pages.put(PageEnum.HOME, new HomePage());
+        pages.put(PageEnum.CARS, new CarsPage());
+        pages.put(PageEnum.SIGNIN, new SignInPage());
+        pages.put(PageEnum.SIGNUP, new SignUpPage());
+        pages.put(PageEnum.CONTACT, new ContactPage());
+        pages.put(PageEnum.MY_ORDERS, new UserOrdersPage());
+        pages.put(PageEnum.ORDERS, new OrdersPage());
+    }
 
     private PageFactory() {
     }
 
     public static JspPage defineAndGet(final PageEnum uri) {
-        if (uri.getUri().equals("home")) {
-            return new HomePage();
-        }
-        if (uri.getUri().equals("signin")) {
-            return new SignInPage();
-        }
-        if (uri.getUri().equals("signup")) {
-            return new SignUpPage();
-        }
-        if (uri.getUri().equals("contact")) {
-            return new ContactPage();
-        }
-        if (uri.getUri().equals("cars")) {
-            return new CarsPage();
-        }
-        throw new IllegalStateException("Unknown uri: /" + uri);
+        return pages.get(uri);
     }
 }
