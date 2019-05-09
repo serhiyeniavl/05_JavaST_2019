@@ -14,4 +14,10 @@ public class CarServiceImpl extends AbstractService implements CarService {
         CarDao dao = daoManager.createDao(CarDao.class).orElseThrow();
         return dao.getAll();
     }
+
+    @Override
+    public Optional<Car> findById(final long id) {
+        CarDao dao = daoManager.createDao(CarDao.class).orElseThrow();
+        return dao.get(id);
+    }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CarService extends Service {
     Optional<List<Car>> loadCars();
+    Optional<Car> findById(long id);
 }
