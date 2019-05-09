@@ -25,15 +25,15 @@ public class SignUpCommand extends Command {
     public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNUP);
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String fName = request.getParameter("fname");
-        String lName = request.getParameter("lname");
-        String address = request.getParameter("address");
-        String passportNumber = request.getParameter("ps_number");
-        String passportIdNumber = request.getParameter("ps_id");
-        String passportIssueDate = request.getParameter("ps_issue");
-        String passportEndDate = request.getParameter("ps_end");
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("password").trim();
+        String fName = request.getParameter("fname").trim();
+        String lName = request.getParameter("lname").trim();
+        String address = request.getParameter("address").trim();
+        String passportNumber = request.getParameter("ps_number").trim();
+        String passportIdNumber = request.getParameter("ps_id").trim();
+        String passportIssueDate = request.getParameter("ps_issue").trim();
+        String passportEndDate = request.getParameter("ps_end").trim();
 
 
         User user;
