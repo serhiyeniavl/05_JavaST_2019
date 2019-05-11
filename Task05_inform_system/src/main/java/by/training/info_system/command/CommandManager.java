@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface CommandManager {
-    JspPage execute(Command command, HttpServletRequest request, HttpServletResponse response);
+    JspPage execute(Command command,
+                    HttpServletRequest request,
+                    HttpServletResponse response);
 
     void close();
 }

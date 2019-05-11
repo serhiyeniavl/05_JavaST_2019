@@ -1,5 +1,6 @@
-package by.training.info_system.command;
+package by.training.info_system.command.user;
 
+import by.training.info_system.command.Command;
 import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.Passport;

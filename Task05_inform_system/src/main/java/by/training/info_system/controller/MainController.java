@@ -21,20 +21,24 @@ public class MainController extends HttpServlet {
         ConnectionPool.getInstance();
     }
 
-
     @Override
     protected void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp) throws IOException {
-        CommandManager commandManager = CommandManagerFactory.getManager(new ServiceFactoryImpl(new DaoManagerImpl()));
+        CommandManager commandManager = CommandManagerFactory.getManager(
+                new ServiceFactoryImpl(new DaoManagerImpl()));
         JspPage redirectPage = commandManager.execute(new EmptyCommand(), req, resp);
         commandManager.close();
 
         try {
             if (redirectPage.isRedirect()) {
                 redirectPage.setRedirect(false);
-                resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/" + redirectPage.getUri() + redirectPage.getRequestParameters()));
+                resp.sendRedirect(
+                        resp.encodeRedirectURL(
+                                req.getContextPath() + "/" + redirectPage.getUri()
+                                        + redirectPage.getRequestParameters()));
             } else {
-                getServletContext().getRequestDispatcher(redirectPage.getJspPagePath()).forward(req, resp);
+                getServletContext().getRequestDispatcher(
+                        redirectPage.getJspPagePath()).forward(req, resp);
             }
         } catch (ServletException e) {
             log.error("Servlet exception when forward req and resp", e);
@@ -47,12 +51,16 @@ public class MainController extends HttpServlet {
     protected void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp) {
         Command command = ActionCommandFactory.defineCommand(req);
-        CommandManager commandManager = CommandManagerFactory.getManager(new ServiceFactoryImpl(new DaoManagerImpl()));
+        CommandManager commandManager = CommandManagerFactory.getManager(
+                new ServiceFactoryImpl(new DaoManagerImpl()));
         JspPage redirectPage = commandManager.execute(command, req, resp);
         commandManager.close();
 
         try {
-            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/" + redirectPage.getUri() + redirectPage.getRequestParameters()));
+            resp.sendRedirect(
+                    resp.encodeRedirectURL(
+                            req.getContextPath() + "/" + redirectPage.getUri()
+                                    + redirectPage.getRequestParameters()));
         } catch (IOException e) {
             log.error("Servlet IO exception", e);
         }

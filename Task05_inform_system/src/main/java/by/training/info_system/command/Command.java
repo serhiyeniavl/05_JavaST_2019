@@ -19,7 +19,7 @@ import java.util.List;
 
 public abstract class Command {
 
-    ServiceFactory factory;
+    protected ServiceFactory factory;
 
 
     void setFactory(ServiceFactory factory) {
@@ -39,30 +39,31 @@ public abstract class Command {
         putAttrInRequest(request, RequestAttribute.CARS, cars);
     }
 
+    void loadUserOrders(HttpServletRequest request, long id) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findUserOrders(id).orElseGet(ArrayList::new);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+    }
+
     void loadOrders(HttpServletRequest request) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findAllOrders().orElseGet(ArrayList::new);
-        if (!orders.isEmpty()) {
-            putAttrInRequest(request, RequestAttribute.ORDERS, orders);
-        } else {
-            putAttrInRequest(request, RequestAttribute.INFO,
-                    "Orders list is empty.");
-        }
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
     }
 
-    void appendRequestParameter(JspPage page, RequestParameter parameter,
-                                RequestMessage message) {
+    protected void appendRequestParameter(JspPage page, RequestParameter parameter,
+                                          RequestMessage message) {
         page.appendRequestParameter(parameter.getValue() + "="
-        + Encoder.encodeString(message.getValue()));
+                + Encoder.encodeString(message.getValue()));
     }
 
-    void appendRequestParameter(JspPage page, RequestParameter parameter,
-                                String message) {
+    protected void appendRequestParameter(JspPage page, RequestParameter parameter,
+                                          String message) {
         page.appendRequestParameter(parameter.getValue() + "="
                 + Encoder.encodeString(message));
     }
 
-    boolean validate(Validator validator, Object object) {
+    protected boolean validate(Validator validator, Object object) {
         return validator.validate(object);
     }
 }

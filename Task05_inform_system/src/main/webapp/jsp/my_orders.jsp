@@ -89,16 +89,6 @@
                                     Car rent price:
                                     <td><c:out value="${ order.car.rentPrice }$"/></td>
                                     <br>
-                                    User first name:
-                                    <td><c:out
-                                            value="${ order.user.userData.FName }"/></td>
-                                    <br>
-                                    User email:
-                                    <td><c:out value="${ order.user.login }"/></td>
-                                    <br>
-                                    User:
-                                    <td><c:out value="${ order.user.role }"/></td>
-                                    <br>
                                     <c:if test="${not empty order.issueDate}">
                                         Issue date:
                                         <td><c:out value="${ order.issueDate }"/></td>

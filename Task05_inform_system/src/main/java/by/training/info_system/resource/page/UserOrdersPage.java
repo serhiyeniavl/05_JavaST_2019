@@ -12,7 +12,7 @@ class UserOrdersPage extends JspPage {
         roles.add(Role.USER);
         roles.add(Role.MANAGER);
         roles.add(Role.ADMIN);
-        setUri("orders");
+        setUri("my_orders");
         setAllowedRoles(roles);
         setJspPagePath(ConfigurationManager.getInstance().getPagePath(getUri()));
     }

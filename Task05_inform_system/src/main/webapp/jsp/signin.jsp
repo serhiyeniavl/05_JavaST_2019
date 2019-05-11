@@ -80,6 +80,7 @@
                     </label>
                     <a href="${signup}" class="text-center new-account">Create
                         an account </a>
+                    <a href="${home}" class="text-center new-account" style="position: absolute; margin-left: 30%;">Homepage</a>
                 </form>
             </div>
         </div>

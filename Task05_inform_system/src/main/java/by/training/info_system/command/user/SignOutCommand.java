@@ -1,5 +1,6 @@
-package by.training.info_system.command;
+package by.training.info_system.command.user;
 
+import by.training.info_system.command.Command;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;

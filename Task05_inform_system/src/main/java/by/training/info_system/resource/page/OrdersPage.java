@@ -10,7 +10,6 @@ class OrdersPage extends JspPage {
     OrdersPage() {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.MANAGER);
-        roles.add(Role.ADMIN);
         setUri("orders");
         setAllowedRoles(roles);
         setJspPagePath(ConfigurationManager.getInstance().getPagePath(getUri()));

@@ -4,14 +4,16 @@
 
 
 <c:set var="url">${pageContext.request.requestURL}</c:set>
-<c:set var="ctx" value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
+<c:set var="ctx"
+       value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
 
 <html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${ctx}/css/contact.css"
           type="text/css"/>
-    <link rel="icon" href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
+    <link rel="icon"
+          href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
           type="image/jpg">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -26,52 +28,64 @@
 
 <body style="background-color: #25274d">
 
-<!--Section: Contact v.2-->
 <div class="container contact">
     <div class="row">
         <div class="col-md-3">
             <div class="contact-info">
-                <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
+                <img src="https://image.ibb.co/kUASdV/contact-image.png"
+                     alt="image"/>
                 <h2>Contact Us</h2>
-                <h5>Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</h5>
+                <h5>Do you have any questions? Please do not hesitate to contact
+                    us directly. Our team will come back to you within a matter
+                    of hours to help you.</h5>
             </div>
         </div>
         <div class="col-md-9">
             <div class="contact-form">
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="fname">First Name:</label>
+                    <label class="control-label col-sm-2" for="fname">First
+                        Name:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname">
+                        <input type="text" class="form-control" id="fname"
+                               placeholder="Enter First Name" name="fname">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="lname">Last Name:</label>
+                    <label class="control-label col-sm-2" for="lname">Last
+                        Name:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname">
+                        <input type="text" class="form-control" id="lname"
+                               placeholder="Enter Last Name" name="lname">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="email">Email:</label>
+                    <label class="control-label col-sm-2"
+                           for="email">Email:</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        <input type="email" class="form-control" id="email"
+                               placeholder="Enter email" name="email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="comment">Comment:</label>
+                    <label class="control-label col-sm-2"
+                           for="comment">Comment:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <textarea class="form-control" rows="5"
+                                  id="comment"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-default">Submit
+                        </button>
+                        <button type="submit" class="btn btn-default">Homepage
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--Section: Contact v.2-->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

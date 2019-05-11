@@ -242,19 +242,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${orders}">Orders</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${users}">Users</a>
-                    </li>
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${orders}">Orders</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${managers}">Mangers</a>
+                        <a class="nav-link" href="${managers}">Managers</a>
                     </li>
                 </c:if>
 
@@ -288,8 +282,8 @@
                                     <a class="dropdown-item a01"
                                        href="${profile}">Profile</a>
                                     <a class="dropdown-item a01"
-                                       href="${user_orders}">Your orders</a>
-                                    <p class="dropdown-item a01">Your
+                                       href="${user_orders}">My orders</a>
+                                    <p class="dropdown-item a01">My
                                         discount: ${discount}</p>
                                     <div class="dropdown-divider"></div>
                                     <form style="margin-bottom: 0px;"
