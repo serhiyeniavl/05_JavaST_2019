@@ -10,12 +10,12 @@ import java.util.Optional;
 
 public class OrderServiceImpl extends AbstractService implements OrderService {
     @Override
-    public boolean createNewOrder(final Order order) {
+    public Integer createNewOrder(final Order order) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         daoManager.autoCommit(false);
         daoManager.commit();
-        boolean isCreated = dao.create(order);
-        if (isCreated) {
+        int isCreated = dao.create(order);
+        if (isCreated != 0) {
             daoManager.commit();
         } else {
             daoManager.rollback();
@@ -28,5 +28,17 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     public Optional<List<Order>> findAllOrders() {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         return dao.getAll();
+    }
+
+    @Override
+    public Optional<Order> findOrderById(long id) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.get(id);
+    }
+
+    @Override
+    public boolean isActiveOrder(final long carId, final long userId) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.isActive(carId, userId);
     }
 }
