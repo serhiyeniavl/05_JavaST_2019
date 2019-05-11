@@ -3,6 +3,9 @@ package by.training.info_system.entity.status;
 public enum OrderStatus {
     NOT_CONFIRMED("Not confirmed"),
     EXPIRED("Expired"),
+    ACCEPTED("Accepted"),
+    ACTIVE("Active"),
+    COMPLETED("Completed"),
     CONFIRMED("Confirmed");
 
     private String value;
