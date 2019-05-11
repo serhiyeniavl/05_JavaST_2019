@@ -32,8 +32,8 @@ public class CarDaoImpl extends AbstractDao implements CarDao {
     }
 
     @Override
-    public boolean create(final Car entity) {
-        return false;
+    public Integer create(final Car entity) {
+        return 0;
     }
 
     @Override

@@ -20,16 +20,19 @@ import java.util.Optional;
 @Log4j2
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
-    public boolean create(final User entity) {
+    public Integer create(final User entity) {
         String sql1 = "INSERT INTO Users (`id`, `login`, `password`, `role`) VALUES (?, ?, ?, ?)";
         String sql2 = "INSERT INTO Passport (`id`, `serie`, `number`, `id_number`, `issue_date`, `end_date`)" +
                 " VALUES (?, ?, ?, ?, ?, ?)";
         String sql3 = "INSERT INTO User_data (`user_id`, `fname`, `lname`, `passport_id`, `address`)" +
                 " VALUES (?, ?, ?, ?, ?)";
 
-        PreparedStatement statement1 = createPreparedStatement(sql1);
+        PreparedStatement statement1 = createPreparedStatement(sql1,
+                Statement.RETURN_GENERATED_KEYS);
         PreparedStatement statement2 = createPreparedStatement(sql2);
         PreparedStatement statement3 = createPreparedStatement(sql3);
+
+        Integer userId = 0;
 
         try {
             int lastUserId = getLastPosition("Users", "id");
@@ -69,6 +72,11 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             int query1 = statement1.executeUpdate();
             if (query1 < 1) {
                 throw new SQLException("Cannot execute insertion into users db");
+            } else {
+                ResultSet resultSet = statement1.getGeneratedKeys();
+                resultSet.next();
+                userId = resultSet.getInt(1);
+                resultSet.close();
             }
             int query2 = statement3.executeUpdate();
             if (query2 < 1) {
@@ -80,13 +88,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             }
         } catch (SQLException e) {
             log.error("Cannot create a prepared statement", e);
-            return false;
+            return userId;
         } finally {
             closePreparedStatement(statement1);
             closePreparedStatement(statement2);
             closePreparedStatement(statement3);
         }
-        return true;
+        return userId;
     }
 
     public Optional<User> get(final long id) {
@@ -234,7 +242,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             log.error("Cannot set argument in prepared statement.", e);
         }
         try (ResultSet resultSet = statement.executeQuery()) {
-            resultSet.next();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
             return Optional.ofNullable(createUser(resultSet));
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);

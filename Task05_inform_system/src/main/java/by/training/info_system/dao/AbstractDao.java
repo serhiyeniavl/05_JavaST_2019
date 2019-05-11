@@ -47,6 +47,17 @@ public abstract class AbstractDao {
         return statement;
     }
 
+    protected PreparedStatement createPreparedStatement(final String sql,
+                                                        final int autoGenKeys) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql, autoGenKeys);
+        } catch (SQLException e) {
+            log.error("Error when try to create prepare statement", e);
+        }
+        return statement;
+    }
+
     protected void closeStatement(final Statement statement) {
         try {
             if (statement != null) {
