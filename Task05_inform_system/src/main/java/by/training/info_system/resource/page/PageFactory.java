@@ -20,6 +20,11 @@ public final class PageFactory {
     }
 
     public static JspPage defineAndGet(final PageEnum uri) {
+        clearParams();
         return pages.get(uri);
+    }
+
+    private static void clearParams() {
+        pages.values().forEach(JspPage::clearRequestParameters);
     }
 }
