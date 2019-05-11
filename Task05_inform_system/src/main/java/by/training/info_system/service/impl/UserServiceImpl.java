@@ -19,12 +19,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public boolean registerNewUser(final User user) {
+    public Integer registerNewUser(final User user) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         daoManager.autoCommit(false);
         daoManager.commit();
-        boolean isCreated = userDao.create(user);
-        if (isCreated) {
+        int isCreated = userDao.create(user);
+        if (isCreated != 0) {
             daoManager.commit();
         } else {
             daoManager.rollback();
