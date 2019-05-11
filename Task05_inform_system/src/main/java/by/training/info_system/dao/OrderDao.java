@@ -9,4 +9,5 @@ public interface OrderDao extends Dao<Order> {
     boolean isActive(long carId, long userId);
     Optional<List<Order>> readCurrentOrders();
     Optional<List<Order>> findOverdue();
+    Optional<List<Order>> findOrders(long userId);
 }

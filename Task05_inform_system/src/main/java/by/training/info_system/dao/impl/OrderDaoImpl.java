@@ -251,4 +251,63 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
         }
         return true;
     }
+
+    @Override
+    public Optional<List<Order>> findOrders(long userId) {
+        String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+                + "final_price, brand_name, rent_price, image_path, reg_number"
+                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
+                + "JOIN Car_info Ci on C.id = Ci.car_id "
+                + "WHERE Orders.user_id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setLong(1, userId);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try (ResultSet resultSet = statement.executeQuery()) {
+            List<Order> orders = new ArrayList<>();
+            while (resultSet.next()) {
+                Car car = Car.builder()
+                        .brandName(resultSet.getString("brand_name"))
+                        .imagePath(resultSet.getString("image_path"))
+                        .rentPrice(resultSet.getShort("rent_price"))
+                        .carInfo(
+                                CarInfo.builder()
+                                        .regNumber(resultSet.getString("reg_number"))
+                                        .build()
+                        )
+                        .build();
+
+                Order order = Order.builder()
+                        .car(car)
+                        .status(OrderStatus.fromValue(resultSet.getString("status")))
+                        .build();
+                order.setId(resultSet.getLong("id"));
+                long finalPrice = resultSet.getLong("final_price");
+                if (finalPrice != 0) {
+                    order.setFinalPrice(finalPrice);
+                }
+                Object issueDate = resultSet.getObject("issue_date");
+                if (issueDate != null) {
+                    order.setIssueDate(resultSet.getTimestamp("issue_date")
+                            .toLocalDateTime());
+                    order.setReturnDate(resultSet.getTimestamp("return_date")
+                            .toLocalDateTime());
+                }
+                Object realReturnDate = resultSet.getObject("real_return_date");
+                if (realReturnDate != null) {
+                    order.setRealReturnDate(resultSet.getTimestamp("real_return_date")
+                            .toLocalDateTime());
+                }
+                orders.add(order);
+            }
+            return Optional.of(orders);
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return Optional.empty();
+    }
 }

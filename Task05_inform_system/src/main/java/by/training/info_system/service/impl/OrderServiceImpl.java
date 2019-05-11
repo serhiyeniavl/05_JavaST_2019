@@ -41,4 +41,10 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         return dao.isActive(carId, userId);
     }
+
+    @Override
+    public Optional<List<Order>> findUserOrders(final long id) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.findOrders(id);
+    }
 }

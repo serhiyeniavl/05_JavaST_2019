@@ -2,6 +2,7 @@ package by.training.info_system.command;
 
 import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.command.client.RequestParameter;
+import by.training.info_system.entity.User;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
@@ -9,6 +10,7 @@ import by.training.info_system.util.Encoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -39,6 +41,12 @@ public class EmptyCommand extends Command {
         if (isAuthorizedUserTrySignAgain(request, page)) {
             page = PageFactory.defineAndGet(PageEnum.HOME);
             page.setRedirect(true);
+        }
+
+        if (page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("user");
+            loadUserOrders(request, user.getId());
         }
 
         if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
