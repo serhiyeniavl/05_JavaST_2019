@@ -1,18 +1,23 @@
 package by.training.info_system.command;
 
 import by.training.info_system.command.client.RequestAttribute;
+import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.User;
 import by.training.info_system.resource.ConfigurationManager;
+import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
 import by.training.info_system.service.UserService;
+import by.training.info_system.util.Encoder;
 import by.training.info_system.util.PasswordHasher;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class SignInCommand extends Command {
@@ -27,8 +32,12 @@ public class SignInCommand extends Command {
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
             if (service.isInBlackList(user.get())) {
-                putAttrInRequest(request, RequestAttribute.BLACK_LIST,
-                        "This account have been banned.");
+                appendRequestParameter(page, RequestParameter.TIME,
+                        LocalDateTime.now().toString());
+                appendRequestParameter(page, RequestParameter.MESSAGE,
+                        RequestMessage.BANNED_ACCOUNT);
+                appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                        RequestAttribute.BLACK_LIST.toString());
                 return page;
             }
             HttpSession session = request.getSession(false);
@@ -45,8 +54,12 @@ public class SignInCommand extends Command {
 
             page = PageFactory.defineAndGet(PageEnum.HOME);
         } else {
-            putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
-                    "Incorrect email or password");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.INCORRECT_SIGNIN);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
         }
         return page;
     }

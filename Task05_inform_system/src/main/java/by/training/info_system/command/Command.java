@@ -1,12 +1,15 @@
 package by.training.info_system.command;
 
 import by.training.info_system.command.client.RequestAttribute;
+import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.Car;
 import by.training.info_system.entity.Order;
+import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.service.CarService;
 import by.training.info_system.service.OrderService;
 import by.training.info_system.service.ServiceFactory;
+import by.training.info_system.util.Encoder;
 import by.training.info_system.validator.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +48,18 @@ public abstract class Command {
             putAttrInRequest(request, RequestAttribute.INFO,
                     "Orders list is empty.");
         }
+    }
+
+    void appendRequestParameter(JspPage page, RequestParameter parameter,
+                                RequestMessage message) {
+        page.appendRequestParameter(parameter.getValue() + "="
+        + Encoder.encodeString(message.getValue()));
+    }
+
+    void appendRequestParameter(JspPage page, RequestParameter parameter,
+                                String message) {
+        page.appendRequestParameter(parameter.getValue() + "="
+                + Encoder.encodeString(message));
     }
 
     boolean validate(Validator validator, Object object) {

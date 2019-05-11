@@ -1,10 +1,12 @@
 package by.training.info_system.command;
 
 import by.training.info_system.command.client.RequestAttribute;
+import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.Passport;
 import by.training.info_system.entity.User;
 import by.training.info_system.entity.data.UserData;
 import by.training.info_system.entity.role.Role;
+import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
@@ -16,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Log4j2
@@ -34,7 +37,6 @@ public class SignUpCommand extends Command {
         String passportIdNumber = request.getParameter("ps_id").trim();
         String passportIssueDate = request.getParameter("ps_issue").trim();
         String passportEndDate = request.getParameter("ps_end").trim();
-
 
         User user;
         Passport userPassport;
@@ -64,38 +66,55 @@ public class SignUpCommand extends Command {
                     .userData(userData)
                     .build();
         } catch (Exception e) {
-            putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
-                    "You've incorrectly filled the form. Check the tips inside" +
-                            " fields.");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.INCORRECT_SIGNUP_FORM);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             return page;
         }
 
         if (!validate(new UserValidator(), user)) {
-            putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
-                    "You've incorrectly filled the form. Check the tips inside" +
-                            " fields.");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.INCORRECT_SIGNUP_FORM);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             return page;
         }
 
         UserService service = factory.getService(UserService.class).orElseThrow();
         if (service.isInBlackList(user)) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            putAttrInRequest(request, RequestAttribute.BLACK_LIST,
-                    "This account already exists and have been banned.");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.BANNED_ACCOUNT_EXIST);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.BLACK_LIST.toString());
             return page;
         }
         if (service.isExist(userPassport.getNumber(), userPassport.getIdNumber())) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            putAttrInRequest(request, RequestAttribute.INCORRECT_DATA,
-                    "User with that passport data already exists. Try to sign in.");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.USER_WITH_PASSPORT_EXIST);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             return page;
         }
-        boolean isCreated = service.registerNewUser(user);
-        if (isCreated) {
+        Integer isCreated = service.registerNewUser(user);
+        if (isCreated != 0) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            putAttrInRequest(request, RequestAttribute.SIGNED_UP,
-                    "You've successfully signed up!\nPlease, sign in" +
-                            " into your account.");
+            appendRequestParameter(page, RequestParameter.TIME,
+                    LocalDateTime.now().toString());
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.SUCCESSFUL_SIGNUP);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.SIGNED_UP.toString());
         }
         return page;
     }
