@@ -18,14 +18,15 @@ public class EmptyCommand extends Command {
     private static final int URL_TIMEOUT = 7;
 
     @Override
-    public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
+    public JspPage execute(final HttpServletRequest request,
+                           final HttpServletResponse response) {
         String requestedPage = (String) request.getAttribute("requestedPage");
         JspPage page = PageFactory.defineAndGet(PageEnum.valueOf(requestedPage.toUpperCase()));
 
         if ((page.getUri().equals(PageEnum.SIGNIN.getUri())
                 || page.getUri().equals(PageEnum.SIGNUP.getUri()))) {
-            if (checkRequestAttrsOnSignIn(request)) {
-                return processSignInOrUpAttr(request, page);
+            if (checkRequestMessageAttrs(request)) {
+                return processMessageAttrs(request, page);
             } else if (checkSecureAttr(request)) {
                 return processSecureAttr(request, page);
             }
@@ -33,8 +34,8 @@ public class EmptyCommand extends Command {
 
         if (page.getUri().equals(PageEnum.CARS.getUri())) {
             loadCars(request);
-            if (checkRequestAttrsOnOrder(request)) {
-                return processCarsAttr(request, page);
+            if (checkRequestMessageAttrs(request)) {
+                return processMessageAttrs(request, page);
             }
         }
 
@@ -47,10 +48,16 @@ public class EmptyCommand extends Command {
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
             loadUserOrders(request, user.getId());
+            if (checkRequestMessageAttrs(request)) {
+                return processMessageAttrs(request, page);
+            }
         }
 
         if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
             loadOrders(request);
+            if (checkRequestMessageAttrs(request)) {
+                return processMessageAttrs(request, page);
+            }
         }
         return page;
     }
@@ -68,17 +75,13 @@ public class EmptyCommand extends Command {
                 && request.getParameter(RequestParameter.TIME.getValue()) != null;
     }
 
-    private boolean checkRequestAttrsOnSignIn(final HttpServletRequest request) {
+    private boolean checkRequestMessageAttrs(final HttpServletRequest request) {
         return request.getParameter(RequestParameter.MESSAGE.getValue()) != null
                 && request.getParameter(RequestParameter.TIME.getValue()) != null;
     }
 
-    private boolean checkRequestAttrsOnOrder(final HttpServletRequest request) {
-        return checkRequestAttrsOnSignIn(request);
-    }
-
-    private JspPage processSignInOrUpAttr(final HttpServletRequest request,
-                                          final JspPage page) {
+    private JspPage processMessageAttrs(final HttpServletRequest request,
+                                        final JspPage page) {
         String time = Encoder.decodeString(request.getParameter(
                 RequestParameter.TIME.getValue()));
         LocalDateTime reqTime = LocalDateTime.parse(
@@ -94,11 +97,6 @@ public class EmptyCommand extends Command {
             page.setRedirect(true);
         }
         return page;
-    }
-
-    private JspPage processCarsAttr(final HttpServletRequest request,
-                                    final JspPage page) {
-        return processSignInOrUpAttr(request, page);
     }
 
     private JspPage processSecureAttr(final HttpServletRequest request,

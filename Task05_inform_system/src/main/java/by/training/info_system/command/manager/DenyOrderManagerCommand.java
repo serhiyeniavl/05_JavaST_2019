@@ -8,7 +8,7 @@ import by.training.info_system.resource.page.PageFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-class ConfirmManagerCommand extends Command {
+public class DenyOrderManagerCommand extends Command {
     @Override
     public JspPage execute(final HttpServletRequest request,
                            final HttpServletResponse response) {

@@ -13,7 +13,10 @@ import by.training.info_system.entity.status.OrderStatus;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -198,6 +201,9 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                 if (issueDate != null) {
                     order.setIssueDate(resultSet.getTimestamp("issue_date")
                             .toLocalDateTime());
+                }
+                Object returnDate = resultSet.getObject("return_date");
+                if  (returnDate != null) {
                     order.setReturnDate(resultSet.getTimestamp("return_date")
                             .toLocalDateTime());
                 }
@@ -219,6 +225,82 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
 
     @Override
     public boolean update(final Order entity) {
+        String sql = "UPDATE Orders SET status = ?, issue_date = ?,"
+                + " return_date = ?, real_return_date = ?, final_price = ? "
+                + "WHERE Orders.id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        Timestamp issueDate
+                = entity.getIssueDate() != null ? Timestamp.valueOf(entity.getIssueDate())
+                : null;
+        Timestamp returnDate
+                = entity.getReturnDate() != null ? Timestamp.valueOf(entity.getReturnDate())
+                : null;
+        Timestamp realReturnDate
+                = entity.getRealReturnDate() != null ? Timestamp.valueOf(entity.getRealReturnDate())
+                : null;
+        Long finalPrice = entity.getFinalPrice();
+
+        try {
+            statement.setString(1, entity.getStatus().getValue());
+            if (issueDate != null) {
+                statement.setTimestamp(2, issueDate);
+            } else {
+                statement.setNull(2, Types.TIMESTAMP);
+            }
+            if (returnDate != null) {
+                statement.setTimestamp(3, returnDate);
+            } else {
+                statement.setNull(3, Types.TIMESTAMP);
+            }
+            if (realReturnDate != null) {
+                statement.setTimestamp(4, realReturnDate);
+            } else {
+                statement.setNull(4, Types.TIMESTAMP);
+            }
+            if (finalPrice != null) {
+                statement.setLong(5, entity.getFinalPrice());
+            } else {
+                statement.setNull(5, Types.SMALLINT);
+            }
+            statement.setLong(6, entity.getId());
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            if (query < 1) {
+                throw new SQLException("Error when trying to update order");
+            }
+            return true;
+        } catch (SQLException e) {
+            log.error("Cannot update order status", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(final long id, final OrderStatus status) {
+        String sql = "UPDATE Orders SET status = ? WHERE Orders.id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setString(1, status.getValue());
+            statement.setLong(2, id);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            if (query < 1) {
+                throw new SQLException("Error when trying to update order");
+            }
+            return true;
+        } catch (SQLException e) {
+            log.error("Cannot update order status", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
         return false;
     }
 
@@ -292,6 +374,9 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                 if (issueDate != null) {
                     order.setIssueDate(resultSet.getTimestamp("issue_date")
                             .toLocalDateTime());
+                }
+                Object returnDate = resultSet.getObject("return_date");
+                if  (returnDate != null) {
                     order.setReturnDate(resultSet.getTimestamp("return_date")
                             .toLocalDateTime());
                 }

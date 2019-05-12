@@ -1,9 +1,9 @@
-input[type=submit]:hover {
+.butt:hover {
     color:#fff;
     background-color: black;
 }
 
-input {
+.butt {
     text-align: center;
     background: skyblue;
     border: none;

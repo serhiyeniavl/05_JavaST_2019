@@ -24,7 +24,15 @@ public enum RequestMessage {
     ACTIVE_ORDER(RequestMessageManager.getInstance()
             .getProperty("active_order")),
     SIGNIN_TO_RENT(RequestMessageManager.getInstance()
-            .getProperty("signin_to_rent"));
+            .getProperty("signin_to_rent")),
+    UPDATED_ORDER_STATUS(RequestMessageManager.getInstance()
+            .getProperty("updated_order_status")),
+    UPDATED_ORDER_STATUS_WRONG(RequestMessageManager.getInstance()
+            .getProperty("update_order_status_wrong")),
+    USER_TOOK_A_CAR(RequestMessageManager.getInstance()
+            .getProperty("user_took_car")),
+    TOOK_A_CAR_GOES_WRONG(RequestMessageManager.getInstance()
+            .getProperty("user_took_goes_wrong"));
 
 
     private String value;

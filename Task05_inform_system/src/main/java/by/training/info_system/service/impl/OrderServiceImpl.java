@@ -2,6 +2,7 @@ package by.training.info_system.service.impl;
 
 import by.training.info_system.dao.OrderDao;
 import by.training.info_system.entity.Order;
+import by.training.info_system.entity.status.OrderStatus;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.OrderService;
 
@@ -46,5 +47,17 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     public Optional<List<Order>> findUserOrders(final long id) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         return dao.findOrders(id);
+    }
+
+    @Override
+    public boolean updateOrderStatus(final long id, final OrderStatus status) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.update(id, status);
+    }
+
+    @Override
+    public boolean updateOrder(final Order order) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.update(order);
     }
 }

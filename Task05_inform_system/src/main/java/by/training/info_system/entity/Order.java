@@ -6,6 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
@@ -20,4 +21,20 @@ public class Order extends Entity implements Serializable {
     private LocalDateTime returnDate;
     private LocalDateTime realReturnDate;
     private Long finalPrice;
+
+    private static final DateTimeFormatter FORMATTER
+            = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:SS");
+
+    public String showIssueDate() {
+        return issueDate.format(FORMATTER);
+    }
+
+    public String showReturnDate() {
+        return returnDate.format(FORMATTER);
+    }
+
+    public String showRealReturnDate() {
+        return realReturnDate.format(FORMATTER);
+    }
+
 }

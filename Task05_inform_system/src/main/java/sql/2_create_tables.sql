@@ -34,7 +34,7 @@ CREATE TABLE `Orders` (
                         `issue_date` TIMESTAMP default null,
                         `return_date` TIMESTAMP default null,
                         `real_return_date` TIMESTAMP default null,
-                        `final_price` smallint NOT NULL default 0,
+                        `final_price` smallint,
                         PRIMARY KEY (`id`)
 );
 

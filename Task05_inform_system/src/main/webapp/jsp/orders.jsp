@@ -30,8 +30,7 @@
     <link rel="icon"
           href="${ctx}/img/wheel.png"
           type="image/jpg">
-    <link rel="stylesheet" href="${ctx}/css/orders.css"
-          type="text/css"/>
+    <link rel="stylesheet" href="${ctx}/css/orders.css?" type="text/css"/>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -74,7 +73,7 @@
                     <div class="row">
                         <tr>
                             <div class="col-1-3">
-                                <td><img width="85%" height="55%"
+                                <td><img width="80%" height="45%"
                                          src="${ctx}/img/cars/${order.car.imagePath}"/>
                                 </td>
                             </div>
@@ -101,16 +100,16 @@
                                     <br>
                                     <c:if test="${not empty order.issueDate}">
                                         Issue date:
-                                        <td><c:out value="${ order.issueDate }"/></td>
+                                        <td><c:out value="${ order.showIssueDate() }"/></td>
                                         <br>
                                         Return date:
-                                        <td><c:out value="${ order.returnDate }"/></td>
+                                        <td><c:out value="${ order.showReturnDate() }"/></td>
                                         <br>
                                     </c:if>
                                     <c:if test="${not empty order.realReturnDate}">
                                         Issue date:
                                         <td><c:out
-                                                value="${ order.realReturnDate }"/></td>
+                                                value="${ order.showRealReturnDate() }"/></td>
                                         <br>
                                         Final price:
                                         <td><c:out value="${ order.finalPrice }"/></td>
@@ -119,17 +118,26 @@
                                     Status:
                                     <td><c:out value="${ order.status }"/></td>
                                     <br>
+                                    <c:if test="${order.status.getValue() == 'Not confirmed'}">
                                     <form action="${home}" method="post">
                                         <input type="hidden" name="command"
-                                               value="manage_order"/>
-                                        <td><input type="submit" name="confirm"
-                                                   value="Confirm" style="width: 200px">
-                                        </td>
-                                        <td><input type="submit" name="deny"
-                                                   value="Deny" style="width: 200px">
+                                               value="confirm_order"/>
+                                        <td><button class="butt" type="submit" name="confirm"
+                                                    value="${order.id}" style="width: 160px">Confirm</button>
                                         </td>
                                     </form>
+                                    <form action="${home}" method="post">
+                                        <input type="hidden" name="command"
+                                               value="deny_order"/>
+                                        <td><button class="butt" type="submit" name="deny"
+                                                    value="${order.id}" style="width: 160px">Deny</button>
+                                        </td>
+                                    </form>
+                                    </c:if>
                                 </div>
+                                <c:if test="${not empty info}">
+                                <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
+                                    </c:if>
                             </div>
                         </tr>
                     </div>
