@@ -38,9 +38,9 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
-    public boolean isActiveOrder(final long carId, final long userId) {
+    public boolean isActiveOrder(final long userId) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
-        return dao.isActive(carId, userId);
+        return dao.isActive(userId);
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OrderService extends Service {
     Integer createNewOrder(Order order);
-    boolean isActiveOrder(long carId, long userId);
+    boolean isActiveOrder(long userId);
     boolean updateOrderStatus(long id, OrderStatus status);
     boolean updateOrder(Order order);
     Optional<List<Order>> findUserOrders(long id);
