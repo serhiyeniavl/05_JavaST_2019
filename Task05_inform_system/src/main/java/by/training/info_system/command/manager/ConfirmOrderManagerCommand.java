@@ -29,8 +29,9 @@ public class ConfirmOrderManagerCommand extends Command {
                 RequestAttribute.INFO.toString());
         if (isUpdated) {
             appendRequestParameter(page, RequestParameter.MESSAGE,
-                    RequestMessage.UPDATED_ORDER_STATUS);
-
+                    RequestMessage.CONFIRMED_ORDER);
+            appendRequestParameter(page, RequestParameter.ORDER_ID,
+                    orderId.toString());
         } else {
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.UPDATED_ORDER_STATUS_WRONG);

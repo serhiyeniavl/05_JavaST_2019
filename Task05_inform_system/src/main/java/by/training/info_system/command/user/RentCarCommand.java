@@ -44,7 +44,7 @@ public class RentCarCommand extends Command {
                 Long.valueOf(request.getParameter("rent_butt"))).orElseThrow();
         User user = (User) session.getAttribute("user");
         OrderService orderService = factory.getService(OrderService.class).orElseThrow();
-        if (orderService.isActiveOrder(car.getId(), user.getId())) {
+        if (orderService.isActiveOrder(user.getId())) {
             appendRequestParameter(page, RequestParameter.TIME,
                     LocalDateTime.now().toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
