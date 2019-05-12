@@ -25,14 +25,18 @@ public enum RequestMessage {
             .getProperty("active_order")),
     SIGNIN_TO_RENT(RequestMessageManager.getInstance()
             .getProperty("signin_to_rent")),
-    UPDATED_ORDER_STATUS(RequestMessageManager.getInstance()
-            .getProperty("updated_order_status")),
+    DENIED_ORDER(RequestMessageManager.getInstance()
+            .getProperty("denied_order")),
+    CONFIRMED_ORDER(RequestMessageManager.getInstance()
+            .getProperty("confirmed_order")),
     UPDATED_ORDER_STATUS_WRONG(RequestMessageManager.getInstance()
             .getProperty("update_order_status_wrong")),
     USER_TOOK_A_CAR(RequestMessageManager.getInstance()
             .getProperty("user_took_car")),
     TOOK_A_CAR_GOES_WRONG(RequestMessageManager.getInstance()
-            .getProperty("user_took_goes_wrong"));
+            .getProperty("user_took_goes_wrong")),
+    COMPLETED_USER_ORDER(RequestMessageManager.getInstance()
+            .getProperty("completed_user_order"));
 
 
     private String value;
