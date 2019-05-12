@@ -5,6 +5,8 @@ public enum OrderStatus {
     EXPIRED("Expired"),
     ACCEPTED("Accepted"),
     ACTIVE("Active"),
+    DENIED("Denied"),
+    EXTENDED("Extended"),
     COMPLETED("Completed"),
     CONFIRMED("Confirmed");
 

@@ -23,7 +23,7 @@ public class Order extends Entity implements Serializable {
     private Long finalPrice;
 
     private static final DateTimeFormatter FORMATTER
-            = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:SS");
+            = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM");
 
     public String showIssueDate() {
         return issueDate.format(FORMATTER);
