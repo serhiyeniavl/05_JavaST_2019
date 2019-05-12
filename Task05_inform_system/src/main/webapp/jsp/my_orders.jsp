@@ -74,7 +74,7 @@
                     <div class="row">
                         <tr>
                             <div class="col-1-3">
-                                <td><img width="80%" height="45%"
+                                <td><img width="75%" height="40%"
                                          src="${ctx}/img/cars/${order.car.imagePath}"/>
                                 </td>
                             </div>
@@ -119,7 +119,7 @@
                                         </form>
                                     </c:if>
                                 </div>
-                                <c:if test="${not empty info}">
+                                <c:if test="${not empty info && not empty order_id && order.id == order_id}">
                                 <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
                                     </c:if>
                             </div>

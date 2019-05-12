@@ -73,7 +73,7 @@
                     <div class="row">
                         <tr>
                             <div class="col-1-3">
-                                <td><img width="80%" height="45%"
+                                <td><img width="85%" height="55%"
                                          src="${ctx}/img/cars/${order.car.imagePath}"/>
                                 </td>
                             </div>
@@ -119,14 +119,14 @@
                                     <td><c:out value="${ order.status }"/></td>
                                     <br>
                                     <c:if test="${order.status.getValue() == 'Not confirmed'}">
-                                    <form action="${home}" method="post">
+                                    <form action="${orders}" method="post">
                                         <input type="hidden" name="command"
                                                value="confirm_order"/>
                                         <td><button class="butt" type="submit" name="confirm"
                                                     value="${order.id}" style="width: 160px">Confirm</button>
                                         </td>
                                     </form>
-                                    <form action="${home}" method="post">
+                                    <form action="${orders}" method="post">
                                         <input type="hidden" name="command"
                                                value="deny_order"/>
                                         <td><button class="butt" type="submit" name="deny"
@@ -134,8 +134,24 @@
                                         </td>
                                     </form>
                                     </c:if>
+                                    <c:if test="${order.status.getValue() == 'Active'}">
+                                        <form action="${orders}" method="post">
+                                            <input type="hidden" name="command"
+                                                   value="complete_user_order"/>
+                                            <td><button class="butt" type="submit" name="complete"
+                                                        value="${order.id}" style="width: 160px">Complete order</button>
+                                            </td>
+                                        </form>
+                                        <form action="${orders}" method="post">
+                                            <input type="hidden" name="command"
+                                                   value="extend_user_order"/>
+                                            <td><button class="butt" type="submit" name="extend"
+                                                        value="${order.id}" style="width: 160px">Extend order</button>
+                                            </td>
+                                        </form>
+                                    </c:if>
                                 </div>
-                                <c:if test="${not empty info}">
+                                <c:if test="${not empty info && not empty order_id && order.id == order_id}">
                                 <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
                                     </c:if>
                             </div>
