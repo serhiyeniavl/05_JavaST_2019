@@ -4,6 +4,7 @@ public enum RequestAttribute {
     BLACK_LIST("blackList"),
     INCORRECT_DATA("incorrectData"),
     INFO("info"),
+    ORDER_ID("order_id"),
     CARS("rental_cars"),
     ORDERS("car_orders"),
     SIGNED_UP("signedUp");

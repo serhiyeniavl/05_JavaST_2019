@@ -42,21 +42,24 @@ public class EmptyCommand extends Command {
         if (isAuthorizedUserTrySignAgain(request, page)) {
             page = PageFactory.defineAndGet(PageEnum.HOME);
             page.setRedirect(true);
+            return page;
         }
 
         if (page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
             loadUserOrders(request, user.getId());
-            if (checkRequestMessageAttrs(request)) {
-                return processMessageAttrs(request, page);
+            if (checkRequestMessageAttrs(request)
+                    && checkOrderIdMsg(request)) {
+                return processOrderIdAttr(request, processMessageAttrs(request, page));
             }
         }
 
         if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
             loadOrders(request);
-            if (checkRequestMessageAttrs(request)) {
-                return processMessageAttrs(request, page);
+            if (checkRequestMessageAttrs(request)
+                    && checkOrderIdMsg(request)) {
+                return processOrderIdAttr(request, processMessageAttrs(request, page));
             }
         }
         return page;
@@ -78,6 +81,10 @@ public class EmptyCommand extends Command {
     private boolean checkRequestMessageAttrs(final HttpServletRequest request) {
         return request.getParameter(RequestParameter.MESSAGE.getValue()) != null
                 && request.getParameter(RequestParameter.TIME.getValue()) != null;
+    }
+
+    private boolean checkOrderIdMsg(final HttpServletRequest request) {
+        return request.getParameter(RequestParameter.ORDER_ID.getValue()) != null;
     }
 
     private JspPage processMessageAttrs(final HttpServletRequest request,
@@ -115,6 +122,17 @@ public class EmptyCommand extends Command {
         } else {
             page.setRedirect(true);
         }
+        return page;
+    }
+
+    private JspPage processOrderIdAttr(final HttpServletRequest request,
+                                       final JspPage page) {
+        String orderId = Encoder.decodeString(request.getParameter(
+                RequestParameter.ORDER_ID.getValue()));
+        putAttrInRequest(request,
+                RequestAttribute
+                        .valueOf(RequestParameter.ORDER_ID
+                                .toString()), orderId);
         return page;
     }
 }
