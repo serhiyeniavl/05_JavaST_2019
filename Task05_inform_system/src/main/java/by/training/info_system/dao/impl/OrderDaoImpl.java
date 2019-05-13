@@ -312,24 +312,25 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     @Override
     public boolean isActive(final long userId) {
         String sql = "SELECT car_id, user_id, status FROM Orders "
-                + "WHERE user_id = ? AND status != ?";
+                + "WHERE user_id = ? AND status NOT IN (?,?)";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setLong(1, userId);
             statement.setString(2, OrderStatus.COMPLETED.getValue());
+            statement.setString(3, OrderStatus.DENIED.getValue());
         } catch (SQLException e) {
             log.error("Cannot create prepared statement", e);
         }
         try (ResultSet resultSet = statement.executeQuery()) {
-            if (!resultSet.next()) {
-                return false;
+            if (resultSet.next()) {
+                return true;
             }
         } catch (SQLException e) {
             log.error(RESULT_SET_ERROR, e);
         } finally {
             closePreparedStatement(statement);
         }
-        return true;
+        return false;
     }
 
     @Override

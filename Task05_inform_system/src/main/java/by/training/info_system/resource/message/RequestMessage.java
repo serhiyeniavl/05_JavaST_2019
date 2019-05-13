@@ -35,6 +35,10 @@ public enum RequestMessage {
             .getProperty("user_took_car")),
     TOOK_A_CAR_GOES_WRONG(RequestMessageManager.getInstance()
             .getProperty("user_took_goes_wrong")),
+    EXTENDED_ORDER(RequestMessageManager.getInstance()
+            .getProperty("extended_order")),
+    EXTEND_GOES_WRONG(RequestMessageManager.getInstance()
+            .getProperty("extend_goes_wrong")),
     COMPLETED_USER_ORDER(RequestMessageManager.getInstance()
             .getProperty("completed_user_order"));
 
