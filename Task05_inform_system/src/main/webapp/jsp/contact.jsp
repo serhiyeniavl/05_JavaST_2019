@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<c:url var="home" value="/home"/>
 <c:set var="url">${pageContext.request.requestURL}</c:set>
 <c:set var="ctx"
        value="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}"/>
@@ -78,8 +78,8 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-default">Submit
                         </button>
-                        <button type="submit" class="btn btn-default">Homepage
-                        </button>
+                        <a href="${home}"><button type="submit" class="btn btn-default">Homepage
+                        </button></a>
                     </div>
                 </div>
             </div>

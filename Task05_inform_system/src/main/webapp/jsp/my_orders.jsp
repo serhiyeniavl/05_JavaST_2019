@@ -103,7 +103,7 @@
                                                 value="${ order.showRealReturnDate() }"/></td>
                                         <br>
                                         Final price:
-                                        <td><c:out value="${ order.finalPrice }"/></td>
+                                        <td><c:out value="${ order.finalPrice }$"/></td>
                                         <br>
                                     </c:if>
                                     Status:

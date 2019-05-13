@@ -112,7 +112,7 @@
                                                 value="${ order.showRealReturnDate() }"/></td>
                                         <br>
                                         Final price:
-                                        <td><c:out value="${ order.finalPrice }"/></td>
+                                        <td><c:out value="${ order.finalPrice }$"/></td>
                                         <br>
                                     </c:if>
                                     Status:
@@ -134,7 +134,7 @@
                                         </td>
                                     </form>
                                     </c:if>
-                                    <c:if test="${order.status.getValue() == 'Active'}">
+                                    <c:if test="${order.status.getValue() == 'Active' || order.status.getValue() == 'Extended'}">
                                         <form action="${orders}" method="post">
                                             <input type="hidden" name="command"
                                                    value="complete_user_order"/>
@@ -142,7 +142,9 @@
                                                         value="${order.id}" style="width: 160px">Complete order</button>
                                             </td>
                                         </form>
-                                        <form action="${orders}" method="post">
+                                    </c:if>
+                                    <c:if test="${order.status.getValue() == 'Active'}">
+                                    <form action="${orders}" method="post">
                                             <input type="hidden" name="command"
                                                    value="extend_user_order"/>
                                             <td><button class="butt" type="submit" name="extend"
