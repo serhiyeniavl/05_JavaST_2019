@@ -27,6 +27,9 @@ public class DenyOrderManagerCommand extends Command {
                 LocalDateTime.now().toString());
         appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                 RequestAttribute.INFO.toString());
+        String referer = request.getHeader("referer");
+        String pageNum = String.valueOf(referer.charAt(referer.length() - 1));
+        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdated) {
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.DENIED_ORDER);

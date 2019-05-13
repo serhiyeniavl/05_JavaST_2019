@@ -45,35 +45,6 @@ public class EmptyCommand extends Command {
             return page;
         }
 
-//        if (page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
-//            HttpSession session = request.getSession(false);
-//            User user = (User) session.getAttribute("user");
-//
-//            loadUserOrders(request, user.getId());
-//            if (checkRequestMessageAttrs(request)
-//                    && checkOrderIdMsg(request)) {
-//                return processOrderIdAttr(request, processMessageAttrs(request, page));
-//            }
-//        }
-//
-//        if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
-//            int pageNum = 1;
-//            if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
-//                pageNum = Integer.parseInt(request.getParameter(RequestParameter.PAGE.getValue()));
-//                putAttrInRequest(request, RequestAttribute.CURRENT_PAGE, pageNum);
-//            } else {
-//                appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE,
-//                        String.valueOf(pageNum));
-//                page.setRedirect(true);
-//                return page;
-//            }
-//            loadOrders(request, pageNum, RECORDS_PER_PAGE);
-//            if (checkRequestMessageAttrs(request)
-//                    && checkOrderIdMsg(request)) {
-//                return processOrderIdAttr(request, processMessageAttrs(request, page));
-//            }
-//        }
-
         if (page.getUri().equals(PageEnum.ORDERS.getUri())
                 || page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
             int pageNum = 1;
@@ -141,6 +112,10 @@ public class EmptyCommand extends Command {
             putAttrInRequest(request, RequestAttribute.valueOf(attr),
                     msg);
         } else {
+            if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
+                appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE,
+                        request.getParameter(RequestParameter.PAGE.getValue()));
+            }
             page.setRedirect(true);
         }
         return page;

@@ -1,7 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="by.training.info_system.entity.User" %>
-<%@ page import="by.training.info_system.entity.data.UserData" %>
-<%@ page import="by.training.info_system.entity.Passport" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -54,7 +51,9 @@
         .a-nav {
             color: #000;
         }
-
+        .msg {
+            color: #60c9a8;
+        }
         #center {
             position: absolute;
             width: 100%;
@@ -197,7 +196,7 @@
                                     </form>
                                 </c:if>
                                 <c:if test="${not empty info && not empty order_id && order.id == order_id}">
-                                    <h5>${info}</h5>
+                                    <h4 class="msg">${info}</h4>
                                 </c:if>
                             </tr>
                         </div>

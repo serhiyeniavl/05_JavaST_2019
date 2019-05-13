@@ -33,6 +33,9 @@ public class CompleteUserOrderCommand extends Command {
                 LocalDateTime.now().toString());
         appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                 RequestAttribute.INFO.toString());
+        String referer = request.getHeader("referer");
+        String pageNum = String.valueOf(referer.charAt(referer.length() - 1));
+        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdatedStatus && isUpdatedOrder) {
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.COMPLETED_USER_ORDER);
