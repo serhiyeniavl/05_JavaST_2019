@@ -29,20 +29,20 @@ public class CompleteUserOrderCommand extends Command {
         order.setRealReturnDate(LocalDateTime.now());
         order.setFinalPrice(calculatePrice(order));
         boolean isUpdatedOrder = service.updateOrder(order);
-        appendRequestParameter(page, RequestParameter.TIME,
-                LocalDateTime.now().toString());
-        appendRequestParameter(page, RequestParameter.ATTRIBUTE,
-                RequestAttribute.INFO.toString());
-        String referer = request.getHeader("referer");
-        String pageNum = String.valueOf(referer.charAt(referer.length() - 1));
+        appendTimeParam(request, page);
+        String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdatedStatus && isUpdatedOrder) {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INFO.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.COMPLETED_USER_ORDER);
             appendRequestParameter(page, RequestParameter.ORDER_ID,
                     orderId.toString());
 
         } else {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.UPDATED_ORDER_STATUS_WRONG);
         }

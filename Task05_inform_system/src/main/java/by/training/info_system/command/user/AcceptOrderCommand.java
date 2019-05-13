@@ -28,19 +28,19 @@ public class AcceptOrderCommand extends Command {
         order.setReturnDate(LocalDateTime.now().plusDays(1L));
         order.setStatus(OrderStatus.ACTIVE);
         boolean isAccepted = service.updateOrder(order);
-        appendRequestParameter(page, RequestParameter.TIME,
-                LocalDateTime.now().toString());
-        appendRequestParameter(page, RequestParameter.ATTRIBUTE,
-                RequestAttribute.INFO.toString());
-        String referer = request.getHeader("referer");
-        String pageNum = String.valueOf(referer.charAt(referer.length() - 1));
+        appendTimeParam(request, page);
+        String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isAccepted) {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INFO.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.USER_TOOK_A_CAR);
             appendRequestParameter(page, RequestParameter.ORDER_ID,
                     orderId.toString());
         } else {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.TOOK_A_CAR_GOES_WRONG);
         }

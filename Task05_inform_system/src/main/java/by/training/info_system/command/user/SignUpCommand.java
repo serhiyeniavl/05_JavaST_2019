@@ -61,7 +61,7 @@ public class SignUpCommand extends Command {
                     .build();
 
             user = User.builder()
-                    .login(email)
+                    .email(email)
                     .password(PasswordHasher.hashPass(password))
                     .role(Role.USER)
                     .userData(userData)

@@ -20,7 +20,7 @@ CREATE TABLE `Car_info` (
 
 CREATE TABLE `Users` (
                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                       `login` varchar(30) NOT NULL UNIQUE,
+                       `email` varchar(255) NOT NULL UNIQUE,
                        `password` varchar(255) NOT NULL,
                        `role` tinyint NOT NULL,
                        PRIMARY KEY (`id`)

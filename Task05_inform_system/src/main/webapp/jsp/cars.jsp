@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="by.training.info_system.entity.Car" %>
-<%@ page import="by.training.info_system.entity.data.CarInfo" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -30,6 +28,7 @@
     <link rel="icon"
           href="https://cdn1.savepice.ru/uploads/2019/4/17/5ae5758165638c1db1af157878d0e2a9-full.png"
           type="image/jpg">
+
     <link rel="stylesheet" href="${ctx}/css/cars.css"
           type="text/css"/>
 
@@ -38,12 +37,14 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:700"
           rel="stylesheet">
 
     <title>
         Free ride
     </title>
+
     <style>
         .a01 {
             color: rgb(251, 251, 251);
@@ -74,12 +75,18 @@
 
         .button5:hover {
             background-color: #F5F5F5;
-            /*color: white;*/
         }
 
         .car_img {
             width: 65%;
             height: 32%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .car_img {
+                width: 70%;
+                height: 33%;
+            }
         }
 
         @media screen and (max-width: 768px) {
@@ -89,11 +96,10 @@
             }
 
             .car_img {
-                width: 40%;
-                height: 20%;
+                width: 70%;
+                height: 23%;
             }
         }
-
     </style>
 
 </head>

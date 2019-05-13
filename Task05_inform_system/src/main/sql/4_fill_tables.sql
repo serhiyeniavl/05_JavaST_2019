@@ -1,7 +1,7 @@
 USE `car_rent_system_db`;
 
 
-INSERT INTO Users(login, password, role)
+INSERT INTO Users(email, password, role)
 VALUES ('marshal@gmail.com', '$2a$12$W/cFqbDwELpvG0HpwIagXOXMo9iA.KCpVwlA3A50rpRR9nHTBaif2', '1'),
        ('neadrd@gmail.com', '$2a$12$zrFEei3e62gzWxERGqtquuUmijcmYy7KuRatDEL.CmK.wnewQW4Za', '2'),
        ('hach@mail.ru', '$2a$12$RLr65fglUuCn4tuMEp5IUuyZjmZ4NLi4ujzK7sUzb1jfCE.GKI22y', '1');

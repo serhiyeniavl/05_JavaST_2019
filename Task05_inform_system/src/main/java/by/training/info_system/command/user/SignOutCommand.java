@@ -7,11 +7,16 @@ import by.training.info_system.resource.page.PageFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SignOutCommand extends Command {
     @Override
-    public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
-        request.getSession(false).invalidate();
+    public JspPage execute(final HttpServletRequest request,
+                           final HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return PageFactory.defineAndGet(PageEnum.SIGNIN);
     }
 }

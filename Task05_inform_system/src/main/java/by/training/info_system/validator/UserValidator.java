@@ -13,7 +13,7 @@ public class UserValidator implements Validator<User> {
 
     @Override
     public boolean validate(final User object) {
-        return object.getLogin().matches(EMAIL_REGEX)
+        return object.getEmail().matches(EMAIL_REGEX)
                 && object.getUserData().getFName().matches(NAME_REGEX)
                 && object.getUserData().getLName().matches(NAME_REGEX)
                 && object.getUserData().getAddress().matches(ADDRESS_REGEX)

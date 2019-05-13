@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class UserServiceImpl extends AbstractService implements UserService {
     @Override
-    public Optional<User> findByLogin(String email) {
+    public Optional<User> findByEmail(final String email) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.read(email);
     }
@@ -38,7 +38,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
         List<BlackListNode> usersBlackList = dao.readBlackList().orElse(new ArrayList<>());
         return usersBlackList.stream()
-                .anyMatch(user1 -> user1.getUser().getLogin().equals(user.getLogin()));
+                .anyMatch(user1 -> user1.getUser().getEmail().equals(user.getEmail()));
     }
 
     @Override

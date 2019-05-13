@@ -27,19 +27,19 @@ public class ExtendUserOrderCommand extends Command {
         order.setReturnDate(order.getReturnDate().plusDays(1L));
         order.setStatus(OrderStatus.EXTENDED);
         boolean isUpdated = service.updateOrder(order);
-        appendRequestParameter(page, RequestParameter.TIME,
-                LocalDateTime.now().toString());
-        appendRequestParameter(page, RequestParameter.ATTRIBUTE,
-                RequestAttribute.INFO.toString());
-        String referer = request.getHeader("referer");
-        String pageNum = String.valueOf(referer.charAt(referer.length() - 1));
+        appendTimeParam(request, page);
+        String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdated) {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INFO.toString());
             appendRequestParameter(page, RequestParameter.ORDER_ID,
                     orderId.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.EXTENDED_ORDER);
         } else {
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INCORRECT_DATA.toString());
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.EXTEND_GOES_WRONG);
         }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends Service {
-    Optional<User> findByLogin(String email);
+    Optional<User> findByEmail(String email);
     Integer registerNewUser(User user);
     boolean isInBlackList(User user);
     boolean isExist(Integer passportNumber, String idPassportNumber);

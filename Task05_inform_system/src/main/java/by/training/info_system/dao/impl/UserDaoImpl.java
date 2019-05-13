@@ -21,7 +21,7 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     public Integer create(final User entity) {
-        String sql1 = "INSERT INTO Users (`id`, `login`, `password`, `role`) VALUES (?, ?, ?, ?)";
+        String sql1 = "INSERT INTO Users (`id`, `email`, `password`, `role`) VALUES (?, ?, ?, ?)";
         String sql2 = "INSERT INTO Passport (`id`, `serie`, `number`, `id_number`, `issue_date`, `end_date`)" +
                 " VALUES (?, ?, ?, ?, ?, ?)";
         String sql3 = "INSERT INTO User_data (`user_id`, `fname`, `lname`, `passport_id`, `address`)" +
@@ -40,7 +40,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 throw new SQLException("Cannot count all users");
             }
             statement1.setInt(1, lastUserId);
-            statement1.setString(2, entity.getLogin());
+            statement1.setString(2, entity.getEmail());
             statement1.setString(3, entity.getPassword());
             statement1.setInt(4, entity.getRole().value());
 
@@ -127,7 +127,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<List<User>> getAll() {
-        String sql = "SELECT login, role, fname, lname, address, serie, number,"
+        String sql = "SELECT email, role, fname, lname, address, serie, number,"
                 + " id_number, issue_date, end_date FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
                 + "JOIN Passport ON User_data.passport_id=Passport.id";
@@ -155,10 +155,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<User> read(final String email) {
-        String sql = "SELECT id, login, password, role, fname"
+        String sql = "SELECT id, email, password, role, fname"
                 + " FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
-                + "WHERE login = ?;";
+                + "WHERE email = ?;";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setString(1, email);
@@ -174,7 +174,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                     .build();
             Role role = Role.fromValue(resultSet.getInt("role"));
             User user = User.builder()
-                    .login(resultSet.getString("login"))
+                    .email(resultSet.getString("email"))
                     .role(role)
                     .password(resultSet.getString("password"))
                     .userData(userData)
@@ -192,7 +192,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public Optional<List<BlackListNode>> readBlackList() {
         String sql = "SELECT reason, lock_date, unlock_date," +
-                " id, login, fname, lname FROM Black_list " +
+                " id, email, fname, lname FROM Black_list " +
                 "JOIN Users U on Black_list.user_id = U.id " +
                 "JOIN User_data Ud on U.id = Ud.user_id";
         List<BlackListNode> usersBlackList = new ArrayList<>();
@@ -200,7 +200,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         try (ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 User user = User.builder()
-                        .login(resultSet.getString("login"))
+                        .email(resultSet.getString("email"))
                         .userData(
                                 UserData.builder()
                                         .fName(resultSet.getString("fname"))
@@ -229,7 +229,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public Optional<User> findByPassportNumber(final Integer number,
                                                final String idNumber) {
-        String sql = "SELECT login, role, fname, lname, address, serie, number,"
+        String sql = "SELECT email, role, fname, lname, address, serie, number,"
                 + " id_number, issue_date, end_date FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
                 + "JOIN Passport ON User_data.passport_id=Passport.id " +
@@ -276,7 +276,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                     .build();
             Role role = Role.fromValue(resultSet.getInt("role"));
             return User.builder()
-                    .login(resultSet.getString("login"))
+                    .email(resultSet.getString("email"))
                     .role(role)
                     .userData(userData)
                     .build();

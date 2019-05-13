@@ -60,6 +60,9 @@
         .msg {
             color: #60c9a8;
         }
+        .error_msg {
+            color: red;
+        }
         .pag {
             margin-bottom: 5%;
         }
@@ -153,6 +156,9 @@
                                 <c:if test="${not empty info && not empty order_id && order.id == order_id}">
                                     <h4 class="msg">${info}</h4>
                                 </c:if>
+                                <c:if test="${not empty incorrectData}">
+                                <h4 class="error_msg">${incorrectData}
+                                    </c:if>
                             </tr>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ import by.training.info_system.validator.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,16 @@ public abstract class Command {
                                                          RequestParameter parameter,
                                                          String message) {
         page.appendRequestParameter(parameter.getValue() + "=" + message);
+    }
+
+    protected void appendTimeParam(HttpServletRequest request, JspPage page) {
+        appendRequestParameter(page, RequestParameter.TIME,
+                LocalDateTime.now().toString());
+    }
+
+    protected String findCurrentPage(HttpServletRequest request) {
+        String referer = request.getHeader("referer");
+        return String.valueOf(referer.charAt(referer.length() - 1));
     }
 
     protected boolean validate(Validator validator, Object object) {

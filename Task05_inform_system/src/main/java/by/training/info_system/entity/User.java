@@ -12,7 +12,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class User extends Entity implements Serializable {
-    private String login;
+    private String email;
     private String password;
     private Role role;
     private UserData userData;

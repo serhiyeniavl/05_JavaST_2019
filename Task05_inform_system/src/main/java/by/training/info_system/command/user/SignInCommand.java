@@ -4,21 +4,17 @@ import by.training.info_system.command.Command;
 import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.User;
-import by.training.info_system.resource.ConfigurationManager;
 import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
 import by.training.info_system.service.UserService;
-import by.training.info_system.util.Encoder;
 import by.training.info_system.util.PasswordHasher;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class SignInCommand extends Command {
@@ -29,7 +25,7 @@ public class SignInCommand extends Command {
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         UserService service = factory.getService(UserService.class).orElseThrow();
-        Optional<User> user = service.findByLogin(email);
+        Optional<User> user = service.findByEmail(email);
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
             if (service.isInBlackList(user.get())) {
@@ -43,7 +39,7 @@ public class SignInCommand extends Command {
             }
             HttpSession session = request.getSession(false);
             User sessionUser = User.builder()
-                    .login(user.get().getLogin())
+                    .email(user.get().getEmail())
                     .role(user.get().getRole())
                     .userData(user.get().getUserData())
                     .build();
