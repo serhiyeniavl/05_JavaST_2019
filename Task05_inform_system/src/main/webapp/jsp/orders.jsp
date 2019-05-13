@@ -50,15 +50,39 @@
         .a01:hover {
             color: rgb(52, 57, 62);
         }
+
+        .a-nav {
+            color: #000;
+        }
+
         #center {
-            position:absolute;
-            width:100%;
-            top:40%;
-            text-align:center;
+            position: absolute;
+            width: 100%;
+            top: 40%;
+            text-align: center;
+        }
+        .pag {
+            margin-bottom: 5%;
+        }
+        @media screen and (max-width: 1500px){
+            .pag {
+                margin-bottom: 7%;
+            }
+        }
+        @media screen and (max-width: 1000px){
+            .pag {
+                margin-bottom: 10%;
+            }
+        }
+        @media screen and (max-width: 768px){
+            .pag {
+                margin-bottom: 12%;
+            }
         }
     </style>
 
 </head>
+<body style="background-color: #F5F5F5">
 
 <c:choose>
     <c:when test="${empty car_orders}">
@@ -67,108 +91,156 @@
         </div>
     </c:when>
     <c:otherwise>
-        <c:forEach var="order" items="${car_orders}" varStatus="status">
-            <div class="main">
+        <div class="pag">
+            <c:forEach var="order" items="${car_orders}" varStatus="status">
                 <div class="container">
                     <div class="row">
-                        <tr>
-                            <div class="col-1-3">
-                                <td><img width="85%" height="55%"
-                                         src="${ctx}/img/cars/${order.car.imagePath}"/>
-                                </td>
-                            </div>
-                            <div style="text-align: center;">
-                                <div class="col-2-3;">
-                                    Order
-                                    <td><c:out value="#${ order.id }"/></td>
+                        <div class="col-md-6">
+                            <tr><img width="75%" height="45%"
+                                     class="img-fluid rounded"
+                                     src="${ctx}/img/cars/${order.car.imagePath}?"/>
+                            </tr>
+                        </div>
+                        <div class="col-md-6">
+                            <tr>
+                                Order
+                                <th><c:out value="#${ order.id }"/></th>
+                                <br>
+                                Car:
+                                <th><c:out
+                                        value="${ order.car.brandName }"/></th>
+                                <br>
+                                Price per hour:
+                                <th><c:out
+                                        value="${ order.car.rentPrice }$"/></th>
+                                <br>
+                                Customer name:
+                                <th><c:out
+                                        value="${ order.user.userData.FName}"/></th>
+                                <br>
+                                Customer email:
+                                <th><c:out value="${ order.user.login }"/></th>
+                                <br>
+                                <c:if test="${not empty order.issueDate}">
+                                    Issue date:
+                                    <th><c:out
+                                            value="${ order.showIssueDate()}"/></th>
                                     <br>
-                                    Car:
-                                    <td><c:out value="${ order.car.brandName }"/></td>
+                                </c:if>
+                                <c:if test="${not empty order.returnDate}">
+                                    Return date:
+                                    <th><c:out
+                                            value="${ order.showReturnDate()}"/></th>
                                     <br>
-                                    Car rent price:
-                                    <td><c:out value="${ order.car.rentPrice }$"/></td>
+                                </c:if>
+                                <c:if test="${not empty order.realReturnDate}">
+                                    Real return date:
+                                    <th><c:out
+                                            value="${ order.showRealReturnDate()}"/></th>
                                     <br>
-                                    User first name:
-                                    <td><c:out
-                                            value="${ order.user.userData.FName }"/></td>
+                                    Final price:
+                                    <th><c:out
+                                            value="${ order.finalPrice}"/></th>
                                     <br>
-                                    User email:
-                                    <td><c:out value="${ order.user.login }"/></td>
-                                    <br>
-                                    User:
-                                    <td><c:out value="${ order.user.role }"/></td>
-                                    <br>
-                                    <c:if test="${not empty order.issueDate}">
-                                        Issue date:
-                                        <td><c:out value="${ order.showIssueDate() }"/></td>
-                                        <br>
-                                        Return date:
-                                        <td><c:out value="${ order.showReturnDate() }"/></td>
-                                        <br>
-                                    </c:if>
-                                    <c:if test="${not empty order.realReturnDate}">
-                                        Issue date:
-                                        <td><c:out
-                                                value="${ order.showRealReturnDate() }"/></td>
-                                        <br>
-                                        Final price:
-                                        <td><c:out value="${ order.finalPrice }$"/></td>
-                                        <br>
-                                    </c:if>
-                                    Status:
-                                    <td><c:out value="${ order.status }"/></td>
-                                    <br>
-                                    <c:if test="${order.status.getValue() == 'Not confirmed'}">
+                                </c:if>
+                                Status:
+                                <th><c:out
+                                        value="${ order.status.getValue()}"/></th>
+                                <br>
+                                <c:if test="${order.status.getValue() eq 'Not confirmed'}">
                                     <form action="${orders}" method="post">
                                         <input type="hidden" name="command"
-                                               value="confirm_order"/>
-                                        <td><button class="butt" type="submit" name="confirm"
-                                                    value="${order.id}" style="width: 160px">Confirm</button>
+                                               value="confirm_order">
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    type="submit" name="confirm"
+                                                    value="${order.id}">Confirm
+                                            </button>
                                         </td>
                                     </form>
                                     <form action="${orders}" method="post">
                                         <input type="hidden" name="command"
-                                               value="deny_order"/>
-                                        <td><button class="butt" type="submit" name="deny"
-                                                    value="${order.id}" style="width: 160px">Deny</button>
+                                               value="deny_order">
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    type="submit" name="deny"
+                                                    value="${order.id}">Deny
+                                            </button>
                                         </td>
                                     </form>
-                                    </c:if>
-                                    <c:if test="${order.status.getValue() == 'Active' || order.status.getValue() == 'Extended'}">
-                                        <form action="${orders}" method="post">
-                                            <input type="hidden" name="command"
-                                                   value="complete_user_order"/>
-                                            <td><button class="butt" type="submit" name="complete"
-                                                        value="${order.id}" style="width: 160px">Complete order</button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                    <c:if test="${order.status.getValue() == 'Active'}">
+                                </c:if>
+                                <c:if test="${order.status.getValue() eq 'Active' || order.status.getValue() eq 'Extended'}">
                                     <form action="${orders}" method="post">
-                                            <input type="hidden" name="command"
-                                                   value="extend_user_order"/>
-                                            <td><button class="butt" type="submit" name="extend"
-                                                        value="${order.id}" style="width: 160px">Extend order</button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                </div>
+                                        <input type="hidden" name="command"
+                                               value="complete_user_order"/>
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    type="submit"
+                                                    name="complete"
+                                                    value="${order.id}">Complete
+                                                order
+                                            </button>
+                                        </td>
+                                    </form>
+                                </c:if>
+                                <c:if test="${order.status.getValue() == 'Active'}">
+                                    <form action="${orders}" method="post">
+                                        <input type="hidden" name="command"
+                                               value="extend_user_order"/>
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    type="submit" name="extend"
+                                                    value="${order.id}">Extend
+                                                order
+                                            </button>
+                                        </td>
+                                    </form>
+                                </c:if>
                                 <c:if test="${not empty info && not empty order_id && order.id == order_id}">
-                                <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
-                                    </c:if>
-                            </div>
-                        </tr>
+                                    <h5>${info}</h5>
+                                </c:if>
+                            </tr>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr/>
-        </c:forEach>
+                <hr>
+            </c:forEach>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <c:if test="${current_page != 1}">
+                        <li class="page-item"><a class="page-link a-nav"
+                                                 href="${orders}?page=${current_page - 1}">Previous</a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="1" end="${num_of_pages}" var="i">
+                        <c:choose>
+                            <c:when test="${current_page eq i}">
+                                <li class="page-item disabled"><a
+                                        class="page-link a-nav"
+                                        href="${orders}?page=${i}">${i}</a>
+                                    <span class="sr-only">(current)</span></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link a-nav"
+                                                         href="${orders}?page=${i}">${i}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${current_page lt num_of_pages}">
+                        <li class="page-item"><a class="page-link a-nav"
+                                                 href="${orders}?page=${current_page + 1}">Next</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
     </c:otherwise>
 </c:choose>
 
 
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+<footer class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
         <a class="navbar-brand" href="${home}"
            style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
@@ -255,7 +327,8 @@
             </ul>
         </div>
     </div>
-</nav>
+</footer>
+</body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -26,9 +26,10 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
-    public Optional<List<Order>> findAllOrders() {
+    public Optional<List<Order>> findAllOrders(final int page,
+                                               final int recordsPerPage) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
-        return dao.getAll();
+        return dao.getAll(page, recordsPerPage);
     }
 
     @Override
@@ -44,9 +45,11 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
-    public Optional<List<Order>> findUserOrders(final long id) {
+    public Optional<List<Order>> findUserOrders(final long id,
+                                                final int page,
+                                                final int recordsPerPage) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
-        return dao.findOrders(id);
+        return dao.findOrders(id, page, recordsPerPage);
     }
 
     @Override
@@ -56,8 +59,26 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
+    public Optional<List<Order>> findAllOrders() {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.getAll();
+    }
+
+    @Override
     public boolean updateOrder(final Order order) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         return dao.update(order);
+    }
+
+    @Override
+    public Integer countOrders() {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.countOrders();
+    }
+
+    @Override
+    public Integer countOrders(final long userId) {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.countOrders(userId);
     }
 }

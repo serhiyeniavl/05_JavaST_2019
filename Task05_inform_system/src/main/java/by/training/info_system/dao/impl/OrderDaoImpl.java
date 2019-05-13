@@ -29,6 +29,38 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     }
 
     @Override
+    public Integer countOrders() {
+        String sql = "SELECT COUNT(id) FROM Orders";
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer countOrders(final long userId) {
+        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE user_id = %s", userId);
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
+        return 0;
+    }
+
+    @Override
     public Optional<List<Order>> findOverdue() {
         return Optional.empty();
     }
@@ -334,15 +366,20 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     }
 
     @Override
-    public Optional<List<Order>> findOrders(long userId) {
+    public Optional<List<Order>> findOrders(final long userId,
+                                            final int page,
+                                            final int recordsPerPage) {
         String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
                 + "final_price, brand_name, rent_price, image_path, reg_number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
                 + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ?";
+                + "WHERE Orders.user_id = ? "
+                + "LIMIT ? OFFSET ?";
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setLong(1, userId);
+            statement.setInt(2, recordsPerPage);
+            statement.setInt(3, (page - 1) * recordsPerPage);
         } catch (SQLException e) {
             log.error("Cannot create prepared statement", e);
         }
@@ -391,6 +428,88 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
             log.error(RESULT_SET_ERROR, e);
         } finally {
             closePreparedStatement(statement);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Order>> findOrders(long userId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Order>> getAll(final int page, final int ordersPerPage) {
+        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+                + "final_price, brand_name, rent_price, image_path, reg_number,"
+                + " login, role, fname, lname, serie, number"
+                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
+                + "JOIN Car_info Ci on C.id = Ci.car_id "
+                + "JOIN Users U on Orders.user_id = U.id "
+                + "JOIN User_data Ud on U.id = Ud.user_id "
+                + "JOIN Passport P on Ud.passport_id = P.id "
+                + "LIMIT %s OFFSET %s", ordersPerPage, (page-1) * ordersPerPage);
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            List<Order> orders = new ArrayList<>();
+            while (resultSet.next()) {
+                Passport passport = Passport.builder()
+                        .serie(resultSet.getString("serie"))
+                        .number(resultSet.getInt("number"))
+                        .build();
+                User user = User.builder()
+                        .login(resultSet.getString("login"))
+                        .role(Role.fromValue(resultSet.getInt("role")))
+                        .userData(
+                                UserData.builder()
+                                        .fName(resultSet.getString("fname"))
+                                        .lName(resultSet.getString("lname"))
+                                        .passport(passport)
+                                        .build()
+                        )
+                        .build();
+                Car car = Car.builder()
+                        .brandName(resultSet.getString("brand_name"))
+                        .imagePath(resultSet.getString("image_path"))
+                        .rentPrice(resultSet.getShort("rent_price"))
+                        .carInfo(
+                                CarInfo.builder()
+                                        .regNumber(resultSet.getString("reg_number"))
+                                        .build()
+                        )
+                        .build();
+
+                Order order = Order.builder()
+                        .user(user)
+                        .car(car)
+                        .status(OrderStatus.fromValue(resultSet.getString("status")))
+                        .build();
+                order.setId(resultSet.getLong("id"));
+                long finalPrice = resultSet.getLong("final_price");
+                if (finalPrice != 0) {
+                    order.setFinalPrice(finalPrice);
+                }
+                Object issueDate = resultSet.getObject("issue_date");
+                if (issueDate != null) {
+                    order.setIssueDate(resultSet.getTimestamp("issue_date")
+                            .toLocalDateTime());
+                }
+                Object returnDate = resultSet.getObject("return_date");
+                if  (returnDate != null) {
+                    order.setReturnDate(resultSet.getTimestamp("return_date")
+                            .toLocalDateTime());
+                }
+                Object realReturnDate = resultSet.getObject("real_return_date");
+                if (realReturnDate != null) {
+                    order.setRealReturnDate(resultSet.getTimestamp("real_return_date")
+                            .toLocalDateTime());
+                }
+                orders.add(order);
+            }
+            return Optional.of(orders);
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
         }
         return Optional.empty();
     }

@@ -57,6 +57,27 @@
             top:40%;
             text-align:center;
         }
+        .a-nav {
+            color: #000;
+        }
+        .pag {
+            margin-bottom: 5%;
+        }
+        @media screen and (max-width: 1500px){
+            .pag {
+                margin-bottom: 7%;
+            }
+        }
+        @media screen and (max-width: 1000px){
+            .pag {
+                margin-bottom: 10%;
+            }
+        }
+        @media screen and (max-width: 768px){
+            .pag {
+                margin-bottom: 12%;
+            }
+        }
     </style>
 
 </head>
@@ -68,67 +89,107 @@
         </div>
     </c:when>
     <c:otherwise>
-        <c:forEach var="order" items="${car_orders}" varStatus="status">
-            <div class="main">
+        <div class="pag">
+            <c:forEach var="order" items="${car_orders}" varStatus="status">
                 <div class="container">
                     <div class="row">
-                        <tr>
-                            <div class="col-1-3">
-                                <td><img width="75%" height="40%"
-                                         src="${ctx}/img/cars/${order.car.imagePath}"/>
-                                </td>
-                            </div>
-                            <div style="text-align: center;">
-                                <div class="col-2-3;">
-                                    Order
-                                    <td><c:out value="#${ order.id }"/></td>
+                        <div class="col-md-6">
+                            <tr><img width="75%" height="45%"
+                                     class="img-fluid rounded"
+                                     src="${ctx}/img/cars/${order.car.imagePath}?"/>
+                            </tr>
+                        </div>
+                        <div class="col-md-6">
+                            <tr>
+                                Order
+                                <th><c:out value="#${ order.id }"/></th>
+                                <br>
+                                Car:
+                                <th><c:out
+                                        value="${ order.car.brandName }"/></th>
+                                <br>
+                                Price per hour:
+                                <th><c:out
+                                        value="${ order.car.rentPrice }$"/></th>
+                                <br>
+                                <c:if test="${not empty order.issueDate}">
+                                    Issue date:
+                                    <th><c:out
+                                            value="${ order.showIssueDate()}"/></th>
                                     <br>
-                                    Car:
-                                    <td><c:out value="${ order.car.brandName }"/></td>
+                                </c:if>
+                                <c:if test="${not empty order.returnDate}">
+                                    Return date:
+                                    <th><c:out
+                                            value="${ order.showReturnDate()}"/></th>
                                     <br>
-                                    Car rent price:
-                                    <td><c:out value="${ order.car.rentPrice }$"/></td>
+                                </c:if>
+                                <c:if test="${not empty order.realReturnDate}">
+                                    Real return date:
+                                    <th><c:out
+                                            value="${ order.showRealReturnDate()}"/></th>
                                     <br>
-                                    <c:if test="${not empty order.issueDate}">
-                                        Issue date:
-                                        <td><c:out value="${ order.showIssueDate() }"/></td>
-                                        <br>
-                                        Return date:
-                                        <td><c:out value="${ order.showReturnDate() }"/></td>
-                                        <br>
-                                    </c:if>
-                                    <c:if test="${not empty order.realReturnDate}">
-                                        Issue date:
-                                        <td><c:out
-                                                value="${ order.showRealReturnDate() }"/></td>
-                                        <br>
-                                        Final price:
-                                        <td><c:out value="${ order.finalPrice }$"/></td>
-                                        <br>
-                                    </c:if>
-                                    Status:
-                                    <td><c:out value="${ order.status }"/></td>
+                                    Final price:
+                                    <th><c:out
+                                            value="${ order.finalPrice}"/></th>
                                     <br>
-                                    <c:if test="${order.status.getValue() == 'Confirmed'}">
-                                        <form action="${home}" method="post">
-                                            <input type="hidden" name="command"
-                                                   value="accept_order"/>
-                                            <td><button class="butt" type="submit" name="accept"
-                                                        value="${order.id}" style="width: 160px">Take a car</button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                </div>
+                                </c:if>
+                                Status:
+                                <th><c:out
+                                        value="${ order.status.getValue()}"/></th>
+                                <br>
+                                <c:if test="${order.status.getValue() eq 'Confirmed'}">
+                                    <form action="${user_orders}" method="post">
+                                        <input type="hidden" name="command"
+                                               value="accept_order">
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    type="submit" name="accept"
+                                                    value="${order.id}">Take a car
+                                            </button>
+                                        </td>
+                                    </form>
+                                </c:if>
                                 <c:if test="${not empty info && not empty order_id && order.id == order_id}">
-                                <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
-                                    </c:if>
-                            </div>
-                        </tr>
+                                    <h5>${info}</h5>
+                                </c:if>
+                            </tr>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr/>
-        </c:forEach>
+                <hr>
+            </c:forEach>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <c:if test="${current_page != 1}">
+                        <li class="page-item"><a class="page-link a-nav"
+                                                 href="${user_orders}?page=${current_page - 1}">Previous</a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="1" end="${num_of_pages}" var="i">
+                        <c:choose>
+                            <c:when test="${current_page eq i}">
+                                <li class="page-item disabled"><a
+                                        class="page-link a-nav"
+                                        href="${user_orders}?page=${i}">${i}</a>
+                                    <span class="sr-only">(current)</span></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link a-nav"
+                                                         href="${user_orders}?page=${i}">${i}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${current_page lt num_of_pages}">
+                        <li class="page-item"><a class="page-link a-nav"
+                                                 href="${user_orders}?page=${current_page + 1}">Next</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
     </c:otherwise>
 </c:choose>
 

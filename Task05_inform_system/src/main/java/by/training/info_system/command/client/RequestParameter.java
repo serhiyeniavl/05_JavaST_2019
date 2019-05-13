@@ -3,6 +3,7 @@ package by.training.info_system.command.client;
 public enum RequestParameter {
     USER_NAME("nm"),
     ORDER_ID("oi"),
+    PAGE("page"),
     TIME("tm"),
     USER_LOGIN("ul"),
     ATTRIBUTE("at"),

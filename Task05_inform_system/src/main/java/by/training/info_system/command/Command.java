@@ -21,6 +21,8 @@ public abstract class Command {
 
     protected ServiceFactory factory;
 
+    private static final int RECORDS_PER_PAGE = 3;
+
 
     void setFactory(ServiceFactory factory) {
         this.factory = factory;
@@ -39,16 +41,20 @@ public abstract class Command {
         putAttrInRequest(request, RequestAttribute.CARS, cars);
     }
 
-    void loadUserOrders(HttpServletRequest request, long id) {
+    void loadUserOrders(HttpServletRequest request, long id, int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
-        List<Order> orders = service.findUserOrders(id).orElseGet(ArrayList::new);
+        List<Order> orders = service.findUserOrders(id, page, RECORDS_PER_PAGE).orElseGet(ArrayList::new);
+        int numOfPages = (int) Math.ceil(service.countOrders(id) * 1.0 / RECORDS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
-    void loadOrders(HttpServletRequest request) {
+    void loadOrders(HttpServletRequest request, int pageNum) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
-        List<Order> orders = service.findAllOrders().orElseGet(ArrayList::new);
+        List<Order> orders = service.findAllOrders(pageNum, RECORDS_PER_PAGE).orElseGet(ArrayList::new);
+        int numOfPages = (int) Math.ceil(service.countOrders() * 1.0 / RECORDS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
     protected void appendRequestParameter(JspPage page, RequestParameter parameter,
@@ -61,6 +67,12 @@ public abstract class Command {
                                           String message) {
         page.appendRequestParameter(parameter.getValue() + "="
                 + Encoder.encodeString(message));
+    }
+
+    protected void appendRequestParameterWithoutEncoding(JspPage page,
+                                                         RequestParameter parameter,
+                                                         String message) {
+        page.appendRequestParameter(parameter.getValue() + "=" + message);
     }
 
     protected boolean validate(Validator validator, Object object) {
