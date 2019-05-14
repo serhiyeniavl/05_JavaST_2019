@@ -13,7 +13,6 @@ import by.training.info_system.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
 
 public class ExtendUserOrderCommand extends Command {
     @Override
@@ -27,7 +26,7 @@ public class ExtendUserOrderCommand extends Command {
         order.setReturnDate(order.getReturnDate().plusDays(1L));
         order.setStatus(OrderStatus.EXTENDED);
         boolean isUpdated = service.updateOrder(order);
-        appendTimeParam(request, page);
+        appendTimeParam(page);
         String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdated) {

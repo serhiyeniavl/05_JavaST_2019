@@ -12,7 +12,6 @@ import by.training.info_system.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
 
 public class DenyOrderManagerCommand extends Command {
     @Override
@@ -23,7 +22,7 @@ public class DenyOrderManagerCommand extends Command {
         Long orderId = Long.valueOf(request.getParameter("deny"));
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         boolean isUpdated = service.updateOrderStatus(orderId, OrderStatus.DENIED);
-        appendTimeParam(request, page);
+        appendTimeParam(page);
         String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdated) {

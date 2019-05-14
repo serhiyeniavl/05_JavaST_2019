@@ -28,7 +28,7 @@ public class AcceptOrderCommand extends Command {
         order.setReturnDate(LocalDateTime.now().plusDays(1L));
         order.setStatus(OrderStatus.ACTIVE);
         boolean isAccepted = service.updateOrder(order);
-        appendTimeParam(request, page);
+        appendTimeParam(page);
         String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isAccepted) {

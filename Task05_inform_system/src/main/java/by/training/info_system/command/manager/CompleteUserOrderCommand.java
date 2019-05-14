@@ -29,7 +29,7 @@ public class CompleteUserOrderCommand extends Command {
         order.setRealReturnDate(LocalDateTime.now());
         order.setFinalPrice(calculatePrice(order));
         boolean isUpdatedOrder = service.updateOrder(order);
-        appendTimeParam(request, page);
+        appendTimeParam(page);
         String pageNum = findCurrentPage(request);
         appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
         if (isUpdatedStatus && isUpdatedOrder) {
