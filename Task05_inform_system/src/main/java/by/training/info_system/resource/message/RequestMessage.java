@@ -40,7 +40,13 @@ public enum RequestMessage {
     EXTEND_GOES_WRONG(RequestMessageManager.getInstance()
             .getProperty("extend_goes_wrong")),
     COMPLETED_USER_ORDER(RequestMessageManager.getInstance()
-            .getProperty("completed_user_order"));
+            .getProperty("completed_user_order")),
+    PASSWORD_CHANGED(RequestMessageManager.getInstance()
+            .getProperty("password_changed")),
+    PASSWORDS_INCORRECT(RequestMessageManager.getInstance()
+            .getProperty("incorrect_password")),
+    PASSWORD_CHANGE_GOES_WRONG(RequestMessageManager.getInstance()
+            .getProperty("password_change_goes_wrong"));
 
 
     private String value;

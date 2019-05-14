@@ -19,6 +19,19 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public Optional<User> findById(final long id) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.get(id);
+    }
+
+    @Override
+    public boolean updatePassword(final long id,
+                                  final String password) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.update(id, password);
+    }
+
+    @Override
     public Integer registerNewUser(final User user) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         daoManager.autoCommit(false);

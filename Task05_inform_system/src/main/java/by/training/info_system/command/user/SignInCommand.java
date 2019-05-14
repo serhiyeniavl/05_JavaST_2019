@@ -19,7 +19,8 @@ import java.util.Optional;
 
 public class SignInCommand extends Command {
     @Override
-    public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
+    public JspPage execute(final HttpServletRequest request,
+                           final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNIN);
 
         String email = request.getParameter("email");
@@ -29,8 +30,7 @@ public class SignInCommand extends Command {
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {
             if (service.isInBlackList(user.get())) {
-                appendRequestParameter(page, RequestParameter.TIME,
-                        LocalDateTime.now().toString());
+                appendTimeParam(page);
                 appendRequestParameter(page, RequestParameter.MESSAGE,
                         RequestMessage.BANNED_ACCOUNT);
                 appendRequestParameter(page, RequestParameter.ATTRIBUTE,

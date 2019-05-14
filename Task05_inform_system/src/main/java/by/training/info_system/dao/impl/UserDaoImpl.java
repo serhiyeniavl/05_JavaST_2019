@@ -98,32 +98,55 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public Optional<User> get(final long id) {
-//        String sql = "SELECT login, role, fname, lname, address, serie, number, "
-//                + "id_number, issue_date, end_date from Users, User_data, "
-//                + "Passport where User_data.user_id = Users.id "
-//                + "and User_data.passport_id = Passport.id"
-//                + "Users.id = ?;";
-//        PreparedStatement statement = createPreparedStatement(sql);
-//        try {
-//            statement.setString(1, String.valueOf(id));
-//        } catch (SQLException e) {
-//            log.error("Cannot set argument in prepared statement.", e);
-//        }
-//
-//        try (ResultSet resultSet = statement.executeQuery(sql)) {
-//            resultSet.next();
-//            Role role = Role.fromValue(resultSet)
-//            User user = User.builder()
-//                    .login(resultSet.getString("login"))
-//                    .password("none")
-//                    .role()
-//        return user != null ? Optional.of(user) : Optional.empty();
-//        } catch (SQLException e) {
-//            log.error(RESULT_SET_ERROR, e);
-//        } finally {
-//            closePreparedStatement(statement);
-//        }
+        String sql = "SELECT email, password, role, fname, lname, address, serie, number, "
+                + "id_number, issue_date, end_date FROM Passport "
+                + "JOIN User_data Ud on Passport.id = Ud.passport_id "
+                + "JOIN Users U on Ud.user_id = U.id WHERE U.id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setString(1, String.valueOf(id));
+        } catch (SQLException e) {
+            log.error("Cannot set argument in prepared statement.", e);
+        }
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                User user = createUser(resultSet);
+                user.setPassword(resultSet.getString("password"));
+                user.setId(id);
+                return Optional.of(user);
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closePreparedStatement(statement);
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean update(final long id, final String password) {
+        String sql = "UPDATE Users SET password = ? WHERE id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setString(1, password);
+            statement.setLong(2, id);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement.", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            if (query < 1) {
+                throw new SQLException("Cannot update password");
+            }
+            return true;
+        } catch (SQLException e) {
+            log.error("Error when trying to update password", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return false;
     }
 
     public Optional<List<User>> getAll() {
@@ -205,10 +228,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                                 UserData.builder()
                                         .fName(resultSet.getString("fname"))
                                         .lName(resultSet.getString("lname"))
-                                .build()
+                                        .build()
                         )
                         .build();
-                user.setId((long)resultSet.getInt("id"));
+                user.setId((long) resultSet.getInt("id"));
                 BlackListNode node = BlackListNode.builder()
                         .user(user)
                         .reason(resultSet.getString("reason"))

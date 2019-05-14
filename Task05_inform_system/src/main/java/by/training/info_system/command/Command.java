@@ -4,11 +4,13 @@ import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.Car;
 import by.training.info_system.entity.Order;
+import by.training.info_system.entity.User;
 import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.service.CarService;
 import by.training.info_system.service.OrderService;
 import by.training.info_system.service.ServiceFactory;
+import by.training.info_system.service.UserService;
 import by.training.info_system.util.Encoder;
 import by.training.info_system.validator.Validator;
 
@@ -58,6 +60,13 @@ public abstract class Command {
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
+    void loadProfileInfo(HttpServletRequest request, long userId) {
+        UserService service = factory.getService(UserService.class).orElseThrow();
+        User user = service.findById(userId).orElse(User.builder().build());
+        putAttrInRequest(request, RequestAttribute.PROFILE, user);
+    }
+
+
     protected void appendRequestParameter(JspPage page, RequestParameter parameter,
                                           RequestMessage message) {
         page.appendRequestParameter(parameter.getValue() + "="
@@ -76,7 +85,7 @@ public abstract class Command {
         page.appendRequestParameter(parameter.getValue() + "=" + message);
     }
 
-    protected void appendTimeParam(HttpServletRequest request, JspPage page) {
+    protected void appendTimeParam(JspPage page) {
         appendRequestParameter(page, RequestParameter.TIME,
                 LocalDateTime.now().toString());
     }

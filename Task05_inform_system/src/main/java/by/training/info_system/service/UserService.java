@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends Service {
+    Optional<User> findById(long id);
     Optional<User> findByEmail(String email);
     Integer registerNewUser(User user);
     boolean isInBlackList(User user);
+    boolean updatePassword(long id, String password);
     boolean isExist(Integer passportNumber, String idPassportNumber);
     Optional<List<User>> readBlackList();
     Optional<List<User>> findUsersWithDiscount();

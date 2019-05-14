@@ -39,6 +39,16 @@ public class EmptyCommand extends Command {
             }
         }
 
+        if (page.getUri().equals(PageEnum.PROFILE.getUri())) {
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("user");
+            loadProfileInfo(request, user.getId());
+            if (checkRequestMessageAttrs(request)) {
+                return processMessageAttrs(request, page);
+            }
+            return page;
+        }
+
         if (isAuthorizedUserTrySignAgain(request, page)) {
             page = PageFactory.defineAndGet(PageEnum.HOME);
             page.setRedirect(true);
