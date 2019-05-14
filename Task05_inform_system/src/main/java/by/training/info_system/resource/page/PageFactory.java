@@ -14,6 +14,7 @@ public final class PageFactory {
         pages.put(PageEnum.CONTACT, new ContactPage());
         pages.put(PageEnum.MY_ORDERS, new UserOrdersPage());
         pages.put(PageEnum.ORDERS, new OrdersPage());
+        pages.put(PageEnum.PROFILE, new ProfilePage());
     }
 
     private PageFactory() {

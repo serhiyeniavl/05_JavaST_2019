@@ -18,6 +18,7 @@
         <url-pattern>/contact</url-pattern>
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -65,6 +66,7 @@
         <url-pattern>/contact</url-pattern>
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
+        <url-pattern>/profile</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -81,5 +83,6 @@
         <url-pattern>/contact</url-pattern>
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
+        <url-pattern>/profile</url-pattern>
     </filter-mapping>
 </web-app>

@@ -25,6 +25,7 @@ public class URIDefinerFilter implements Filter {
         URI_LIST.add("/signup");
         URI_LIST.add("/contact");
         URI_LIST.add("/orders");
+        URI_LIST.add("/profile");
         URI_LIST.add("/my_orders");
     }
 
