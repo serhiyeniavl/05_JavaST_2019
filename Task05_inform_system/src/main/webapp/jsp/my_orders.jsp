@@ -66,6 +66,11 @@
         .pag {
             margin-bottom: 5%;
         }
+        .menu-bar {
+            background-color: rgb(53,58,63);
+            padding-bottom: 2%;
+            color: rgb(254, 254, 254)
+        }
         @media screen and (max-width: 1500px){
             .pag {
                 margin-bottom: 7%;
@@ -84,6 +89,45 @@
     </style>
 
 </head>
+
+<body style="background-color: #F5F5F5">
+
+<div class="container menu-bar">
+    <div class="row">
+        <form class="col ">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2" id="show">Show only:</label>
+                    <select class="custom-select mr-sm-2">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <form class="col-6 d-flex justify-content-center">
+            <div class="form-group">
+                <label for="formGroupExampleInput">Find by number</label>
+                <input type="text" class="form-control" style="width: 75%" id="formGroupExampleInput" placeholder="Number">
+            </div>
+        </form>
+        <form class="col d-flex justify-content-end">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2">Sort by:</label>
+                    <select class="custom-select mr-sm-2">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <c:choose>
     <c:when test="${empty car_orders}">
@@ -134,7 +178,7 @@
                                     <br>
                                     Final price:
                                     <th><c:out
-                                            value="${ order.finalPrice}"/></th>
+                                            value="${ order.finalPrice}$"/></th>
                                     <br>
                                 </c:if>
                                 Status:
@@ -198,8 +242,6 @@
         </div>
     </c:otherwise>
 </c:choose>
-
-
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
@@ -288,6 +330,7 @@
         </div>
     </div>
 </nav>
+</body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
