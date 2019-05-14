@@ -25,4 +25,8 @@ public class UserValidator implements Validator<User> {
                 && object.getUserData().getPassport().getIdNumber()
                     .matches(PASSPORT_ID_NUM_REGEX_BLR);
     }
+
+    public boolean isCorrectEmail(final String email) {
+        return email.matches(EMAIL_REGEX);
+    }
 }

@@ -17,6 +17,7 @@ public enum CommandEnum {
     COMPLETE_USER_ORDER(new CompleteUserOrderCommand()),
     EXTEND_USER_ORDER(new ExtendUserOrderCommand()),
     CHANGE_PASSWORD(new ChangePasswordCommand()),
+    CHANGE_EMAIL(new ChangeEmailCommand()),
     RENT_CAR(new RentCarCommand());
 
     Command command;

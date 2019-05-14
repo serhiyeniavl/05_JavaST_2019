@@ -11,6 +11,7 @@ public interface UserService extends Service {
     Integer registerNewUser(User user);
     boolean isInBlackList(User user);
     boolean updatePassword(long id, String password);
+    boolean updateEmail(long id, String email);
     boolean isExist(Integer passportNumber, String idPassportNumber);
     Optional<List<User>> readBlackList();
     Optional<List<User>> findUsersWithDiscount();

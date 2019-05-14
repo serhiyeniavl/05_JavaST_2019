@@ -127,11 +127,12 @@
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                  aria-labelledby="nav-profile-tab">
-                <form style="padding-top: 7%;">
+                <form action="${profile}" method="post" style="padding-top: 7%;">
+                    <input type="hidden" name="command" value="change_email">
                     <div class="form-group">
                         <label for="exampleInputEmail1">New email
                             address</label>
-                        <input type="email" class="form-control"
+                        <input type="email" class="form-control" name="email"
                                id="exampleInputEmail1" required
                                aria-describedby="emailHelp"
                                placeholder="Enter email">
@@ -141,7 +142,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control"
+                        <input type="password" class="form-control" name="password"
                                id="exampleInputPassword1" required
                                placeholder="Password">
                         <small class="form-text text-muted">Confirm password.

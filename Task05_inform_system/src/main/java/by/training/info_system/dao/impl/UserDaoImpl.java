@@ -128,10 +128,21 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public boolean update(final long id, final String password) {
         String sql = "UPDATE Users SET password = ? WHERE id = ?";
+        return update(sql, password, id);
+    }
+
+    @Override
+    public boolean updateEmail(final long id, final String email) {
+        String sql = "UPDATE Users SET email = ? WHERE id = ?";
+        return update(sql, email, id);
+    }
+
+    private boolean update(final String sql, final String param1,
+                          final long param2) {
         PreparedStatement statement = createPreparedStatement(sql);
         try {
-            statement.setString(1, password);
-            statement.setLong(2, id);
+            statement.setString(1, param1);
+            statement.setLong(2, param2);
         } catch (SQLException e) {
             log.error("Cannot create prepared statement.", e);
         }
@@ -148,6 +159,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         }
         return false;
     }
+
 
     public Optional<List<User>> getAll() {
         String sql = "SELECT email, role, fname, lname, address, serie, number,"
