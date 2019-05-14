@@ -50,8 +50,8 @@
                            placeholder="Email" required autofocus>
                     <input name="pass" type="password" class="form-control"
                            placeholder="Password" required>
-                    <c:if test="${not empty incorrectData}">
-                        <h5 style="color: red; text-align: center">${incorrectData}
+                    <c:if test="${not empty incorrect_data}">
+                        <h5 style="color: red; text-align: center">${incorrect_data}
                             <br>If you have any questions, please,
                             <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h5>
                     </c:if>

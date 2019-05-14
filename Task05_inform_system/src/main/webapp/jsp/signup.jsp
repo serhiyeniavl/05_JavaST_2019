@@ -33,8 +33,8 @@
                 <header class="card-header">
                     <a href="${signin}" class="float-right btn btn-outline-primary mt-1">Sign in</a>
                     <h4 class="card-title mt-2">Sign up</h4>
-                    <c:if test="${not empty incorrectData}">
-                        <h6 style="color: red; text-align: center">${incorrectData}
+                    <c:if test="${not empty incorrect_data}">
+                        <h6 style="color: red; text-align: center">${incorrect_data}
                             <br>If you have any questions, please,
                             <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h6>
                     </c:if>

@@ -243,8 +243,8 @@
                                 <c:if test="${not empty info && not empty order_id && order.id == order_id}">
                                     <h4 class="msg">${info}</h4>
                                 </c:if>
-                                <c:if test="${not empty incorrectData}">
-                                    <h4 class="error_msg">${incorrectData}
+                                <c:if test="${not empty incorrect_data}">
+                                    <h4 class="error_msg">${incorrect_data}
                                 </c:if>
                             </tr>
                         </div>

@@ -36,5 +36,4 @@ public class Order extends Entity implements Serializable {
     public String showRealReturnDate() {
         return realReturnDate.format(FORMATTER);
     }
-
 }

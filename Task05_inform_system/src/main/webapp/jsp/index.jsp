@@ -1,7 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="by.training.info_system.entity.User" %>
-<%@ page import="by.training.info_system.entity.data.UserData" %>
-<%@ page import="by.training.info_system.entity.Passport" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 

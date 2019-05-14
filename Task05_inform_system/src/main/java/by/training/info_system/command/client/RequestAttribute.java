@@ -2,13 +2,14 @@ package by.training.info_system.command.client;
 
 public enum RequestAttribute {
     BLACK_LIST("blackList"),
-    INCORRECT_DATA("incorrectData"),
+    INCORRECT_DATA("incorrect_data"),
     INFO("info"),
     ORDER_ID("order_id"),
     NUM_OF_PAGES("num_of_pages"),
     CURRENT_PAGE("current_page"),
     RECORD_PER_PAGE("records_per_page"),
     CARS("rental_cars"),
+    PROFILE("data"),
     ORDERS("car_orders"),
     SIGNED_UP("signedUp");
 

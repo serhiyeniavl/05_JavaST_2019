@@ -121,8 +121,8 @@
     <c:if test="${not empty info}">
     <h3 style="color: #008000; text-align: center">${info}
         </c:if>
-        <c:if test="${not empty incorrectData}">
-        <h3 style="color: red; text-align: center">${incorrectData}
+        <c:if test="${not empty incorrect_data}">
+        <h3 style="color: red; text-align: center">${incorrect_data}
             <br>If you have any questions, please,
             <a href="${contact}" style="color: red; text-decoration: underline">contact</a>
             us.</h3>
