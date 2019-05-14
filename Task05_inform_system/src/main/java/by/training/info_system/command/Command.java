@@ -5,6 +5,7 @@ import by.training.info_system.command.client.RequestParameter;
 import by.training.info_system.entity.Car;
 import by.training.info_system.entity.Order;
 import by.training.info_system.entity.User;
+import by.training.info_system.entity.status.OrderStatus;
 import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.service.CarService;
@@ -64,6 +65,10 @@ public abstract class Command {
         UserService service = factory.getService(UserService.class).orElseThrow();
         User user = service.findById(userId).orElse(User.builder().build());
         putAttrInRequest(request, RequestAttribute.PROFILE, user);
+    }
+
+    void loadOrderStatuses(HttpServletRequest request) {
+        putAttrInRequest(request, RequestAttribute.ORDER_STATUS, OrderStatus.values());
     }
 
 

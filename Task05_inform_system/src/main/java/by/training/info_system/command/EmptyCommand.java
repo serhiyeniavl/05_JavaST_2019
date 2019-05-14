@@ -57,6 +57,7 @@ public class EmptyCommand extends Command {
 
         if (page.getUri().equals(PageEnum.ORDERS.getUri())
                 || page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
+            loadOrderStatuses(request);
             int pageNum = 1;
             if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
                 pageNum = Integer.parseInt(request.getParameter(RequestParameter.PAGE.getValue()));

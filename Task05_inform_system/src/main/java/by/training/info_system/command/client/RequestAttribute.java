@@ -4,6 +4,7 @@ public enum RequestAttribute {
     BLACK_LIST("blackList"),
     INCORRECT_DATA("incorrect_data"),
     INFO("info"),
+    ORDER_STATUS("order_status"),
     ORDER_ID("order_id"),
     NUM_OF_PAGES("num_of_pages"),
     CURRENT_PAGE("current_page"),

@@ -66,11 +66,6 @@
         .pag {
             margin-bottom: 5%;
         }
-        .menu-bar {
-            background-color: rgb(53,58,63);
-            padding-bottom: 2%;
-            color: rgb(254, 254, 254)
-        }
         @media screen and (max-width: 1500px){
             .pag {
                 margin-bottom: 7%;
@@ -92,42 +87,31 @@
 
 <body style="background-color: #F5F5F5">
 
-<div class="container menu-bar">
-    <div class="row">
-        <form class="col ">
-            <div class="form-row align-items-center">
-                <div class="col-auto my-1">
-                    <label class="mr-sm-2" id="show">Show only:</label>
-                    <select class="custom-select mr-sm-2">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="margin-right: 3%; color: white">Navigation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Find by status
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <c:forEach var="status" items="${order_status}">
+                        <a class="dropdown-item" href="#">${status.getValue()}</a>
+                    </c:forEach>
                 </div>
-            </div>
-        </form>
-        <form class="col-6 d-flex justify-content-center">
-            <div class="form-group">
-                <label for="formGroupExampleInput">Find by number</label>
-                <input type="text" class="form-control" style="width: 75%" id="formGroupExampleInput" placeholder="Number">
-            </div>
-        </form>
-        <form class="col d-flex justify-content-end">
-            <div class="form-row align-items-center">
-                <div class="col-auto my-1">
-                    <label class="mr-sm-2">Sort by:</label>
-                    <select class="custom-select mr-sm-2">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search by ID" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
-</div>
+</nav>
 
 <c:choose>
     <c:when test="${empty car_orders}">
