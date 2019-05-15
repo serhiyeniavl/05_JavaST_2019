@@ -19,6 +19,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public Optional<User> findByEmailFullInto(final String email) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.readFullInfo(email);
+    }
+
+    @Override
     public Optional<User> findById(final long id) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.get(id);
@@ -67,8 +73,27 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public Optional<List<User>> readBlackList() {
-        return Optional.empty();
+    public Optional<List<User>> findAll() {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        return dao.getAll();
+    }
+
+    @Override
+    public Optional<List<User>> findManagers() {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        return dao.findManagers();
+    }
+
+    @Override
+    public Optional<List<User>> findCustomers() {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        return dao.findCustomers();
+    }
+
+    @Override
+    public Optional<List<BlackListNode>> readBlackList() {
+        UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
+        return dao.readBlackList();
     }
 
     @Override

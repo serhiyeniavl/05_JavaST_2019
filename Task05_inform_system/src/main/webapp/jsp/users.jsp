@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
-<c:url value="/managers" var="managers"/>
 <c:url value="/orders" var="orders"/>
 <c:url value="/my_orders" var="user_orders"/>
 <c:url value="/users" var="users"/>
@@ -49,11 +49,159 @@
         .a01:hover {
             color: rgb(52, 57, 62);
         }
+
+        #center {
+            position: absolute;
+            padding-top: 5%;
+            width: 78%;
+            top: 40%;
+            text-align: center;
+        }
     </style>
 
 </head>
 
-<body style="background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%;">
+<body style="background-color: #F5F5F5">
+
+<h1 align="center" style="color: #030005">Users</h1>
+<br/>
+<br/>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="">Control panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="${users}">All users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="${users}?show=managers">Managers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="${users}?show=customers">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="${users}?show=blackList">Black
+                        list</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="${users}?id">
+                <input class="form-control mr-sm-2" type="search" required autocomplete="off"
+                       name="id" placeholder="ID" aria-label="Search" style="width: 24%">
+                <button class="btn btn-outline-success my-2 my-sm-0"
+                        type="submit">Search
+                </button>
+            </form>
+            <form class="form-inline my-2 my-lg-0" action="${users}?email">
+                <input class="form-control mr-sm-2" type="search" required autocomplete="off"
+                       name ="email" placeholder="Email" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0"
+                        type="submit">Search
+                </button>
+            </form>
+        </div>
+    </nav>
+    <br/>
+    <table class="table ">
+        <thead>
+        <tr style="font-size: larger; border: #030005; color: #030005;">
+            <th>ID</th>
+            <th>Email</th>
+            <th>Full name</th>
+            <th>Role</th>
+            <c:choose>
+                <c:when test="${empty blackList}">
+                    <th>Address</th>
+                    <th>Passport ID</th>
+                </c:when>
+                <c:otherwise>
+                    <th>Reason</th>
+                    <th>Lock date</th>
+                    <th>Unlock date</th>
+                    <th></th>
+                </c:otherwise>
+            </c:choose>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:choose>
+        <c:when test="${empty userList}">
+        </tbody>
+    </table>
+    <div id="center">
+        <h2>There is no users.</h2>
+    </div>
+    </c:when>
+    <c:otherwise>
+        <c:forEach items="${userList}" var="u">
+            <tr style="color: black; font-size: 17px">
+                <c:choose>
+                    <c:when test="${empty blackList}">
+                        <td>${u.id}</td>
+                        <td>${u.email}</td>
+                        <td>${u.userData.FName} ${u.userData.LName}</td>
+                        <td>${u.role.toString()}</td>
+                        <td>${u.userData.address}</td>
+                        <td>${u.userData.passport.idNumber}</td>
+                        <td width="50px">
+                            <c:if test="${not u.role.toString() != 'ADMIN'}">
+                                <form action="${users}" method="post"
+                                      style="margin: 0"
+                                      onsubmit="return confirm('Account will be delete permanently.');">
+                                    <input type="hidden" name="command"
+                                           value="delete_user">
+                                    <button type="submit" name="user_id"
+                                            value="${u.id}"
+                                            class="btn btn-danger">Delete
+                                    </button>
+                                </form>
+                            </c:if>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${u.user.id}</td>
+                        <td>${u.user.email}</td>
+                        <td>${u.user.userData.FName} ${u.user.userData.LName}</td>
+                        <td>${u.user.role.toString()}</td>
+                        <td>${u.reason}</td>
+                        <td>${u.showLockDate()}</td>
+                        <td>${u.showUnlockDate()}</td>
+                        <td width="50px">
+                            <c:if test="${not u.user.role.toString() != 'ADMIN'}">
+                                <form action="${users}" method="post"
+                                      style="margin: 0"
+                                      onsubmit="return confirm('Are you sure to delete account from black list?');">
+                                    <input type="hidden" name="command"
+                                           value="delete_user_black_list">
+                                    <button type="submit" name="user_id"
+                                            value="${u.user.id}"
+                                            class="btn btn-danger">Delete from list
+                                    </button>
+                                </form>
+                            </c:if>
+                        </td>
+                    </c:otherwise>
+                </c:choose>
+
+            </tr>
+        </c:forEach>
+        </tbody>
+        </table>
+    </c:otherwise>
+    </c:choose>
+
+</div>
+<br/>
+<br/>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">

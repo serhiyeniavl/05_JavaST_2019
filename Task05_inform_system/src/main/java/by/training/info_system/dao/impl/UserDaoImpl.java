@@ -162,23 +162,11 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
 
     public Optional<List<User>> getAll() {
-        String sql = "SELECT email, role, fname, lname, address, serie, number,"
+        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
                 + " id_number, issue_date, end_date FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
                 + "JOIN Passport ON User_data.passport_id=Passport.id";
-        List<User> users = new ArrayList<>();
-        Statement statement = createStatement();
-        try (ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                users.add(createUser(resultSet));
-            }
-            return Optional.of(users);
-        } catch (SQLException e) {
-            log.error(RESULT_SET_ERROR, e);
-        } finally {
-            closeStatement(statement);
-        }
-        return Optional.empty();
+        return Optional.of(getAll(sql));
     }
 
     public boolean update(final User entity) {
@@ -225,9 +213,38 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
+    public Optional<User> readFullInfo(final String email) {
+        String sql = "SELECT U.id, email, password, role, fname, lname, address, serie, number, "
+                + "id_number, issue_date, end_date FROM Passport "
+                + "JOIN User_data Ud on Passport.id = Ud.passport_id "
+                + "JOIN Users U on Ud.user_id = U.id WHERE U.email = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setString(1, email);
+        } catch (SQLException e) {
+            log.error("Cannot set argument in prepared statement.", e);
+        }
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                User user = createUser(resultSet);
+                user.setPassword(resultSet.getString("password"));
+                user.setId(resultSet.getLong("id"));
+                return Optional.of(user);
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<List<BlackListNode>> readBlackList() {
         String sql = "SELECT reason, lock_date, unlock_date," +
-                " id, email, fname, lname FROM Black_list " +
+                " id, email, role, fname, lname FROM Black_list " +
                 "JOIN Users U on Black_list.user_id = U.id " +
                 "JOIN User_data Ud on U.id = Ud.user_id";
         List<BlackListNode> usersBlackList = new ArrayList<>();
@@ -236,6 +253,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             while (resultSet.next()) {
                 User user = User.builder()
                         .email(resultSet.getString("email"))
+                        .role(Role.fromValue(resultSet.getInt("role")))
                         .userData(
                                 UserData.builder()
                                         .fName(resultSet.getString("fname"))
@@ -292,6 +310,44 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public Optional<List<User>> findAllWithDiscount() {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<User>> findManagers() {
+        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
+                + " id_number, issue_date, end_date FROM Users "
+                + "JOIN User_data ON Users.id=User_data.user_id "
+                + "JOIN Passport ON User_data.passport_id=Passport.id "
+                + "WHERE role = 2";
+        return Optional.of(getAll(sql));
+    }
+
+    @Override
+    public Optional<List<User>> findCustomers() {
+        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
+                + " id_number, issue_date, end_date FROM Users "
+                + "JOIN User_data ON Users.id=User_data.user_id "
+                + "JOIN Passport ON User_data.passport_id=Passport.id "
+                + "WHERE role = 1";
+        return Optional.of(getAll(sql));
+    }
+
+    private List<User> getAll(final String sql) {
+        List<User> users = new ArrayList<>();
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                User user = createUser(resultSet);
+                user.setId(resultSet.getLong("Users.id"));
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
+        return new ArrayList<>();
     }
 
     private User createUser(final ResultSet resultSet) {

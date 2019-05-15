@@ -49,11 +49,16 @@
         .a01:hover {
             color: rgb(52, 57, 62);
         }
+        .back-img {
+            background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%; -moz-background-size: 100%; /* Firefox 3.6+ */
+            -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+            -o-background-size: 100%;
+        }
     </style>
 
 </head>
 
-<body style="background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%;">
+<body class="back-img">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">

@@ -27,16 +27,24 @@
     <title>
         Free ride
     </title>
+
+    <style>
+        .back-img {
+            background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%; -moz-background-size: 100%; /* Firefox 3.6+ */
+            -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+            -o-background-size: 100%;
+        }
+    </style>
 </head>
 
-<body style="background: url(https://cdn1.savepice.ru/uploads/2019/4/17/c7994e2db99daa99566ce32cce7ddeb0-full.jpg) no-repeat; background-size: 100%;">
+<body class="back-img">
 
 
 <div class="container" style="margin-top: 55px;">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall"
-                 style="background-color: rgba(247,247,247,0.9);">
+                 style="background-color: rgba(247,247,247);">
                 <h1 class="text-center login-title" style="font-size: 23px">Sign
                     in to continue to
                     Free ride</h1>
