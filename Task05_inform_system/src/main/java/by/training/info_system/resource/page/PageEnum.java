@@ -8,6 +8,7 @@ public enum PageEnum {
     ORDERS("orders"),
     MY_ORDERS("my_orders"),
     PROFILE("profile"),
+    USERS("users"),
     CARS("cars");
 
     private String uri;

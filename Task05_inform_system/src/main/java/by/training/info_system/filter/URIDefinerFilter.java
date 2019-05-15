@@ -27,6 +27,7 @@ public class URIDefinerFilter implements Filter {
         URI_LIST.add("/orders");
         URI_LIST.add("/profile");
         URI_LIST.add("/my_orders");
+        URI_LIST.add("/users");
     }
 
     @Override

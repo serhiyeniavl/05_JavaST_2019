@@ -19,6 +19,7 @@
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
         <url-pattern>/profile</url-pattern>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -67,6 +68,7 @@
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
         <url-pattern>/profile</url-pattern>
+        <url-pattern>/users</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -84,5 +86,6 @@
         <url-pattern>/orders</url-pattern>
         <url-pattern>/my_orders</url-pattern>
         <url-pattern>/profile</url-pattern>
+        <url-pattern>/users</url-pattern>
     </filter-mapping>
 </web-app>

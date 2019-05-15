@@ -303,9 +303,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${users}">Users</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${managers}">Managers</a>
-                    </li>
                 </c:if>
 
                 <c:choose>

@@ -6,14 +6,12 @@ import by.training.info_system.resource.ConfigurationManager;
 import java.util.HashSet;
 import java.util.Set;
 
-class UserOrdersPage extends JspPage {
-    UserOrdersPage() {
+public class UsersPage extends JspPage {
+    UsersPage() {
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        roles.add(Role.MANAGER);
-        setUri("my_orders");
+        roles.add(Role.ADMIN);
+        setUri("users");
         setAllowedRoles(roles);
         setJspPagePath(ConfigurationManager.getInstance().getPagePath(getUri()));
     }
 }
-

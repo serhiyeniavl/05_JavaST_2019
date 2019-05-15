@@ -66,9 +66,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="${home}">Home
-                        <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -84,7 +83,9 @@
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${users}">Users</a>
+                        <a class="nav-link active" href="${users}">Users
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                 </c:if>
 
@@ -140,32 +141,6 @@
     </div>
 </nav>
 
-<!-- Page Content -->
-<section style="margin-top: 60px; margin-right: 20px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6"
-                 style="background-color: rgba(10,13,14,0.4); color: white;">
-                <h1 class="mt-2" style="color: rgb(241,284,71)">We appreciate
-                    your time</h1>
-                <p style="font-size: 23px">Vehicle rental the way it should
-                    be.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container" style="margin-top: 7px;">
-        <div class="row">
-            <div class="col-lg-6"
-                 style="background-color: rgba(10,13,14,0.4); color: white;">
-                <p style="font-size: 23px">Clear pricing and simple process.</p>
-                <br>
-                <a href="${cars}"
-                   class="butt">Book online</a>
-            </div>
-        </div>
-    </div>
-</section>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
