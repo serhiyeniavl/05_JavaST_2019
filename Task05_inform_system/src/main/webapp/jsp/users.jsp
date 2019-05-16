@@ -79,16 +79,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="${users}">All users</a>
+                    <a class="nav-link" href="${users}?page=1">All users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=managers">Managers</a>
+                    <a class="nav-link active" href="${users}?show=managers&page=1">Managers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=customers">Customers</a>
+                    <a class="nav-link active" href="${users}?show=customers&page=1">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=blackList">Black
+                    <a class="nav-link active" href="${users}?show=blackList&page=1">Black
                         list</a>
                 </li>
             </ul>
@@ -120,6 +120,7 @@
                 <c:when test="${empty blackList}">
                     <th>Address</th>
                     <th>Passport ID</th>
+                    <th></th>
                 </c:when>
                 <c:otherwise>
                     <th>Reason</th>
@@ -152,6 +153,32 @@
                         <td>${u.userData.address}</td>
                         <td>${u.userData.passport.idNumber}</td>
                         <td width="50px">
+                            <c:choose>
+                                <c:when test="${u.role.toString() != 'MANAGER'}">
+                                    <form action="${users}" method="post"
+                                          style="margin: 0">
+                                        <input type="hidden" name="command"
+                                               value="make_manager">
+                                        <button type="submit" name="user_id"
+                                                value="${u.id}"
+                                                class="btn btn-outline-primary">Make a manager
+                                        </button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form action="${users}" method="post"
+                                          style="margin: 0">
+                                        <input type="hidden" name="command"
+                                               value="make_user">
+                                        <button type="submit" name="user_id"
+                                                value="${u.id}"
+                                                class="btn btn-outline-primary">Make an user
+                                        </button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td width="50px">
                             <c:if test="${not u.role.toString() != 'ADMIN'}">
                                 <form action="${users}" method="post"
                                       style="margin: 0"
@@ -160,7 +187,7 @@
                                            value="delete_user">
                                     <button type="submit" name="user_id"
                                             value="${u.id}"
-                                            class="btn btn-danger">Delete
+                                            class="btn btn-outline-danger">Delete
                                     </button>
                                 </form>
                             </c:if>
@@ -183,7 +210,7 @@
                                            value="delete_user_black_list">
                                     <button type="submit" name="user_id"
                                             value="${u.user.id}"
-                                            class="btn btn-danger">Delete from list
+                                            class="btn btn-outline-danger">Delete from list
                                     </button>
                                 </form>
                             </c:if>
