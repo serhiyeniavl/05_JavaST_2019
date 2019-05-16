@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EmptyCommand extends Command {
@@ -107,10 +106,19 @@ public class EmptyCommand extends Command {
 
     private JspPage handleUsersPage(final HttpServletRequest request,
                                     final JspPage page) {
-        if (request.getParameter(RequestParameter.SHOW.getValue()) != null) {
+        int pageNum = 1;
+        if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
+            if (request.getParameter(RequestParameter.SHOW.getValue()) == null) {
+                appendRequestParameterWithoutEncoding(page, RequestParameter.SHOW,
+                        RequestAttribute.ALL_USERS.getValue());
+                page.setRedirect(true);
+                return page;
+            }
+            pageNum = Integer.parseInt(request.getParameter(RequestParameter.PAGE.getValue()));
+            putAttrInRequest(request, RequestAttribute.CURRENT_PAGE, pageNum);
             if (request.getParameter(RequestParameter.SHOW.getValue())
                     .equals(RequestAttribute.ALL_USERS.getValue())) {
-                loadUsers(request);
+                loadUsers(request, pageNum);
             } else if (request.getParameter(RequestParameter.SHOW.getValue())
                     .equals(RequestAttribute.MANAGERS.getValue())) {
                 loadManagers(request);
@@ -125,12 +133,14 @@ public class EmptyCommand extends Command {
         } else if (request.getParameter(RequestParameter.ID.getValue()) != null) {
             loadUserById(request, Long.valueOf(request.getParameter("id")));
             return page;
-        } else if (request.getParameter(RequestParameter.EMAL.getValue()) != null) {
+        } else if (request.getParameter(RequestParameter.EMAIL.getValue()) != null) {
             loadUserByEmail(request, request.getParameter("email"));
             return page;
         }
         appendRequestParameterWithoutEncoding(page, RequestParameter.SHOW,
                 RequestAttribute.ALL_USERS.getValue());
+        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE,
+                String.valueOf(pageNum));
         page.setRedirect(true);
         return page;
     }
@@ -210,43 +220,47 @@ public class EmptyCommand extends Command {
         return page;
     }
 
-    void loadCars(HttpServletRequest request) {
+    private void loadCars(HttpServletRequest request) {
         CarService service = factory.getService(CarService.class).orElseThrow();
         List<Car> cars = service.loadCars().orElseGet(ArrayList::new);
         putAttrInRequest(request, RequestAttribute.CARS, cars);
     }
 
-    void loadOrders(HttpServletRequest request, int pageNum) {
+    private void loadOrders(HttpServletRequest request, int pageNum) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
-        List<Order> orders = service.findAllOrders(pageNum, RECORDS_PER_PAGE).orElseGet(ArrayList::new);
-        int numOfPages = (int) Math.ceil(service.countOrders() * 1.0 / RECORDS_PER_PAGE);
+        List<Order> orders = service.findAllOrders(pageNum, ORDERS_PER_PAGE).orElseGet(ArrayList::new);
+        int numOfPages = (int) Math.ceil(service.countOrders() * 1.0 / ORDERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
-    void loadProfileInfo(HttpServletRequest request, long userId) {
+    private void loadProfileInfo(HttpServletRequest request, long userId) {
         UserService service = factory.getService(UserService.class).orElseThrow();
         User user = service.findById(userId).orElse(User.builder().build());
         putAttrInRequest(request, RequestAttribute.PROFILE, user);
     }
 
-    void loadOrderStatuses(HttpServletRequest request) {
+    private void loadOrderStatuses(HttpServletRequest request) {
         putAttrInRequest(request, RequestAttribute.ORDER_STATUS, OrderStatus.values());
     }
 
-    void loadUserOrders(final HttpServletRequest request, final long id, final int page) {
+    private void loadUserOrders(final HttpServletRequest request, final long id, final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
-        List<Order> orders = service.findUserOrders(id, page, RECORDS_PER_PAGE)
+        List<Order> orders = service.findUserOrders(id, page, ORDERS_PER_PAGE)
                 .orElseGet(ArrayList::new);
-        int numOfPages = (int) Math.ceil(service.countOrders(id) * 1.0 / RECORDS_PER_PAGE);
+        int numOfPages = (int) Math.ceil(service.countOrders(id) * 1.0 / ORDERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
-    private void loadUsers(final HttpServletRequest request) {
+    private void loadUsers(final HttpServletRequest request, final int page) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        List<User> users = service.findAll().orElseGet(ArrayList::new);
+        List<User> users = service.findAll(page, USERS_PER_PAGE).orElse(null);
+        int numOfPages = (int) Math.ceil(service.countUsers() * 1.0 / USERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.USERS_LIST, users);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+        putAttrInRequest(request, RequestAttribute.SHOW,
+                RequestAttribute.ALL_USERS.getValue());
     }
 
     private void loadUserById(final HttpServletRequest request, final long id) {

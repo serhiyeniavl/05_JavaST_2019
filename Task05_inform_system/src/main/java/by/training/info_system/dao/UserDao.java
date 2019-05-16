@@ -12,10 +12,12 @@ public interface UserDao extends Dao<User> {
     boolean update(long id, Role role);
     boolean deleteFromBlackList(long id);
     boolean updateEmail(long id, String email);
+    Integer countUsers();
     Optional<User> read(String email);
     Optional<User> readFullInfo(String email);
     Optional<User> findByPassportNumber(Integer number, String idNumber);
     Optional<List<User>> findAllWithDiscount();
+    Optional<List<User>> getAll(int pageNum, int recordsPerPage);
     Optional<List<User>> findManagers();
     Optional<List<User>> findCustomers();
     Optional<List<BlackListNode>> readBlackList();

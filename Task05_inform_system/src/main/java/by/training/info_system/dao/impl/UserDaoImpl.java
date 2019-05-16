@@ -160,13 +160,39 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return false;
     }
 
-
+    @Override
     public Optional<List<User>> getAll() {
-        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
+        return Optional.empty();
+    }
+
+    public Optional<List<User>> getAll(final int pageNum,
+                                       final int recordsPerPage) {
+        String sql = String.format("SELECT Users.id, email, role, fname, lname, address, serie, number,"
                 + " id_number, issue_date, end_date FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
-                + "JOIN Passport ON User_data.passport_id=Passport.id";
+                + "JOIN Passport ON User_data.passport_id=Passport.id "
+                + "LIMIT %s OFFSET %s", recordsPerPage, (pageNum-1) * recordsPerPage);
         return Optional.of(getAll(sql));
+    }
+
+    @Override
+    public Integer countUsers() {
+        String sql = "SELECT COUNT(id) FROM Users WHERE role != 3";
+        return countOrders(sql);
+    }
+
+    private Integer countOrders(final String sql) {
+        Statement statement = createStatement();
+        try (ResultSet resultSet = statement.executeQuery(sql)) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            log.error(RESULT_SET_ERROR, e);
+        } finally {
+            closeStatement(statement);
+        }
+        return 0;
     }
 
     public boolean update(final User entity) {

@@ -7,6 +7,7 @@ public enum RequestAttribute {
     MANAGERS("managers"),
     CUSTOMERS("customers"),
     INFO("info"),
+    SHOW("show"),
     ORDER_STATUS("order_status"),
     ORDER_ID("order_id"),
     USERS_LIST("userList"),

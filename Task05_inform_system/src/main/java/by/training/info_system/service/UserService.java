@@ -12,6 +12,7 @@ public interface UserService extends Service {
     Optional<User> findByEmail(String email);
     Optional<User> findByEmailFullInto(String email);
     Integer registerNewUser(User user);
+    Integer countUsers();
     boolean isInBlackList(User user);
     boolean updateRole(long id, Role role);
     boolean delete(long id);
@@ -19,7 +20,7 @@ public interface UserService extends Service {
     boolean updatePassword(long id, String password);
     boolean updateEmail(long id, String email);
     boolean isExist(Integer passportNumber, String idPassportNumber);
-    Optional<List<User>> findAll();
+    Optional<List<User>> findAll(int page, int recordsPerPage);
     Optional<List<User>> findManagers();
     Optional<List<User>> findCustomers();
     Optional<List<BlackListNode>> readBlackList();

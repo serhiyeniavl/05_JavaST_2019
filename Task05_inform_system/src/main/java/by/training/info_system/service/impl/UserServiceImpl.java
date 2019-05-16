@@ -77,6 +77,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public Integer countUsers() {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.countUsers();
+    }
+
+    @Override
     public boolean isInBlackList(final User user) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
         List<BlackListNode> usersBlackList = dao.readBlackList().orElse(new ArrayList<>());
@@ -92,9 +98,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public Optional<List<User>> findAll() {
+    public Optional<List<User>> findAll(final int page, final int recordsPerPage) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
-        return dao.getAll();
+        return dao.getAll(page, recordsPerPage);
     }
 
     @Override

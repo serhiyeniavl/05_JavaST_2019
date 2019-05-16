@@ -16,7 +16,8 @@ public abstract class Command {
 
     protected ServiceFactory factory;
 
-    static final int RECORDS_PER_PAGE = 3;
+    static final int ORDERS_PER_PAGE = 3;
+    static final int USERS_PER_PAGE = 10;
 
 
     void setFactory(ServiceFactory factory) {

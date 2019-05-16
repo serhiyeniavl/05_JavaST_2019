@@ -225,6 +225,35 @@
     </c:otherwise>
     </c:choose>
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm justify-content-center">
+        <c:if test="${current_page != 1}">
+            <li class="page-item"><a class="page-link a-nav"
+                                     href="${users}?page=${current_page - 1}&show=${show}">Previous</a>
+            </li>
+        </c:if>
+        <c:forEach begin="1" end="${num_of_pages}" var="i">
+            <c:choose>
+                <c:when test="${current_page eq i}">
+                    <li class="page-item disabled"><a
+                            class="page-link a-nav"
+                            href="${users}?page=${i}&show=${show}">${i}</a>
+                        <span class="sr-only">(current)</span></li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item"><a class="page-link a-nav"
+                                             href="${users}?page=${i}&show=${show}">${i}</a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:if test="${current_page lt num_of_pages}">
+            <li class="page-item"><a class="page-link a-nav"
+                                     href="${users}?page=${current_page + 1}&show=${show}">Next</a>
+            </li>
+        </c:if>
+    </ul>
+</nav>
 </div>
 <br/>
 <br/>
