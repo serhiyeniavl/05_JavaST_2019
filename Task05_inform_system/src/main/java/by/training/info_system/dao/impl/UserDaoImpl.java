@@ -138,7 +138,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     private boolean update(final String sql, final String param1,
-                          final long param2) {
+                           final long param2) {
         PreparedStatement statement = createPreparedStatement(sql);
         try {
             statement.setString(1, param1);
@@ -171,17 +171,35 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 + " id_number, issue_date, end_date FROM Users "
                 + "JOIN User_data ON Users.id=User_data.user_id "
                 + "JOIN Passport ON User_data.passport_id=Passport.id "
-                + "LIMIT %s OFFSET %s", recordsPerPage, (pageNum-1) * recordsPerPage);
+                + "LIMIT %s OFFSET %s", recordsPerPage, (pageNum - 1) * recordsPerPage);
         return Optional.of(getAll(sql));
     }
 
     @Override
     public Integer countUsers() {
         String sql = "SELECT COUNT(id) FROM Users WHERE role != 3";
-        return countOrders(sql);
+        return count(sql);
     }
 
-    private Integer countOrders(final String sql) {
+    @Override
+    public Integer countUsersInBlackList() {
+        String sql = "SELECT COUNT(id) FROM Black_list";
+        return count(sql);
+    }
+
+    @Override
+    public Integer countManagers() {
+        String sql = "SELECT COUNT(id) FROM Users WHERE role = 2";
+        return count(sql);
+    }
+
+    @Override
+    public Integer countCustomers() {
+        String sql = "SELECT COUNT(id) FROM Users WHERE role = 1";
+        return count(sql);
+    }
+
+    private Integer count(final String sql) {
         Statement statement = createStatement();
         try (ResultSet resultSet = statement.executeQuery(sql)) {
             if (resultSet.next()) {
@@ -301,6 +319,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 " id, email, role, fname, lname FROM Black_list " +
                 "JOIN Users U on Black_list.user_id = U.id " +
                 "JOIN User_data Ud on U.id = Ud.user_id";
+        return readBlackList(sql);
+    }
+
+    private Optional<List<BlackListNode>> readBlackList(final String sql) {
         List<BlackListNode> usersBlackList = new ArrayList<>();
         Statement statement = createStatement();
         try (ResultSet resultSet = statement.executeQuery(sql)) {
@@ -331,6 +353,17 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             closeStatement(statement);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<BlackListNode>> readBlackList(final int page,
+                                                       final int recordsPerPage) {
+        String sql = String.format("SELECT reason, lock_date, unlock_date," +
+                " id, email, role, fname, lname FROM Black_list " +
+                "JOIN Users U on Black_list.user_id = U.id " +
+                "JOIN User_data Ud on U.id = Ud.user_id "
+                + "LIMIT %s OFFSET %s", recordsPerPage, (page - 1) * recordsPerPage);
+        return readBlackList(sql);
     }
 
     @Override
@@ -367,22 +400,26 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public Optional<List<User>> findManagers() {
-        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
-                + " id_number, issue_date, end_date FROM Users "
-                + "JOIN User_data ON Users.id=User_data.user_id "
-                + "JOIN Passport ON User_data.passport_id=Passport.id "
-                + "WHERE role = 2";
+    public Optional<List<User>> findManagers(final int page,
+                                             final int recordsPerPage) {
+        String sql = String.format("SELECT Users.id, email, role, fname, lname, address, serie, number,"
+                        + " id_number, issue_date, end_date FROM Users "
+                        + "JOIN User_data ON Users.id=User_data.user_id "
+                        + "JOIN Passport ON User_data.passport_id=Passport.id "
+                        + "WHERE role = 2 LIMIT %s OFFSET %s", recordsPerPage,
+                (page - 1) * recordsPerPage);
         return Optional.of(getAll(sql));
     }
 
     @Override
-    public Optional<List<User>> findCustomers() {
-        String sql = "SELECT Users.id, email, role, fname, lname, address, serie, number,"
-                + " id_number, issue_date, end_date FROM Users "
-                + "JOIN User_data ON Users.id=User_data.user_id "
-                + "JOIN Passport ON User_data.passport_id=Passport.id "
-                + "WHERE role = 1";
+    public Optional<List<User>> findCustomers(final int page,
+                                              final int recordsPerPage) {
+        String sql = String.format("SELECT Users.id, email, role, fname, lname, address, serie, number,"
+                        + " id_number, issue_date, end_date FROM Users "
+                        + "JOIN User_data ON Users.id=User_data.user_id "
+                        + "JOIN Passport ON User_data.passport_id=Passport.id "
+                        + "WHERE role = 1 LIMIT %s OFFSET %s", recordsPerPage,
+                (page - 1) * recordsPerPage);
         return Optional.of(getAll(sql));
     }
 

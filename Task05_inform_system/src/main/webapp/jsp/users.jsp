@@ -225,9 +225,10 @@
     </c:otherwise>
     </c:choose>
 
+<c:if test="${not empty userList}">
 <nav aria-label="Page navigation example">
     <ul class="pagination pagination-sm justify-content-center">
-        <c:if test="${current_page != 1}">
+        <c:if test="${current_page != 1 && not empty current_page}">
             <li class="page-item"><a class="page-link a-nav"
                                      href="${users}?page=${current_page - 1}&show=${show}">Previous</a>
             </li>
@@ -254,6 +255,7 @@
         </c:if>
     </ul>
 </nav>
+</c:if>
 </div>
 <br/>
 <br/>

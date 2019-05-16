@@ -83,6 +83,29 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public Integer countManagers() {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.countManagers();
+    }
+
+    @Override
+    public Integer countCustomers() {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.countCustomers();
+    }
+
+    @Override
+    public Integer countUsersInBlackList() {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.countUsersInBlackList();
+    }
+
+    @Override
+    public Optional<List<BlackListNode>> readBlackList() {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean isInBlackList(final User user) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
         List<BlackListNode> usersBlackList = dao.readBlackList().orElse(new ArrayList<>());
@@ -104,21 +127,22 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public Optional<List<User>> findManagers() {
+    public Optional<List<User>> findManagers(final int page, final int recordsPerPage) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
-        return dao.findManagers();
+        return dao.findManagers(page, recordsPerPage);
     }
 
     @Override
-    public Optional<List<User>> findCustomers() {
+    public Optional<List<User>> findCustomers(final int page, final int recordsPerPage) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
-        return dao.findCustomers();
+        return dao.findCustomers(page, recordsPerPage);
     }
 
     @Override
-    public Optional<List<BlackListNode>> readBlackList() {
+    public Optional<List<BlackListNode>> readBlackList(final int page,
+                                                       final int recordsPerPage) {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
-        return dao.readBlackList();
+        return dao.readBlackList(page, recordsPerPage);
     }
 
     @Override

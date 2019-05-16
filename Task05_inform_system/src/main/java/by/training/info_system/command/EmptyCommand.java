@@ -121,13 +121,13 @@ public class EmptyCommand extends Command {
                 loadUsers(request, pageNum);
             } else if (request.getParameter(RequestParameter.SHOW.getValue())
                     .equals(RequestAttribute.MANAGERS.getValue())) {
-                loadManagers(request);
+                loadManagers(request, pageNum);
             } else if (request.getParameter(RequestParameter.SHOW.getValue())
                     .equals(RequestAttribute.CUSTOMERS.getValue())) {
-                loadCustomers(request);
+                loadCustomers(request, pageNum);
             } else if (request.getParameter(RequestParameter.SHOW.getValue())
                     .equals(RequestAttribute.BLACK_LIST.getValue())) {
-                loadBlackList(request);
+                loadBlackList(request, pageNum);
             }
             return page;
         } else if (request.getParameter(RequestParameter.ID.getValue()) != null) {
@@ -259,8 +259,6 @@ public class EmptyCommand extends Command {
         int numOfPages = (int) Math.ceil(service.countUsers() * 1.0 / USERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.USERS_LIST, users);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
-        putAttrInRequest(request, RequestAttribute.SHOW,
-                RequestAttribute.ALL_USERS.getValue());
     }
 
     private void loadUserById(final HttpServletRequest request, final long id) {
@@ -285,22 +283,31 @@ public class EmptyCommand extends Command {
         putAttrInRequest(request, RequestAttribute.USERS_LIST, findingUser);
     }
 
-    private void loadManagers(final HttpServletRequest request) {
+    private void loadManagers(final HttpServletRequest request, final int page) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        List<User> users = service.findManagers().orElseGet(ArrayList::new);
+        int numOfPages = (int) Math.ceil(service.countUsers() * 1.0 / USERS_PER_PAGE);
+        List<User> users = service.findManagers(page, USERS_PER_PAGE)
+                .orElse(null);
         putAttrInRequest(request, RequestAttribute.USERS_LIST, users);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
-    private void loadCustomers(final HttpServletRequest request) {
+    private void loadCustomers(final HttpServletRequest request, final int page) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        List<User> users = service.findCustomers().orElseGet(ArrayList::new);
+        int numOfPages = (int) Math.ceil(service.countUsers() * 1.0 / USERS_PER_PAGE);
+        List<User> users = service.findCustomers(page, USERS_PER_PAGE)
+                .orElse(null);
         putAttrInRequest(request, RequestAttribute.USERS_LIST, users);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
-    private void loadBlackList(final HttpServletRequest request) {
+    private void loadBlackList(final HttpServletRequest request, final int page) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        List<BlackListNode> blackList = service.readBlackList().orElseGet(ArrayList::new);
+        List<BlackListNode> blackList = service.readBlackList(page, USERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countUsers() * 1.0 / USERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.BLACK_LIST, "blList");
         putAttrInRequest(request, RequestAttribute.USERS_LIST, blackList);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 }

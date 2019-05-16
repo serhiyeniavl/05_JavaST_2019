@@ -126,7 +126,7 @@
                         <a href="${contact}" style="color: red; text-decoration: underline">contact</a> us.</h5>
                 </c:if>
                 <c:if test="${not empty info}">
-                    <h5 style="color: rgb(73, 160, 181); text-align: center">${info}
+                    <h5 style="color: green; text-align: center">${info}
 
                 </c:if>
             </div>
