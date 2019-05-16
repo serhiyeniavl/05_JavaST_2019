@@ -195,6 +195,21 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     public boolean delete(final long id) {
+        String sql = "DELETE FROM Users WHERE id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setLong(1, id);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            return query > 0;
+        } catch (SQLException e) {
+            log.error("Error when tyring to delete user", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
         return false;
     }
 

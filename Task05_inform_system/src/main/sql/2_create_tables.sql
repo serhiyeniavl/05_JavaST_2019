@@ -68,11 +68,14 @@ CREATE TABLE `Passport` (
 );
 
 
-ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`)
+  ON DELETE cascade ON UPDATE CASCADE;
 
-ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`);
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk0` FOREIGN KEY (`car_id`) REFERENCES `Cars`(`id`)
+  ON DELETE cascade ON UPDATE CASCADE;
 
-ALTER TABLE `Black_list` ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`);
+ALTER TABLE `Black_list` ADD CONSTRAINT `Black_list_fk0` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`)
+  ON DELETE cascade ON UPDATE CASCADE;
 
 ALTER TABLE `User_data` ADD CONSTRAINT `User_data_fk0`
   FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE cascade ON UPDATE CASCADE;
