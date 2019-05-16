@@ -5,7 +5,6 @@
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
-<c:url value="/managers" var="managers"/>
 <c:url value="/orders" var="orders"/>
 <c:url value="/my_orders" var="user_orders"/>
 <c:url value="/users" var="users"/>
@@ -98,15 +97,15 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Find by status
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
                     <c:forEach var="status" items="${order_status}">
                         <a class="dropdown-item" href="#">${status.getValue()}</a>
                     </c:forEach>
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search by ID" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" action="${orders}?id">
+            <input class="form-control mr-sm-2" name="order_id" type="search" required placeholder="Search by ID" autocomplete="off" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -237,6 +236,7 @@
                 <hr>
             </c:forEach>
 
+            <c:if test="${not empty current_page}">
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-lg justify-content-center">
                     <c:if test="${current_page != 1}">
@@ -266,6 +266,7 @@
                     </c:if>
                 </ul>
             </nav>
+            </c:if>
         </div>
     </c:otherwise>
 </c:choose>

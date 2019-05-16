@@ -30,8 +30,8 @@ public class CompleteUserOrderCommand extends Command {
         order.setFinalPrice(calculatePrice(order));
         boolean isUpdatedOrder = service.updateOrder(order);
         appendTimeParam(page);
-        String pageNum = findCurrentPage(request);
-        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
+        String params = findCurrentParameters(request);
+        page.appendRequestParameter(params.substring(1));
         if (isUpdatedStatus && isUpdatedOrder) {
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                     RequestAttribute.INFO.toString());

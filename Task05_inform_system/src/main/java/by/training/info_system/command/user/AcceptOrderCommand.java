@@ -29,8 +29,8 @@ public class AcceptOrderCommand extends Command {
         order.setStatus(OrderStatus.ACTIVE);
         boolean isAccepted = service.updateOrder(order);
         appendTimeParam(page);
-        String pageNum = findCurrentPage(request);
-        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
+        String params = findCurrentParameters(request);
+        page.appendRequestParameter(params.substring(1));
         if (isAccepted) {
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                     RequestAttribute.INFO.toString());

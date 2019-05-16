@@ -23,8 +23,8 @@ public class ConfirmOrderManagerCommand extends Command {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         boolean isUpdated = service.updateOrderStatus(orderId, OrderStatus.CONFIRMED);
         appendTimeParam(page);
-        String pageNum = findCurrentPage(request);
-        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
+        String params = findCurrentParameters(request);
+        page.appendRequestParameter(params.substring(1));
         if (isUpdated) {
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                     RequestAttribute.INFO.toString());

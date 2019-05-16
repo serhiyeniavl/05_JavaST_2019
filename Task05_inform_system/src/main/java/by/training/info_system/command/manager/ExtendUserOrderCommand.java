@@ -27,8 +27,8 @@ public class ExtendUserOrderCommand extends Command {
         order.setStatus(OrderStatus.EXTENDED);
         boolean isUpdated = service.updateOrder(order);
         appendTimeParam(page);
-        String pageNum = findCurrentPage(request);
-        appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE, pageNum);
+        String params = findCurrentParameters(request);
+        page.appendRequestParameter(params.substring(1));
         if (isUpdated) {
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                     RequestAttribute.INFO.toString());

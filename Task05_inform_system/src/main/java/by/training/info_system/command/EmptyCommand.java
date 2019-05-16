@@ -60,7 +60,50 @@ public class EmptyCommand extends Command {
 
         if (page.getUri().equals(PageEnum.ORDERS.getUri())
                 || page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
-            loadOrderStatuses(request);
+            return handleOrdersPage(request, page);
+        }
+        return page;
+    }
+
+    private JspPage handleSignInPage(final HttpServletRequest request,
+                                     JspPage page) {
+        if (checkRequestMessageAttrs(request)) {
+            return processMessageAttrs(request, page);
+        } else if (checkSecureAttr(request)) {
+            return processSecureAttr(request, page);
+        } else if (isAuthorizedUserTrySignAgain(request, page)) {
+            page = PageFactory.defineAndGet(PageEnum.HOME);
+            page.setRedirect(true);
+            return page;
+        }
+        return page;
+    }
+
+    private JspPage handleOrdersPage(final HttpServletRequest request,
+                                     final JspPage page) {
+        loadOrderStatuses(request);
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        if (request.getParameter("order_id") != null) {
+            long id = Long.parseLong(request.getParameter("order_id"));
+            List<Order> order = null;
+            Order o;
+            if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
+                o = service.findOrderById(id).orElse(null);
+            } else {
+                User user = (User) request.getSession(false)
+                        .getAttribute("user");
+                o = service.findOrder(user.getId(), id).orElse(null);
+            }
+            if (o != null) {
+                order = new ArrayList<>();
+                order.add(o);
+            }
+            putAttrInRequest(request, RequestAttribute.ORDERS, order);
+            if (checkRequestMessageAttrs(request)
+                    && checkOrderIdMsg(request)) {
+                return processOrderIdAttr(request, processMessageAttrs(request, page));
+            }
+        } else {
             int pageNum = 1;
             if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
                 pageNum = Integer.parseInt(request.getParameter(RequestParameter.PAGE.getValue()));
@@ -86,20 +129,6 @@ public class EmptyCommand extends Command {
                     return processOrderIdAttr(request, processMessageAttrs(request, page));
                 }
             }
-        }
-        return page;
-    }
-
-    private JspPage handleSignInPage(final HttpServletRequest request,
-                                     JspPage page) {
-        if (checkRequestMessageAttrs(request)) {
-            return processMessageAttrs(request, page);
-        } else if (checkSecureAttr(request)) {
-            return processSecureAttr(request, page);
-        } else if (isAuthorizedUserTrySignAgain(request, page)) {
-            page = PageFactory.defineAndGet(PageEnum.HOME);
-            page.setRedirect(true);
-            return page;
         }
         return page;
     }
@@ -228,7 +257,8 @@ public class EmptyCommand extends Command {
 
     private void loadOrders(HttpServletRequest request, int pageNum) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
-        List<Order> orders = service.findAllOrders(pageNum, ORDERS_PER_PAGE).orElseGet(ArrayList::new);
+        List<Order> orders = service.findAllOrders(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
         int numOfPages = (int) Math.ceil(service.countOrders() * 1.0 / ORDERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
@@ -244,7 +274,8 @@ public class EmptyCommand extends Command {
         putAttrInRequest(request, RequestAttribute.ORDER_STATUS, OrderStatus.values());
     }
 
-    private void loadUserOrders(final HttpServletRequest request, final long id, final int page) {
+    private void loadUserOrders(final HttpServletRequest request, final long id,
+                                final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findUserOrders(id, page, ORDERS_PER_PAGE)
                 .orElseGet(ArrayList::new);

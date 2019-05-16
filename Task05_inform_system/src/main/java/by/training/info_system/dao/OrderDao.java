@@ -11,6 +11,7 @@ public interface OrderDao extends Dao<Order> {
     Integer countOrders(long userId);
     boolean isActive(long userId);
     boolean update(long id, OrderStatus status);
+    Optional<Order> findOrder(long userId, long orderId);
     Optional<List<Order>> readCurrentOrders();
     Optional<List<Order>> getAll(int page, int ordersPerPage);
     Optional<List<Order>> findOverdue();

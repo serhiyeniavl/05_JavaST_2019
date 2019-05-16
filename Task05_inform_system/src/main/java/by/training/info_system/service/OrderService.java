@@ -17,5 +17,6 @@ public interface OrderService extends Service {
     Optional<List<Order>> findAllOrders();
     Optional<List<Order>> findAllOrders(int page, int recordsPerPage);
     Optional<Order> findOrderById(long id);
+    Optional<Order> findOrder(long userId, long orderId);
 
 }

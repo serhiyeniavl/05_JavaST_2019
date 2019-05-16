@@ -107,7 +107,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search by ID" aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" name="order_id" required placeholder="Search by ID"  autocomplete="off" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -194,6 +194,7 @@
                 <hr>
             </c:forEach>
 
+            <c:if test="${not empty current_page}">
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-lg justify-content-center">
                     <c:if test="${current_page != 1}">
@@ -223,6 +224,7 @@
                     </c:if>
                 </ul>
             </nav>
+            </c:if>
         </div>
     </c:otherwise>
 </c:choose>
