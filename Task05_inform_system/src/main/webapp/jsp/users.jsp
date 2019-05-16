@@ -182,7 +182,7 @@
                             <c:if test="${not u.role.toString() != 'ADMIN'}">
                                 <form action="${users}" method="post"
                                       style="margin: 0"
-                                      onsubmit="return confirm('Account will be delete permanently.');">
+                                      onsubmit="return confirm('Account and all info with it will be delete permanently.');">
                                     <input type="hidden" name="command"
                                            value="delete_user">
                                     <button type="submit" name="user_id"

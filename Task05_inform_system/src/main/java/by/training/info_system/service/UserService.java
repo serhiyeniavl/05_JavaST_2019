@@ -15,6 +15,7 @@ public interface UserService extends Service {
     boolean isInBlackList(User user);
     boolean updateRole(long id, Role role);
     boolean delete(long id);
+    boolean deleteFromBlackList(long id);
     boolean updatePassword(long id, String password);
     boolean updateEmail(long id, String email);
     boolean isExist(Integer passportNumber, String idPassportNumber);

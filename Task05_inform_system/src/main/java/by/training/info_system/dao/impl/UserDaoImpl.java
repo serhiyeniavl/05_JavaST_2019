@@ -196,21 +196,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     public boolean delete(final long id) {
         String sql = "DELETE FROM Users WHERE id = ?";
-        PreparedStatement statement = createPreparedStatement(sql);
-        try {
-            statement.setLong(1, id);
-        } catch (SQLException e) {
-            log.error("Cannot create prepared statement", e);
-        }
-        try {
-            int query = statement.executeUpdate();
-            return query > 0;
-        } catch (SQLException e) {
-            log.error("Error when tyring to delete user", e);
-        } finally {
-            closePreparedStatement(statement);
-        }
-        return false;
+        return delete(sql, id);
+    }
+
+    @Override
+    public boolean deleteFromBlackList(final long id) {
+        String sql = "DELETE FROM Black_list WHERE user_id = ?";
+        return delete(sql, id);
     }
 
     public Optional<User> read(final String email) {
@@ -384,6 +376,24 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             closeStatement(statement);
         }
         return new ArrayList<>();
+    }
+
+    private boolean delete(final String sql, final long id) {
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setLong(1, id);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            return query > 0;
+        } catch (SQLException e) {
+            log.error("Error when tyring to delete user", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return false;
     }
 
     private User createUser(final ResultSet resultSet) {

@@ -2,6 +2,7 @@ package by.training.info_system.command.client;
 
 import by.training.info_system.command.Command;
 import by.training.info_system.command.admin.DeleteUserCommand;
+import by.training.info_system.command.admin.DeleteUserFromBlackListCommand;
 import by.training.info_system.command.admin.MakeManagerAnUserCommand;
 import by.training.info_system.command.admin.MakeUserAManagerCommand;
 import by.training.info_system.command.manager.CompleteUserOrderCommand;
@@ -24,6 +25,7 @@ public enum CommandEnum {
     MAKE_MANAGER(new MakeUserAManagerCommand()),
     MAKE_USER(new MakeManagerAnUserCommand()),
     DELETE_USER(new DeleteUserCommand()),
+    DELETE_USER_BLACK_LIST(new DeleteUserFromBlackListCommand()),
     RENT_CAR(new RentCarCommand());
 
     Command command;

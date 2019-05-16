@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface UserDao extends Dao<User> {
     boolean update(long id, String password);
     boolean update(long id, Role role);
+    boolean deleteFromBlackList(long id);
     boolean updateEmail(long id, String email);
     Optional<User> read(String email);
     Optional<User> readFullInfo(String email);

@@ -56,6 +56,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public boolean deleteFromBlackList(long id) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.deleteFromBlackList(id);
+    }
+
+    @Override
     public Integer registerNewUser(final User user) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         daoManager.autoCommit(false);
