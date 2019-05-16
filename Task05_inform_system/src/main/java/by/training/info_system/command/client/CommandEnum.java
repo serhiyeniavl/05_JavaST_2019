@@ -1,6 +1,8 @@
 package by.training.info_system.command.client;
 
 import by.training.info_system.command.Command;
+import by.training.info_system.command.admin.MakeManagerAnUserCommand;
+import by.training.info_system.command.admin.MakeUserAManagerCommand;
 import by.training.info_system.command.manager.CompleteUserOrderCommand;
 import by.training.info_system.command.manager.ConfirmOrderManagerCommand;
 import by.training.info_system.command.manager.DenyOrderManagerCommand;
@@ -18,6 +20,8 @@ public enum CommandEnum {
     EXTEND_USER_ORDER(new ExtendUserOrderCommand()),
     CHANGE_PASSWORD(new ChangePasswordCommand()),
     CHANGE_EMAIL(new ChangeEmailCommand()),
+    MAKE_MANAGER(new MakeUserAManagerCommand()),
+    MAKE_USER(new MakeManagerAnUserCommand()),
     RENT_CAR(new RentCarCommand());
 
     Command command;

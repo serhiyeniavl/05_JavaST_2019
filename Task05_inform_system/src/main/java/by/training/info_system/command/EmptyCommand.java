@@ -251,14 +251,24 @@ public class EmptyCommand extends Command {
 
     private void loadUserById(final HttpServletRequest request, final long id) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        User user = service.findById(id).orElse(User.builder().build());
-        putAttrInRequest(request, RequestAttribute.USERS_LIST, Arrays.asList(user));
+        User user = service.findById(id).orElse(null);
+        List<User> findingUser = null;
+        if (user != null) {
+            findingUser = new ArrayList<>();
+            findingUser.add(user);
+        }
+        putAttrInRequest(request, RequestAttribute.USERS_LIST, findingUser);
     }
 
     private void loadUserByEmail(final HttpServletRequest request, final String email) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        User user = service.findByEmailFullInto(email).orElse(User.builder().build());
-        putAttrInRequest(request, RequestAttribute.USERS_LIST, Arrays.asList(user));
+        User user = service.findByEmailFullInto(email).orElse(null);
+        List<User> findingUser = null;
+        if (user != null) {
+            findingUser = new ArrayList<>();
+            findingUser.add(user);
+        }
+        putAttrInRequest(request, RequestAttribute.USERS_LIST, findingUser);
     }
 
     private void loadManagers(final HttpServletRequest request) {

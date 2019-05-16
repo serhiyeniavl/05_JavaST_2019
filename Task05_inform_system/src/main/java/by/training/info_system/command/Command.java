@@ -59,6 +59,10 @@ public abstract class Command {
         return String.valueOf(referer.charAt(referer.length() - 1));
     }
 
+    protected String findCurrentParameters(HttpServletRequest request) {
+        return request.getHeader("referer").substring(request.getRequestURL().length());
+    }
+
     protected boolean validate(Validator validator, Object object) {
         return validator.validate(object);
     }
