@@ -4,6 +4,7 @@ import by.training.info_system.dao.UserDao;
 import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.User;
 import by.training.info_system.entity.data.UserData;
+import by.training.info_system.entity.role.Role;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.UserService;
 
@@ -40,6 +41,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public boolean updateEmail(final long id, final String email) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.updateEmail(id, email);
+    }
+
+    @Override
+    public boolean updateRole(final long id, final Role role) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.update(id, role);
     }
 
     @Override

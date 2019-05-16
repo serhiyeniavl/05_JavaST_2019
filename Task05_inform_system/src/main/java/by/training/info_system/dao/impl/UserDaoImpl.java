@@ -173,6 +173,27 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return false;
     }
 
+    @Override
+    public boolean update(final long id, final Role role) {
+        String sql = "UPDATE Users SET role = ? WHERE id = ?";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setInt(1, role.value());
+            statement.setLong(2, id);
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            return query > 0;
+        } catch (SQLException e) {
+            log.error("Error when tyring to update role", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return false;
+    }
+
     public boolean delete(final long id) {
         return false;
     }

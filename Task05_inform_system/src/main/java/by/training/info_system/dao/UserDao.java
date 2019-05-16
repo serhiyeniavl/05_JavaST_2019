@@ -2,12 +2,14 @@ package by.training.info_system.dao;
 
 import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.User;
+import by.training.info_system.entity.role.Role;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends Dao<User> {
     boolean update(long id, String password);
+    boolean update(long id, Role role);
     boolean updateEmail(long id, String email);
     Optional<User> read(String email);
     Optional<User> readFullInfo(String email);
