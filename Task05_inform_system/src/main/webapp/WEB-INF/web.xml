@@ -5,6 +5,7 @@
          version="4.0">
     <request-character-encoding>UTF-8</request-character-encoding>
 
+
     <servlet>
         <servlet-name>MainController</servlet-name>
         <servlet-class>by.training.info_system.controller.MainController</servlet-class>
@@ -24,6 +25,7 @@
 
     <session-config>
         <session-timeout>10000</session-timeout>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
     <jsp-config>
