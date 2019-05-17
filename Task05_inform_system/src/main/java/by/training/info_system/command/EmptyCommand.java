@@ -84,7 +84,13 @@ public class EmptyCommand extends Command {
         loadOrderStatuses(request);
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         if (request.getParameter("order_id") != null) {
-            long id = Long.parseLong(request.getParameter("order_id"));
+            long id;
+            try {
+                id = Long.parseLong(request.getParameter("order_id"));
+            } catch (Exception e) {
+                page.setRedirect(true);
+                return page;
+            }
             List<Order> order = null;
             Order o;
             if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
@@ -105,17 +111,33 @@ public class EmptyCommand extends Command {
             }
         } else {
             int pageNum = 1;
-            if (request.getParameter(RequestParameter.PAGE.getValue()) != null) {
+            String showOrders;
+            if (request.getParameter(RequestParameter.PAGE.getValue()) != null
+                    && request.getParameter(RequestParameter.SHOW.getValue()) != null) {
                 pageNum = Integer.parseInt(request.getParameter(RequestParameter.PAGE.getValue()));
+                showOrders = request.getParameter(RequestParameter.SHOW.getValue());
                 putAttrInRequest(request, RequestAttribute.CURRENT_PAGE, pageNum);
             } else {
                 appendRequestParameterWithoutEncoding(page, RequestParameter.PAGE,
                         String.valueOf(pageNum));
+                appendRequestParameterWithoutEncoding(page, RequestParameter.SHOW,
+                        OrderStatus.ALL.getValue());
                 page.setRedirect(true);
                 return page;
             }
             if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
-                loadOrders(request, pageNum);
+                putAttrInRequest(request, RequestAttribute.SHOW, showOrders);
+                showOrders = showOrders.replace(' ', '_');
+                OrderStatus status = OrderStatus.valueOf(showOrders.toUpperCase());
+                switch (status) {
+                    case DENIED:
+                        break;
+                    case CONFIRMED:
+                        break;
+                    default:
+                        loadAllOrders(request, pageNum);
+                        break;
+                }
                 if (checkRequestMessageAttrs(request)
                         && checkOrderIdMsg(request)) {
                     return processOrderIdAttr(request, processMessageAttrs(request, page));
@@ -160,7 +182,16 @@ public class EmptyCommand extends Command {
             }
             return page;
         } else if (request.getParameter(RequestParameter.ID.getValue()) != null) {
-            loadUserById(request, Long.valueOf(request.getParameter("id")));
+            long id = 0;
+            try {
+                id = Long.valueOf(request.getParameter("id"));
+            } catch (Exception e) {
+                appendRequestParameterWithoutEncoding(page, RequestParameter.SHOW,
+                        RequestAttribute.ALL_USERS.getValue());
+                page.setRedirect(true);
+                return page;
+            }
+            loadUserById(request, id);
             return page;
         } else if (request.getParameter(RequestParameter.EMAIL.getValue()) != null) {
             loadUserByEmail(request, request.getParameter("email"));
@@ -255,7 +286,7 @@ public class EmptyCommand extends Command {
         putAttrInRequest(request, RequestAttribute.CARS, cars);
     }
 
-    private void loadOrders(HttpServletRequest request, int pageNum) {
+    private void loadAllOrders(HttpServletRequest request, int pageNum) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findAllOrders(pageNum, ORDERS_PER_PAGE)
                 .orElse(null);
