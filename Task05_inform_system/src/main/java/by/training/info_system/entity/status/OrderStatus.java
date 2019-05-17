@@ -1,6 +1,7 @@
 package by.training.info_system.entity.status;
 
 public enum OrderStatus {
+    ALL("All"),
     NOT_CONFIRMED("Not confirmed"),
     EXPIRED("Expired"),
     ACCEPTED("Accepted"),
