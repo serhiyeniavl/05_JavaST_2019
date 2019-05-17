@@ -5,7 +5,6 @@
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
-<c:url value="/managers" var="managers"/>
 <c:url value="/orders" var="orders"/>
 <c:url value="/my_orders" var="user_orders"/>
 <c:url value="/users" var="users"/>
@@ -50,7 +49,9 @@
             color: rgb(52, 57, 62);
         }
         .back-img {
-            background: url(${ctx}/img/main_page_background.jpg) no-repeat; background-size: 100%; -moz-background-size: 100%; /* Firefox 3.6+ */
+            background: url(${ctx}/img/main_page_background.jpg) no-repeat;
+            background-size: 100%;
+            -moz-background-size: 100%; /* Firefox 3.6+ */
             -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
             -o-background-size: 100%;
         }

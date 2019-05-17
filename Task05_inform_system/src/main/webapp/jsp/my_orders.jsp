@@ -5,7 +5,6 @@
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
-<c:url value="/managers" var="managers"/>
 <c:url value="/orders" var="orders"/>
 <c:url value="/my_orders" var="user_orders"/>
 <c:url value="/users" var="users"/>
@@ -101,7 +100,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <c:forEach var="status" items="${order_status}">
-                        <a class="dropdown-item" href="#">${status.getValue()}</a>
+                        <a class="dropdown-item" href="${user_orders}?page=${current_page}&show=${status.getValue().toLowerCase()}">${status.getValue()}</a>
                     </c:forEach>
                 </div>
             </li>
@@ -199,7 +198,7 @@
                 <ul class="pagination pagination-lg justify-content-center">
                     <c:if test="${current_page != 1}">
                         <li class="page-item"><a class="page-link a-nav"
-                                                 href="${user_orders}?page=${current_page - 1}">Previous</a>
+                                                 href="${user_orders}?page=${current_page - 1}&show=${show}">Previous</a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${num_of_pages}" var="i">
@@ -207,19 +206,19 @@
                             <c:when test="${current_page eq i}">
                                 <li class="page-item disabled"><a
                                         class="page-link a-nav"
-                                        href="${user_orders}?page=${i}">${i}</a>
+                                        href="${user_orders}?page=${i}&show=${show}">${i}</a>
                                     <span class="sr-only">(current)</span></li>
                             </c:when>
                             <c:otherwise>
                                 <li class="page-item"><a class="page-link a-nav"
-                                                         href="${user_orders}?page=${i}">${i}</a>
+                                                         href="${user_orders}?page=${i}&show=${show}">${i}</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${current_page lt num_of_pages}">
                         <li class="page-item"><a class="page-link a-nav"
-                                                 href="${user_orders}?page=${current_page + 1}">Next</a>
+                                                 href="${user_orders}?page=${current_page + 1}&show=${show}">Next</a>
                         </li>
                     </c:if>
                 </ul>
