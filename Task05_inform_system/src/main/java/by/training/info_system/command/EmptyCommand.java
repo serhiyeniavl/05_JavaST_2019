@@ -125,14 +125,34 @@ public class EmptyCommand extends Command {
                 page.setRedirect(true);
                 return page;
             }
+            showOrders = showOrders.replace(' ', '_');
+            OrderStatus status = OrderStatus.valueOf(showOrders.toUpperCase());
             if (page.getUri().equals(PageEnum.ORDERS.getUri())) {
                 putAttrInRequest(request, RequestAttribute.SHOW, showOrders);
-                showOrders = showOrders.replace(' ', '_');
-                OrderStatus status = OrderStatus.valueOf(showOrders.toUpperCase());
                 switch (status) {
                     case DENIED:
+                        loadDeniedOrders(request, pageNum);
                         break;
                     case CONFIRMED:
+                        loadConfirmedOrders(request, pageNum);
+                        break;
+                    case EXPIRED:
+                        loadOverdueOrders(request, pageNum);
+                        break;
+                    case COMPLETED:
+                        loadCompletedOrders(request, pageNum);
+                        break;
+                    case NOT_CONFIRMED:
+                        loadNotConfirmedOrders(request, pageNum);
+                        break;
+                    case ACTIVE:
+                        loadActiveOrders(request, pageNum);
+                        break;
+                    case EXTENDED:
+                        loadExtendedOrders(request, pageNum);
+                        break;
+                    case ACCEPTED:
+                        loadAcceptedOrders(request, pageNum);
                         break;
                     default:
                         loadAllOrders(request, pageNum);
@@ -145,7 +165,37 @@ public class EmptyCommand extends Command {
             } else {
                 HttpSession session = request.getSession(false);
                 User user = (User) session.getAttribute("user");
-                loadUserOrders(request, user.getId(), pageNum);
+                putAttrInRequest(request, RequestAttribute.SHOW, showOrders);
+                long userId = user.getId();
+                switch (status) {
+                    case DENIED:
+                        loadDeniedUserOrders(request, userId, pageNum);
+                        break;
+                    case CONFIRMED:
+                        loadConfirmedUserOrders(request, userId, pageNum);
+                        break;
+                    case EXPIRED:
+                        loadOverdueUserOrders(request, userId, pageNum);
+                        break;
+                    case ACCEPTED:
+                        loadAcceptedUserOrders(request, userId, pageNum);
+                        break;
+                    case EXTENDED:
+                        loadExtendedUserOrders(request, userId, pageNum);
+                        break;
+                    case ACTIVE:
+                        loadActiveUserOrders(request, userId, pageNum);
+                        break;
+                    case NOT_CONFIRMED:
+                        loadNotConfirmedUserOrders(request, userId, pageNum);
+                        break;
+                    case COMPLETED:
+                        loadCompletedUserOrders(request, userId, pageNum);
+                        break;
+                    default:
+                        loadUserOrders(request, userId, pageNum);
+                        break;
+                }
                 if (checkRequestMessageAttrs(request)
                         && checkOrderIdMsg(request)) {
                     return processOrderIdAttr(request, processMessageAttrs(request, page));
@@ -182,7 +232,7 @@ public class EmptyCommand extends Command {
             }
             return page;
         } else if (request.getParameter(RequestParameter.ID.getValue()) != null) {
-            long id = 0;
+            long id;
             try {
                 id = Long.valueOf(request.getParameter("id"));
             } catch (Exception e) {
@@ -295,6 +345,87 @@ public class EmptyCommand extends Command {
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }
 
+    private void loadOverdueOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findOverdue(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countOverdue() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadNotConfirmedOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findNotConfirmed(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countNotConfirmed() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadConfirmedOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findConfirmed(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countConfirmed() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadAcceptedOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findAccepted(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countAccepted() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadActiveOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findActive(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countActive() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadExtendedOrders(HttpServletRequest request,
+                                    int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findExtended(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countExtended() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadCompletedOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findCompleted(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countCompleted() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadDeniedOrders(HttpServletRequest request,
+                                   int pageNum) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findDenied(pageNum, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countDenied() * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+
+    }
+
     private void loadProfileInfo(HttpServletRequest request, long userId) {
         UserService service = factory.getService(UserService.class).orElseThrow();
         User user = service.findById(userId).orElse(User.builder().build());
@@ -311,6 +442,86 @@ public class EmptyCommand extends Command {
         List<Order> orders = service.findUserOrders(id, page, ORDERS_PER_PAGE)
                 .orElseGet(ArrayList::new);
         int numOfPages = (int) Math.ceil(service.countOrders(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadOverdueUserOrders(final HttpServletRequest request, final long id,
+                                final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findOverdue(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countOverdue(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadActiveUserOrders(final HttpServletRequest request, final long id,
+                                       final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findActive(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countActive(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadAcceptedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findAccepted(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countAccepted(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadNotConfirmedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findNotConfirmed(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countNotConfirmed(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadConfirmedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findConfirmed(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countConfirmed(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadExtendedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findExtended(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countExtended(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadCompletedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findCompleted(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countCompleted(id) * 1.0 / ORDERS_PER_PAGE);
+        putAttrInRequest(request, RequestAttribute.ORDERS, orders);
+        putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void loadDeniedUserOrders(final HttpServletRequest request, final long id,
+                                      final int page) {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findDenied(id, page, ORDERS_PER_PAGE)
+                .orElse(null);
+        int numOfPages = (int) Math.ceil(service.countDenied(id) * 1.0 / ORDERS_PER_PAGE);
         putAttrInRequest(request, RequestAttribute.ORDERS, orders);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
     }

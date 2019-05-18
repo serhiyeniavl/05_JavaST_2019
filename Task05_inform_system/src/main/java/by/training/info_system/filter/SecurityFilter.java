@@ -9,6 +9,7 @@ import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
 import by.training.info_system.util.Encoder;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,6 @@ public class SecurityFilter implements Filter {
     public void doFilter(final ServletRequest servletRequest,
                          final ServletResponse servletResponse,
                          final FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 

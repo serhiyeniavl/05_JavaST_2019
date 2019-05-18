@@ -28,5 +28,4 @@ public interface UserService extends Service {
     Optional<List<User>> findCustomers(int page, int recordsPerPage);
     Optional<List<BlackListNode>> readBlackList();
     Optional<List<BlackListNode>> readBlackList(int page, int recordsPerPage);
-    Optional<List<User>> findUsersWithDiscount();
 }

@@ -144,9 +144,4 @@ public class UserServiceImpl extends AbstractService implements UserService {
         UserDao dao = daoManager.createDao(UserDao.class).orElseThrow();
         return dao.readBlackList(page, recordsPerPage);
     }
-
-    @Override
-    public Optional<List<User>> findUsersWithDiscount() {
-        return Optional.empty();
-    }
 }
