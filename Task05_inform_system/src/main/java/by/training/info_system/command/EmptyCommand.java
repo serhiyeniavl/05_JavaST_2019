@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmptyCommand extends Command {
-    private static final int URL_TIMEOUT = 7;
+    private static final int URL_TIMEOUT = 2;
 
     @Override
     public JspPage execute(final HttpServletRequest request,

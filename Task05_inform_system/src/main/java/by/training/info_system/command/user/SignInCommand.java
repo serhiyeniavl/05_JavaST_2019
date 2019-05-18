@@ -46,9 +46,6 @@ public class SignInCommand extends Command {
             sessionUser.setId(user.get().getId());
             session.setAttribute("user", sessionUser);
 
-            //TODO: make request to the db and count the discount
-            session.setAttribute("discount", "0");
-
             page = PageFactory.defineAndGet(PageEnum.HOME);
         } else {
             appendRequestParameter(page, RequestParameter.TIME,

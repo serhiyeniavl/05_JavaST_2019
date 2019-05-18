@@ -14,7 +14,6 @@
 <c:url value="/profile" var="profile"/>
 
 <c:set var="user" value="${sessionScope.user}"/>
-<c:set var="discount" value="${sessionScope.discount}"/>
 
 <c:set var="url">${pageContext.request.requestURL}</c:set>
 <c:set var="ctx"
@@ -288,13 +287,13 @@
                                        style="margin-left: 12px;"/>
                                 <div class="dropdown-menu"
                                      style="background-color: rgb(52,57,62);">
+                                <c:if test="${user.role.value() != 3}">
                                     <a class="dropdown-item a01"
                                        href="${profile}">Profile</a>
                                     <a class="dropdown-item a01"
                                        href="${user_orders}">My orders</a>
-                                    <p class="dropdown-item a01">My
-                                        discount: ${discount}</p>
                                     <div class="dropdown-divider"></div>
+                                    </c:if>
                                     <form style="margin-bottom: 0px;"
                                           action="${signin}" method="post">
                                         <input type="hidden" name="command"

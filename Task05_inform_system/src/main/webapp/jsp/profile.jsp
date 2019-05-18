@@ -5,7 +5,6 @@
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
-<c:url value="/managers" var="managers"/>
 <c:url value="/orders" var="orders"/>
 <c:url value="/my_orders" var="user_orders"/>
 <c:url value="/users" var="users"/>
@@ -16,7 +15,6 @@
 
 <c:set var="user" value="${sessionScope.user}"/>
 <c:set var="data" value="${requestScope.data}"/>
-<c:set var="discount" value="${sessionScope.discount}"/>
 
 <c:set var="url">${pageContext.request.requestURL}</c:set>
 <c:set var="ctx"
@@ -253,8 +251,6 @@
                                        href="${profile}">Profile</a>
                                     <a class="dropdown-item a01"
                                        href="${user_orders}">My orders</a>
-                                    <p class="dropdown-item a01">My
-                                        discount: ${discount}</p>
                                     <div class="dropdown-divider"></div>
                                     <form style="margin-bottom: 0px;"
                                           action="${signin}" method="post">

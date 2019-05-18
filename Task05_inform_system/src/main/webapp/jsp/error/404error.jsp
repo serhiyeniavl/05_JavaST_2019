@@ -3,6 +3,7 @@
 
 
 <c:url value="/home" var="home"/>
+<c:url value="/contact" var="contact"/>
 
 <html>
 <head>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="error-actions">
                     <a href="${home}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-                        Take Me Home </a><a href="http://localhost:8080/freeride/jsp/contact.jsp" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+                        Take Me Home </a><a href="${contact}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
                 </div>
             </div>
         </div>
