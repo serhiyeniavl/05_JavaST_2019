@@ -99,7 +99,7 @@
                 </a>
                 <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
                     <c:forEach var="status" items="${order_status}">
-                        <a class="dropdown-item" href="${orders}?page=${current_page}&show=${status.getValue().toLowerCase()}">${status.getValue()}</a>
+                        <a class="dropdown-item" href="${orders}?page=1&show=${status.getValue().toLowerCase()}">${status.getValue()}</a>
                     </c:forEach>
                 </div>
             </li>
@@ -196,7 +196,7 @@
                                         </td>
                                     </form>
                                 </c:if>
-                                <c:if test="${order.status.getValue() eq 'Active' || order.status.getValue() eq 'Extended'}">
+                                <c:if test="${order.status.getValue() eq 'Active' || order.status.getValue() eq 'Extended' || order.status.getValue() eq 'Expired'}">
                                     <form action="${orders}" method="post">
                                         <input type="hidden" name="command"
                                                value="complete_user_order"/>

@@ -100,7 +100,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <c:forEach var="status" items="${order_status}">
-                        <a class="dropdown-item" href="${user_orders}?page=${current_page}&show=${status.getValue().toLowerCase()}">${status.getValue()}</a>
+                        <a class="dropdown-item" href="${user_orders}?page=1&show=${status.getValue().toLowerCase()}">${status.getValue()}</a>
                     </c:forEach>
                 </div>
             </li>
