@@ -197,7 +197,7 @@
                         <td>${u.user.email}</td>
                         <td>${u.user.userData.FName} ${u.user.userData.LName}</td>
                         <td>${u.user.role.toString()}</td>
-                        <td>${u.reason}</td>
+                        <td>${u.reason.value()}</td>
                         <td>${u.showLockDate()}</td>
                         <td>${u.showUnlockDate()}</td>
                         <td width="50px">

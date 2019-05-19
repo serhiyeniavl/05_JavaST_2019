@@ -1,5 +1,6 @@
 package by.training.info_system.entity;
 
+import by.training.info_system.entity.ban_reason.BanReason;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 public class BlackListNode implements Serializable {
     private User user;
-    private String reason;
+    private BanReason reason;
     private LocalDate lockDate;
     private LocalDate unlockDate;
 
