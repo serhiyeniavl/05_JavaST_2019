@@ -10,4 +10,4 @@
   
 <h4>Task 05: Final project. Carsharing site.
   
-<h5>Used technologies: Java Stream API, Log4j2, TestNG, lombok, MySQL database, ByCrypt, Base64.<h3>
+<h5>Used technologies and libraries: Java Stream API, Log4j2, TestNG, lombok, MySQL database, ByCrypt, Base64.<h3>
