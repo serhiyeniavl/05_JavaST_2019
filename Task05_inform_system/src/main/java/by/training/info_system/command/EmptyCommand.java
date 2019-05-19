@@ -34,35 +34,51 @@ public class EmptyCommand extends Command {
 
         updateBlackList();
 
-        if ((page.getUri().equals(PageEnum.SIGNIN.getUri())
-                || page.getUri().equals(PageEnum.SIGNUP.getUri()))) {
-            return handleSignInPage(request, page);
-        }
+        PageEnum reqPage = PageEnum.valueOf(page.getUri().toUpperCase());
 
-        if (page.getUri().equals(PageEnum.CARS.getUri())) {
-            loadCars(request);
-            if (checkRequestMessageAttrs(request)) {
-                return processMessageAttrs(request, page);
-            }
+        switch (reqPage) {
+            case SIGNIN:
+                page = handleSignInPage(request, page);
+                break;
+            case SIGNUP:
+                page = handleSignInPage(request, page);
+                break;
+            case ORDERS:
+                page = handleOrdersPage(request, page);
+                break;
+            case MY_ORDERS:
+                page = handleOrdersPage(request, page);
+                break;
+            case USERS:
+                page = handleUsersPage(request, page);
+                break;
+            case PROFILE:
+                page = handleProfilePage(request, page);
+                break;
+            case CARS:
+                page = handleCarsPage(request, page);
+                break;
+            default:
         }
+        return page;
+    }
 
-        if (page.getUri().equals(PageEnum.USERS.getUri())) {
-            return handleUsersPage(request, page);
+    private JspPage handleProfilePage(final HttpServletRequest request,
+                                      final JspPage page) {
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+        loadProfileInfo(request, user.getId());
+        if (checkRequestMessageAttrs(request)) {
+            return processMessageAttrs(request, page);
         }
+        return page;
+    }
 
-        if (page.getUri().equals(PageEnum.PROFILE.getUri())) {
-            HttpSession session = request.getSession(false);
-            User user = (User) session.getAttribute("user");
-            loadProfileInfo(request, user.getId());
-            if (checkRequestMessageAttrs(request)) {
-                return processMessageAttrs(request, page);
-            }
-            return page;
-        }
-
-        if (page.getUri().equals(PageEnum.ORDERS.getUri())
-                || page.getUri().equals(PageEnum.MY_ORDERS.getUri())) {
-            return handleOrdersPage(request, page);
+    private JspPage handleCarsPage(final HttpServletRequest request,
+                                   final JspPage page) {
+        loadCars(request);
+        if (checkRequestMessageAttrs(request)) {
+            return processMessageAttrs(request, page);
         }
         return page;
     }
