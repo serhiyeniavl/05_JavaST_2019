@@ -15,5 +15,4 @@ public class CarInfo implements Serializable {
     private String vinCode;
     private String regNumber;
     private Integer run;
-    private Date lastMaintenance;
 }

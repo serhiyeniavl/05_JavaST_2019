@@ -27,9 +27,9 @@ which provide for you extra comfort during your drive.', '2017', 'Audi A4',  '10
 inexpensive car and do not want to look uncomfortable - this is your choice.',
         '2016', 'Volkswagen Polo',   '8','B', 'vwPolo.jpg');
 
-INSERT INTO Car_info(vin_code, reg_number, run, last_maintenance) VALUES
-('1AJTU42KTIB584931', '5859AB-7', '123456', '2018'),
-('1ITUV57RYFM493048', '4829HR-2', '456745', '2018');
+INSERT INTO Car_info(vin_code, reg_number, run) VALUES
+('1AJTU42KTIB584931', '5859AB-7', '123456'),
+('1ITUV57RYFM493048', '4829HR-2', '456745');
 
 INSERT INTO Black_list(user_id, reason, lock_date, unlock_date) VALUES
 ('4', 'Didn\'t return a car in time', '2019-04-23', '2019-05-10');

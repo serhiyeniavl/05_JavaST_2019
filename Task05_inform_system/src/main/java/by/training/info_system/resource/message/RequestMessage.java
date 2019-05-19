@@ -56,7 +56,11 @@ public enum RequestMessage {
     USER_IN_BLACK_LIST(RequestMessageManager.getInstance()
             .getProperty("user_in_black_list")),
     ADMIN_CANNOT_RENT(RequestMessageManager.getInstance()
-            .getProperty("admin_cannot_rent"));
+            .getProperty("admin_cannot_rent")),
+    CAR_ADDED(RequestMessageManager.getInstance()
+            .getProperty("car_added")),
+    INCORRECT_CAR_ADD_FORM(RequestMessageManager.getInstance()
+            .getProperty("incorrect_car_form"));
 
 
     private String value;

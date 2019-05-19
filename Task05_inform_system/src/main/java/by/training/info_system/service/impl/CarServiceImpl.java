@@ -10,6 +10,12 @@ import java.util.Optional;
 
 public class CarServiceImpl extends AbstractService implements CarService {
     @Override
+    public Integer addCar(final Car car) {
+        CarDao dao = daoManager.createDao(CarDao.class).orElseThrow();
+        return dao.create(car);
+    }
+
+    @Override
     public Optional<List<Car>> loadCars() {
         CarDao dao = daoManager.createDao(CarDao.class).orElseThrow();
         return dao.getAll();

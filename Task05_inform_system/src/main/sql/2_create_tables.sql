@@ -14,7 +14,6 @@ CREATE TABLE `Car_info` (
                           `vin_code` varchar(30) NOT NULL UNIQUE,
                           `reg_number` varchar(10) NOT NULL UNIQUE,
                           `run` int NOT NULL,
-                          `last_maintenance` smallint,
                           PRIMARY KEY (`car_id`)
 );
 
