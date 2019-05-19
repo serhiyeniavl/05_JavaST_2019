@@ -23,6 +23,7 @@ public interface UserService extends Service {
     boolean updatePassword(long id, String password);
     boolean updateEmail(long id, String email);
     boolean isExist(Integer passportNumber, String idPassportNumber);
+    boolean moveToBlackList(BlackListNode node);
     Optional<List<User>> findAll(int page, int recordsPerPage);
     Optional<List<User>> findManagers(int page, int recordsPerPage);
     Optional<List<User>> findCustomers(int page, int recordsPerPage);

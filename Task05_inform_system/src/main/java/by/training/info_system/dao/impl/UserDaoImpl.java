@@ -5,14 +5,12 @@ import by.training.info_system.dao.UserDao;
 import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.Passport;
 import by.training.info_system.entity.User;
+import by.training.info_system.entity.ban_reason.BanReason;
 import by.training.info_system.entity.data.UserData;
 import by.training.info_system.entity.role.Role;
 import lombok.extern.log4j.Log4j2;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -249,6 +247,33 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return delete(sql, id);
     }
 
+    @Override
+    public boolean addToBlackList(final BlackListNode node) {
+        String sql = "INSERT INTO Black_list (user_id, reason, lock_date, unlock_date) "
+                + "VALUES (?,?,?,?)";
+        PreparedStatement statement = createPreparedStatement(sql);
+        try {
+            statement.setLong(1, node.getUser().getId());
+            statement.setString(2, node.getReason().value());
+            statement.setDate(3, Date.valueOf(node.getLockDate()));
+            statement.setDate(4, Date.valueOf(node.getUnlockDate()));
+        } catch (SQLException e) {
+            log.error("Cannot create prepared statement.", e);
+        }
+        try {
+            int query = statement.executeUpdate();
+            if (query < 1) {
+                throw new SQLException("Cannot insert into black list");
+            }
+            return true;
+        } catch (SQLException e) {
+            log.error("Error when trying to insert in black list", e);
+        } finally {
+            closePreparedStatement(statement);
+        }
+        return false;
+    }
+
     public Optional<User> read(final String email) {
         String sql = "SELECT id, email, password, role, fname"
                 + " FROM Users "
@@ -340,7 +365,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 user.setId((long) resultSet.getInt("id"));
                 BlackListNode node = BlackListNode.builder()
                         .user(user)
-                        .reason(resultSet.getString("reason"))
+                        .reason(BanReason.fromValue(resultSet.getString("reason")))
                         .lockDate(resultSet.getDate("lock_date").toLocalDate())
                         .unlockDate(resultSet.getDate("unlock_date").toLocalDate())
                         .build();

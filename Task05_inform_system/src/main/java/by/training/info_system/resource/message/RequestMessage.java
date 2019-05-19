@@ -52,7 +52,11 @@ public enum RequestMessage {
     EMAIL_CHANGE_GOES_WRONG(RequestMessageManager.getInstance()
             .getProperty("password_change_goes_wrong")),
     PASSWORD_CHANGE_GOES_WRONG(RequestMessageManager.getInstance()
-            .getProperty("password_change_goes_wrong"));
+            .getProperty("password_change_goes_wrong")),
+    USER_IN_BLACK_LIST(RequestMessageManager.getInstance()
+            .getProperty("user_in_black_list")),
+    ADMIN_CANNOT_RENT(RequestMessageManager.getInstance()
+            .getProperty("admin_cannot_rent"));
 
 
     private String value;

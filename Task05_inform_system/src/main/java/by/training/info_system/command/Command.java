@@ -2,21 +2,27 @@ package by.training.info_system.command;
 
 import by.training.info_system.command.client.RequestAttribute;
 import by.training.info_system.command.client.RequestParameter;
+import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.resource.message.RequestMessage;
 import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.service.ServiceFactory;
+import by.training.info_system.service.UserService;
 import by.training.info_system.util.Encoder;
 import by.training.info_system.validator.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Command {
 
     protected ServiceFactory factory;
 
-    static final int ORDERS_PER_PAGE = 3;
+    static final int ORDERS_PER_PAGE = 10;
     static final int USERS_PER_PAGE = 10;
 
 
@@ -50,14 +56,17 @@ public abstract class Command {
         page.appendRequestParameter(parameter.getValue() + "=" + message);
     }
 
+    protected void updateBlackList() {
+        UserService service = factory.getService(UserService.class).orElseThrow();
+        List<BlackListNode> blackList = service.readBlackList().orElseGet(ArrayList::new);
+        blackList.stream()
+                .filter(node -> node.getUnlockDate().isBefore(LocalDate.now()))
+                .forEach(node -> service.deleteFromBlackList(node.getUser().getId()));
+    }
+
     protected void appendTimeParam(JspPage page) {
         appendRequestParameter(page, RequestParameter.TIME,
                 LocalDateTime.now().toString());
-    }
-
-    protected String findCurrentPage(HttpServletRequest request) {
-        String referer = request.getHeader("referer");
-        return String.valueOf(referer.charAt(referer.length() - 1));
     }
 
     protected String findCurrentParameters(HttpServletRequest request) {

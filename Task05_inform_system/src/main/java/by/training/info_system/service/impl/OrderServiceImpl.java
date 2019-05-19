@@ -191,6 +191,12 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
+    public Optional<List<Order>> findActiveOrders() {
+        OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
+        return dao.readCurrentOrders();
+    }
+
+    @Override
     public boolean updateOrder(final Order order) {
         OrderDao dao = daoManager.createDao(OrderDao.class).orElseThrow();
         return dao.update(order);

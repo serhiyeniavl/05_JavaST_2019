@@ -32,6 +32,8 @@ public class EmptyCommand extends Command {
         String requestedPage = (String) request.getAttribute("requestedPage");
         JspPage page = PageFactory.defineAndGet(PageEnum.valueOf(requestedPage.toUpperCase()));
 
+        updateBlackList();
+
         if ((page.getUri().equals(PageEnum.SIGNIN.getUri())
                 || page.getUri().equals(PageEnum.SIGNUP.getUri()))) {
             return handleSignInPage(request, page);
@@ -83,6 +85,7 @@ public class EmptyCommand extends Command {
                                      final JspPage page) {
         loadOrderStatuses(request);
         OrderService service = factory.getService(OrderService.class).orElseThrow();
+        updateOrdersStatus();
         if (request.getParameter("order_id") != null) {
             long id;
             try {
@@ -448,7 +451,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadOverdueUserOrders(final HttpServletRequest request, final long id,
-                                final int page) {
+                                       final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findOverdue(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -458,7 +461,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadActiveUserOrders(final HttpServletRequest request, final long id,
-                                       final int page) {
+                                      final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findActive(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -468,7 +471,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadAcceptedUserOrders(final HttpServletRequest request, final long id,
-                                      final int page) {
+                                        final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findAccepted(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -478,7 +481,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadNotConfirmedUserOrders(final HttpServletRequest request, final long id,
-                                      final int page) {
+                                            final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findNotConfirmed(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -488,7 +491,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadConfirmedUserOrders(final HttpServletRequest request, final long id,
-                                      final int page) {
+                                         final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findConfirmed(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -498,7 +501,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadExtendedUserOrders(final HttpServletRequest request, final long id,
-                                      final int page) {
+                                        final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findExtended(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -508,7 +511,7 @@ public class EmptyCommand extends Command {
     }
 
     private void loadCompletedUserOrders(final HttpServletRequest request, final long id,
-                                      final int page) {
+                                         final int page) {
         OrderService service = factory.getService(OrderService.class).orElseThrow();
         List<Order> orders = service.findCompleted(id, page, ORDERS_PER_PAGE)
                 .orElse(null);
@@ -583,5 +586,13 @@ public class EmptyCommand extends Command {
         putAttrInRequest(request, RequestAttribute.BLACK_LIST, "blList");
         putAttrInRequest(request, RequestAttribute.USERS_LIST, blackList);
         putAttrInRequest(request, RequestAttribute.NUM_OF_PAGES, numOfPages);
+    }
+
+    private void updateOrdersStatus() {
+        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        List<Order> orders = service.findActiveOrders().orElseGet(ArrayList::new);
+        orders.stream()
+                .filter(order -> order.getReturnDate().isBefore(LocalDateTime.now()))
+                .forEach(order -> service.updateOrderStatus(order.getId(), OrderStatus.EXPIRED));
     }
 }

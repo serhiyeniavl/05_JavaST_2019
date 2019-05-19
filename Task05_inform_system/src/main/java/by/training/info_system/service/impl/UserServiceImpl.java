@@ -62,6 +62,12 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public boolean moveToBlackList(final BlackListNode node) {
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.addToBlackList(node);
+    }
+
+    @Override
     public Integer registerNewUser(final User user) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         daoManager.autoCommit(false);
@@ -102,7 +108,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     @Override
     public Optional<List<BlackListNode>> readBlackList() {
-        return Optional.empty();
+        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
+        return userDao.readBlackList();
     }
 
     @Override

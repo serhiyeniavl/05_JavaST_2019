@@ -41,8 +41,8 @@ CREATE TABLE `Orders` (
 CREATE TABLE `Black_list` (
                             `user_id` int NOT NULL AUTO_INCREMENT,
                             `reason` varchar(30) NOT NULL,
-                            `lock_date` TIMESTAMP NOT NULL,
-                            `unlock_date` TIMESTAMP NOT NULL,
+                            `lock_date` DATE NOT NULL,
+                            `unlock_date` DATE NOT NULL,
                             PRIMARY KEY (`user_id`)
 );
 

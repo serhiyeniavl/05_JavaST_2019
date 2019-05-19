@@ -12,6 +12,7 @@ public interface UserDao extends Dao<User> {
     boolean update(long id, Role role);
     boolean deleteFromBlackList(long id);
     boolean updateEmail(long id, String email);
+    boolean addToBlackList(BlackListNode node);
     Integer countUsers();
     Integer countUsersInBlackList();
     Integer countManagers();

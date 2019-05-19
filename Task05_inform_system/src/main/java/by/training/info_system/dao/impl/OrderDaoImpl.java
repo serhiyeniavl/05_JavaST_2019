@@ -23,9 +23,39 @@ import java.util.Optional;
 
 @Log4j2
 public class OrderDaoImpl extends AbstractDao implements OrderDao {
+    //language=SQL
+    private static final String SQL_FIND_ORDERS_BY_STATUS = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+            + "final_price, brand_name, rent_price, image_path, reg_number,"
+            + " U.id, email, role, fname, lname, serie, number"
+            + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
+            + "JOIN Car_info Ci on C.id = Ci.car_id "
+            + "JOIN Users U on Orders.user_id = U.id "
+            + "JOIN User_data Ud on U.id = Ud.user_id "
+            + "JOIN Passport P on Ud.passport_id = P.id "
+            + "WHERE Orders.status = '%s' ORDER BY Orders.id "
+            + "LIMIT %s OFFSET %s";
+
+    //language=SQL
+    private static final String SQL_FIND_USER_ORDERS_BY_STATUS
+            = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+            + "final_price, brand_name, rent_price, image_path, reg_number"
+            + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
+            + "JOIN Car_info Ci on C.id = Ci.car_id "
+            + "WHERE Orders.user_id = ? AND Orders.status = '%s' ORDER BY Orders.id "
+            + "LIMIT ? OFFSET ?";
+
     @Override
     public Optional<List<Order>> readCurrentOrders() {
-        return Optional.empty();
+        String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+                + "final_price, brand_name, rent_price, image_path, reg_number,"
+                + " U.id, email, role, fname, lname, serie, number"
+                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
+                + "JOIN Car_info Ci on C.id = Ci.car_id "
+                + "JOIN Users U on Orders.user_id = U.id "
+                + "JOIN User_data Ud on U.id = Ud.user_id "
+                + "JOIN Passport P on Ud.passport_id = P.id "
+                + "WHERE Orders.status = 'Active' OR Orders.status = 'Extended'";
+        return getAll(sql);
     }
 
     @Override
@@ -51,7 +81,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     @Override
     public Integer countOverdue(final long userId) {
         String sql = String.format("SELECT COUNT(id) FROM Orders "
-                + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
                 OrderStatus.EXPIRED.getValue(), userId);
         return countOrders(sql);
     }
@@ -164,17 +194,9 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     @Override
     public Optional<List<Order>> findOverdue(final int page,
                                              final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number,"
-                + " email, role, fname, lname, serie, number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "JOIN Users U on Orders.user_id = U.id "
-                + "JOIN User_data Ud on U.id = Ud.user_id "
-                + "JOIN Passport P on Ud.passport_id = P.id "
-                + "WHERE Orders.status = '%s'"
-                + "LIMIT %s OFFSET %s", OrderStatus.EXPIRED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.EXPIRED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -182,29 +204,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findOverdue(final long userId,
                                              final int page,
                                              final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.EXPIRED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.EXPIRED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findNotConfirmed(final int page,
                                                   final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.NOT_CONFIRMED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.NOT_CONFIRMED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -212,29 +222,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findNotConfirmed(final long userId,
                                                   final int page,
                                                   final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.NOT_CONFIRMED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.NOT_CONFIRMED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findAccepted(final int page,
                                               final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.ACCEPTED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.ACCEPTED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -242,29 +240,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findAccepted(final long userId,
                                               final int page,
                                               final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.ACCEPTED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.ACCEPTED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findActive(final int page,
                                             final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.ACTIVE.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.ACTIVE.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -272,29 +258,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findActive(final long userId,
                                             final int page,
                                             final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.ACTIVE.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.ACTIVE.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findDenied(final int page,
                                             final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.DENIED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.DENIED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -302,29 +276,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findDenied(final long userId,
                                             final int page,
                                             final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.DENIED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.DENIED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findExtended(final int page,
                                               final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.EXTENDED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.EXTENDED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -332,29 +294,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findExtended(final long userId,
                                               final int page,
                                               final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.EXTENDED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.EXTENDED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findCompleted(final int page,
                                                final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.COMPLETED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.COMPLETED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -362,29 +312,17 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findCompleted(final long userId,
                                                final int page,
                                                final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.COMPLETED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.COMPLETED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
     @Override
     public Optional<List<Order>> findConfirmed(final int page,
                                                final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                        + "final_price, brand_name, rent_price, image_path, reg_number,"
-                        + " email, role, fname, lname, serie, number"
-                        + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                        + "JOIN Car_info Ci on C.id = Ci.car_id "
-                        + "JOIN Users U on Orders.user_id = U.id "
-                        + "JOIN User_data Ud on U.id = Ud.user_id "
-                        + "JOIN Passport P on Ud.passport_id = P.id "
-                        + "WHERE Orders.status = '%s'"
-                        + "LIMIT %s OFFSET %s", OrderStatus.CONFIRMED.getValue(),
-                recordsPerPage, (page-1) * recordsPerPage);
+        String sql = String.format(SQL_FIND_ORDERS_BY_STATUS,
+                OrderStatus.CONFIRMED.getValue(),
+                recordsPerPage, (page - 1) * recordsPerPage);
         return getAll(sql);
     }
 
@@ -392,12 +330,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> findConfirmed(final long userId,
                                                final int page,
                                                final int recordsPerPage) {
-        String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number"
-                + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
-                + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? AND Orders.status = '%s' "
-                + "LIMIT ? OFFSET ?", OrderStatus.CONFIRMED.getValue());
+        String sql = String.format(SQL_FIND_USER_ORDERS_BY_STATUS,
+                OrderStatus.CONFIRMED.getValue());
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
 
@@ -409,7 +343,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                 Statement.RETURN_GENERATED_KEYS);
         int orderId = 0;
         ResultSet resultSet = null;
-        try  {
+        try {
             statement.setLong(1, entity.getCar().getId());
             statement.setLong(2, entity.getUser().getId());
             statement.setString(3, OrderStatus.NOT_CONFIRMED.getValue());
@@ -441,7 +375,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<Order> get(long id) {
         String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
                 + "final_price, brand_name, rent_price, image_path, reg_number,"
-                + " email, role, fname, lname, serie, number"
+                + " U.id, email, role, fname, lname, serie, number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
                 + "JOIN Car_info Ci on C.id = Ci.car_id "
                 + "JOIN Users U on Orders.user_id = U.id "
@@ -473,6 +407,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                                     .build()
                     )
                     .build();
+            user.setId(resultSet.getLong("U.id"));
             Car car = Car.builder()
                     .brandName(resultSet.getString("brand_name"))
                     .imagePath(resultSet.getString("image_path"))
@@ -518,8 +453,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     @Override
     public Optional<List<Order>> getAll() {
         String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
-                + "final_price, brand_name, rent_price, image_path, reg_number,"
-                + " email, role, fname, lname, serie, number"
+                + "final_price, brand_name, rent_price, image_path, reg_number, "
+                + "U.id, email, role, fname, lname, serie, number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
                 + "JOIN Car_info Ci on C.id = Ci.car_id "
                 + "JOIN Users U on Orders.user_id = U.id "
@@ -646,7 +581,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                 + "final_price, brand_name, rent_price, image_path, reg_number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
                 + "JOIN Car_info Ci on C.id = Ci.car_id "
-                + "WHERE Orders.user_id = ? "
+                + "WHERE Orders.user_id = ? ORDER BY Orders.id "
                 + "LIMIT ? OFFSET ?";
         return findUserOrders(sql, userId, recordsPerPage, page);
     }
@@ -694,7 +629,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                             .toLocalDateTime());
                 }
                 Object returnDate = resultSet.getObject("return_date");
-                if  (returnDate != null) {
+                if (returnDate != null) {
                     order.setReturnDate(resultSet.getTimestamp("return_date")
                             .toLocalDateTime());
                 }
@@ -722,13 +657,13 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
     public Optional<List<Order>> getAll(final int page, final int ordersPerPage) {
         String sql = String.format("SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
                 + "final_price, brand_name, rent_price, image_path, reg_number,"
-                + " email, role, fname, lname, serie, number"
+                + " U.id, email, role, fname, lname, serie, number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
                 + "JOIN Car_info Ci on C.id = Ci.car_id "
                 + "JOIN Users U on Orders.user_id = U.id "
                 + "JOIN User_data Ud on U.id = Ud.user_id "
-                + "JOIN Passport P on Ud.passport_id = P.id "
-                + "LIMIT %s OFFSET %s", ordersPerPage, (page-1) * ordersPerPage);
+                + "JOIN Passport P on Ud.passport_id = P.id ORDER BY Orders.id "
+                + "LIMIT %s OFFSET %s", ordersPerPage, (page - 1) * ordersPerPage);
         return getAll(sql);
     }
 
@@ -773,7 +708,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                             .toLocalDateTime());
                 }
                 Object returnDate = resultSet.getObject("return_date");
-                if  (returnDate != null) {
+                if (returnDate != null) {
                     order.setReturnDate(resultSet.getTimestamp("return_date")
                             .toLocalDateTime());
                 }
@@ -813,6 +748,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                                         .build()
                         )
                         .build();
+                user.setId(resultSet.getLong("U.id"));
                 Car car = Car.builder()
                         .brandName(resultSet.getString("brand_name"))
                         .imagePath(resultSet.getString("image_path"))
@@ -840,7 +776,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
                             .toLocalDateTime());
                 }
                 Object returnDate = resultSet.getObject("return_date");
-                if  (returnDate != null) {
+                if (returnDate != null) {
                     order.setReturnDate(resultSet.getTimestamp("return_date")
                             .toLocalDateTime());
                 }

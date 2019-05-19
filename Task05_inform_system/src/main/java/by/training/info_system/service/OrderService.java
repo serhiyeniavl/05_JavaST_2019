@@ -31,6 +31,7 @@ public interface OrderService extends Service {
     boolean updateOrder(Order order);
     Optional<List<Order>> findUserOrders(long id, int page, int recordsPerPage);
     Optional<List<Order>> findAllOrders();
+    Optional<List<Order>> findActiveOrders();
     Optional<List<Order>> findAllOrders(int page, int recordsPerPage);
     Optional<List<Order>> findOverdue(int page, int recordsPerPage);
     Optional<List<Order>> findOverdue(long userId, int page, int recordsPerPage);
