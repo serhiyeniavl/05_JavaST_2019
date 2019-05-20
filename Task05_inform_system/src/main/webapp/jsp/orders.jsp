@@ -1,7 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<c:if test="${param.language == 'en'}">
+    <fmt:setLocale value="en" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'ru'}">
+    <fmt:setLocale value="ru" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'de'}">
+    <fmt:setLocale value="de" scope="session"/>
+</c:if>
+<fmt:bundle basename="orders_page">
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
 <c:url value="/contact" var="contact"/>
@@ -25,7 +35,6 @@
     <link rel="icon"
           href="${ctx}/img/wheel.png"
           type="image/jpg">
-    <link rel="stylesheet" href="${ctx}/css/orders.css?" type="text/css"/>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -271,49 +280,55 @@
 </c:choose>
 
 
-<footer class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
     <div class="container">
         <a class="navbar-brand" href="${home}"
            style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse"
+                data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${home}">Home
+                    <a class="nav-link" href="${home}"><fmt:message
+                            key="home"/>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${cars}">Cars</a>
+                    <a class="nav-link" href="${cars}"><fmt:message
+                            key="cars"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${contact}">Contact</a>
+                    <a class="nav-link" href="${contact}"><fmt:message
+                            key="contact"/></a>
                 </li>
                 <c:if test="${not empty user && user.role.value()==2}">
                     <li class="nav-item active">
-                        <a class="nav-link" href="${orders}">Orders
-                            <span class="sr-only">(current)</span>
-                        </a>
+                        <a class="nav-link" href="${orders}"><fmt:message
+                                key="orders"/></a>
                     </li>
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${users}">Users</a>
+                        <a class="nav-link" href="${users}"><fmt:message key="users"/></a>
                     </li>
                 </c:if>
 
                 <c:choose>
                     <c:when test="${user==null}">
                         <li class="nav-item">
-                            <input value="Sign in" type="button"
+                            <input value="<fmt:message
+                                key="signin"/>" type="button"
                                    onclick="window.location='${signin}'"
                                    class="btn btn-success navbar-btn btn-circle"
                                    style="margin-left: 12px;">
                         </li>
-                        <li class="nav-item"><input value="Sign up"
+                        <li class="nav-item"><input value="<fmt:message
+                                key="signup"/>"
                                                     type="button"
                                                     onclick="window.location='${signup}'"
                                                     class="btn btn-success navbar-btn btn-circle"
@@ -332,30 +347,72 @@
                                        style="margin-left: 12px;"/>
                                 <div class="dropdown-menu"
                                      style="background-color: rgb(52,57,62);">
-                                <c:if test="${user.role.value() != 3}">
-                                    <a class="dropdown-item a01"
-                                       href="${profile}">Profile</a>
-                                    <a class="dropdown-item a01"
-                                       href="${user_orders}">My orders</a>
-                                    <div class="dropdown-divider"></div>
+                                    <c:if test="${user.role.value() != 3}">
+                                        <a class="dropdown-item a01"
+                                           href="${profile}"><fmt:message
+                                                key="profile"/></a>
+                                        <a class="dropdown-item a01"
+                                           href="${user_orders}"><fmt:message
+                                                key="my_orders"/>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
                                     </c:if>
                                     <form style="margin-bottom: 0px;"
-                                          action="${signin}" method="post">
-                                        <input type="hidden" name="command"
+                                          action="${signin}"
+                                          method="post">
+                                        <input type="hidden"
+                                               name="command"
                                                value="signout"/>
                                         <input type="submit"
                                                class="dropdown-item a01"
-                                               value="Logout">
+                                               value="<fmt:message
+                                key="logout"/>">
                                     </form>
                                 </div>
                             </div>
                         </li>
                     </c:otherwise>
                 </c:choose>
+                <li style="margin-left: auto; margin-right: 0;">
+                    <div class="btn-group dropup">
+                        <input type="button"
+                               value="<fmt:message
+                                key="language"/>"
+                               class="btn btn-secondary dropdown-toggle"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false"
+                               style="margin-left: 12px;"/>
+                        <div class="dropdown-menu"
+                             style="background-color: rgb(52,57,62);">
+                            <form style="margin-bottom: 0px;" action="${orders}?language=en">
+                                <input type="hidden" name="language"
+                                       value="en">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="En">
+                            </form>
+                            <form style="margin-bottom: 0px;" action="${orders}?language=ru">
+                                <input type="hidden" name="language"
+                                       value="ru">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="Ru">
+                            </form>
+                            <form style="margin-bottom: 0px;" action="${orders}?language=de">
+                                <input type="hidden" name="language"
+                                       value="de">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="De">
+                            </form>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-</footer>
+</nav>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -369,3 +426,4 @@
         crossorigin="anonymous"></script>
 
 </html>
+</fmt:bundle>

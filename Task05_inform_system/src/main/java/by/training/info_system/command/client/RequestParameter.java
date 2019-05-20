@@ -5,6 +5,7 @@ public enum RequestParameter {
     SHOW("show"),
     EMAIL("email"),
     ID("id"),
+    LANG("lang"),
     ORDER_ID("oi"),
     PAGE("page"),
     TIME("tm"),

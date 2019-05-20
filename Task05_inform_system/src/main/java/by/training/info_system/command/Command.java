@@ -52,6 +52,12 @@ public abstract class Command {
                 + Encoder.encodeString(message));
     }
 
+    void appendLanguageAttr(final HttpServletRequest request,
+                            final JspPage page) {
+        page.appendRequestParameter("language" + "="
+                + request.getParameter("language"));
+    }
+
     void appendRequestParameterWithoutEncoding(final JspPage page,
                                                final RequestParameter parameter,
                                                final String message) {

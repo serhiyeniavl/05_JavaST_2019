@@ -34,6 +34,7 @@ public class EmptyCommand extends Command {
                 .toUpperCase()));
 
         updateBlackList();
+        checkLangAttr(page, request);
 
         PageEnum reqPage = PageEnum.valueOf(page.getUri().toUpperCase());
 
@@ -611,5 +612,12 @@ public class EmptyCommand extends Command {
         orders.stream()
                 .filter(order -> order.getReturnDate().isBefore(LocalDateTime.now()))
                 .forEach(order -> service.updateOrderStatus(order.getId(), OrderStatus.EXPIRED));
+    }
+
+    private void checkLangAttr(final JspPage page,
+                               final HttpServletRequest request) {
+        if (request.getParameter("language") != null) {
+            appendLanguageAttr(request, page);
+        }
     }
 }

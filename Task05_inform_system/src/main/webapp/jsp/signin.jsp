@@ -1,7 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<c:if test="${param.language == 'en'}">
+    <fmt:setLocale value="en" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'ru'}">
+    <fmt:setLocale value="ru" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'de'}">
+    <fmt:setLocale value="de" scope="session"/>
+</c:if>
+<fmt:bundle basename="signin_page">
 <c:url var="home" value="/home"/>
 <c:url var="signup" value="/signup"/>
 <c:url var="signin" value="/signin"/>
@@ -100,3 +110,4 @@
 
 </body>
 </html>
+</fmt:bundle>

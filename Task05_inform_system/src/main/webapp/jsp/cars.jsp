@@ -1,7 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
+<c:if test="${param.language == 'en'}">
+    <fmt:setLocale value="en" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'ru'}">
+    <fmt:setLocale value="ru" scope="session"/>
+</c:if>
+<c:if test="${param.language == 'de'}">
+    <fmt:setLocale value="de" scope="session"/>
+</c:if>
+<fmt:bundle basename="cars_page">
 
 <c:url value="/home" var="home"/>
 <c:url value="/cars" var="cars"/>
@@ -62,11 +73,20 @@
             padding: 60px 50px;
         }
 
+        .button4 {
+            background-color: white;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 7%;
+            color: black;
+            border: 2px solid #555555;
+        }
+
         .button5 {
             background-color: white;
             padding-top: 5px;
             padding-bottom: 5px;
-            width: 110px;
+            width: 25%;
             color: black;
             border: 2px solid #555555;
         }
@@ -106,11 +126,11 @@
 <div class="jumbotron text-center"
      style="padding-bottom: 25px; padding-top: 25px;">
     <h1 style="font-size: 43px;">FreeRide</h1>
-    <p style="font-size: 23px">We specialize in rental cars</p>
+    <p style="font-size: 23px"><fmt:message key="foot"/></p>
     <br><br>
-    <h4>If you new in here, you can learn more about how do we work</h4>
+    <h4><fmt:message key="new"/></h4>
     <a href="#info">
-        <button class="button button5" style="margin-top: 10px;">LEARN</button>
+        <button class="button button4" style="margin-top: 10px;"><fmt:message key="learn"/></button>
     </a>
 </div>
 
@@ -125,8 +145,8 @@
             <a href="${contact}" style="color: red; text-decoration: underline">contact</a>
             us.</h3>
         </c:if>
-        <h2>SERVICES</h2>
-        <h4>What we offer</h4>
+        <h2><fmt:message key="services"/></h2>
+        <h4><fmt:message key="offer"/></h4>
         <br>
         <c:forEach var="car" items="${rental_cars}" step="3" varStatus="loop">
         <div class="row">
@@ -141,7 +161,7 @@
                     <p>Year: ${car.yearMade}</p>
                     <p>Rent price: ${car.rentPrice}$</p>
                     <button type="submit" name="rent_butt"
-                            value="${car.id}" class="button button5">RENT
+                            value="${car.id}" class="button button5"><fmt:message key="rent"/>
                     </button>
                 </form>
             </c:if>
@@ -160,7 +180,7 @@
                         <p>Rent price: ${car.rentPrice}$</p>
                         <button type="submit" name="rent_butt"
                                 value="${car.id}" class="button button5">
-                            RENT
+                            <fmt:message key="rent"/>
                         </button>
                     </form>
                 </c:if>
@@ -180,7 +200,7 @@
                         <p>Rent price: ${car.rentPrice}$</p>
                         <button type="submit" name="rent_butt"
                                 value="${car.id}" class="button button5">
-                            RENT
+                            <fmt:message key="rent"/>
                         </button>
                     </form>
                 </c:if>
@@ -261,23 +281,14 @@
     <div class="container-fluid text-center text-md-left">
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
-                <h5 class="text-uppercase font-weight-bold" id="info">How does
-                    it work?</h5>
-                <p>At this page you can see a cars we provide for our customers.
-                 By clicking button "Rent" this order sends to our managers
-                and they are inspecting that. If manager agree with your order
-                 and has no questions he confirms your order. Since that you can
-                take your rental car and drive. You get a car for 1 day
-                or 24 hours.</p>
+                <h5 class="text-uppercase font-weight-bold" id="info">
+                    <fmt:message key="how_does_it_work"/></h5>
+                <p><fmt:message key="how"/></p>
             </div>
             <hr class="clearfix w-100 d-md-none pb-3">
             <div class="col-md-6 mb-md-0 mb-3">
-                <h5 class="text-uppercase font-weight-bold">What if?</h5>
-                <p>If you have any problems with returning car to our
-                    service - you can contact us and require to extend by one day.
-                 If you don't ask our managers about extending and return car
-                 over time - you account will be banned by 3 days. So, look after
-                 your time and we hope you enjoy it!</p>
+                <h5 class="text-uppercase font-weight-bold"><fmt:message key="what_if"/></h5>
+                <p><fmt:message key="if"/></p>
 
             </div>
         </div>
@@ -289,45 +300,52 @@
     <div class="container">
         <a class="navbar-brand" href="${home}"
            style="font-family: 'Roboto', sans-serif; font-size: 23px">FreeRide</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse"
+                data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${home}">Home
+                    <a class="nav-link" href="${home}"><fmt:message
+                            key="home"/>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="${cars}">Cars
-                        <span class="sr-only">(current)</span>
-                    </a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="${cars}"><fmt:message
+                            key="cars"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${contact}">Contact</a>
+                    <a class="nav-link" href="${contact}"><fmt:message
+                            key="contact"/></a>
                 </li>
                 <c:if test="${not empty user && user.role.value()==2}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${orders}">Orders</a>
+                        <a class="nav-link" href="${orders}"><fmt:message
+                                key="orders"/></a>
                     </li>
                 </c:if>
                 <c:if test="${not empty user && user.role.value()==3}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${users}">Users</a>
+                        <a class="nav-link" href="${users}"><fmt:message
+                                key="users"/></a>
                     </li>
                 </c:if>
 
                 <c:choose>
                     <c:when test="${user==null}">
                         <li class="nav-item">
-                            <input value="Sign in" type="button"
+                            <input value="<fmt:message
+                                key="signin"/>" type="button"
                                    onclick="window.location='${signin}'"
                                    class="btn btn-success navbar-btn btn-circle"
                                    style="margin-left: 12px;">
                         </li>
-                        <li class="nav-item"><input value="Sign up"
+                        <li class="nav-item"><input value="<fmt:message
+                                key="signup"/>"
                                                     type="button"
                                                     onclick="window.location='${signup}'"
                                                     class="btn btn-success navbar-btn btn-circle"
@@ -346,26 +364,68 @@
                                        style="margin-left: 12px;"/>
                                 <div class="dropdown-menu"
                                      style="background-color: rgb(52,57,62);">
-                        <c:if test="${user.role.value() != 3}">
-                                    <a class="dropdown-item a01"
-                                       href="${profile}">Profile</a>
-                                    <a class="dropdown-item a01"
-                                       href="${user_orders}">My orders</a>
-                                    <div class="dropdown-divider"></div>
-                        </c:if>
+                                    <c:if test="${user.role.value() != 3}">
+                                        <a class="dropdown-item a01"
+                                           href="${profile}"><fmt:message
+                                                key="profile"/></a>
+                                        <a class="dropdown-item a01"
+                                           href="${user_orders}"><fmt:message
+                                                key="my_orders"/>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    </c:if>
                                     <form style="margin-bottom: 0px;"
-                                          action="${signin}" method="post">
-                                        <input type="hidden" name="command"
+                                          action="${signin}"
+                                          method="post">
+                                        <input type="hidden"
+                                               name="command"
                                                value="signout"/>
                                         <input type="submit"
                                                class="dropdown-item a01"
-                                               value="Logout">
+                                               value="<fmt:message
+                                key="logout"/>">
                                     </form>
                                 </div>
                             </div>
                         </li>
                     </c:otherwise>
                 </c:choose>
+                <li style="margin-left: auto; margin-right: 0;">
+                    <div class="btn-group dropup">
+                        <input type="button"
+                               value="<fmt:message
+                                key="language"/>"
+                               class="btn btn-secondary dropdown-toggle"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false"
+                               style="margin-left: 12px;"/>
+                        <div class="dropdown-menu"
+                             style="background-color: rgb(52,57,62);">
+                            <form style="margin-bottom: 0px;" action="#">
+                                <input type="hidden" name="language"
+                                       value="en">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="En">
+                            </form>
+                            <form style="margin-bottom: 0px;" action="#">
+                                <input type="hidden" name="language"
+                                       value="ru">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="Ru">
+                            </form>
+                            <form style="margin-bottom: 0px;" action="#">
+                                <input type="hidden" name="language"
+                                       value="de">
+                                <input type="submit"
+                                       class="dropdown-item a01"
+                                       value="De">
+                            </form>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -382,3 +442,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+</fmt:bundle>
