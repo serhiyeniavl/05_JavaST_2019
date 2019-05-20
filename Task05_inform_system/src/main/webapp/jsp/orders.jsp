@@ -113,7 +113,7 @@
 <c:choose>
     <c:when test="${empty car_orders}">
         <div id="center">
-            <h2>There is no orders.</h2>
+            <h2>There are no orders.</h2>
         </div>
     </c:when>
     <c:otherwise>

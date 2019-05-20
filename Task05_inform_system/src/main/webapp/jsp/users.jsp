@@ -137,7 +137,7 @@
         </tbody>
     </table>
     <div id="center">
-        <h2>There is no users.</h2>
+        <h2>There are no users.</h2>
     </div>
     </c:when>
     <c:otherwise>
