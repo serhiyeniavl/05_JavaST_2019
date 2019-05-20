@@ -68,7 +68,7 @@ public class AddNewCarCommand extends Command {
                 buffer.append(dirs[i]);
                 buffer.append("/");
             }
-            String pathToStorePhoto = buffer + "webapp/img/cars/"
+            String pathToStorePhoto = buffer + "src/main/webapp/img/cars/"
                     + photoName;
             OutputStream outputStream = new FileOutputStream(pathToStorePhoto);
             fileContent.transferTo(outputStream);
