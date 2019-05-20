@@ -67,8 +67,7 @@ public class SignUpCommand extends Command {
                     .userData(userData)
                     .build();
         } catch (Exception e) {
-            appendRequestParameter(page, RequestParameter.TIME,
-                    LocalDateTime.now().toString());
+            appendTimeParam(page);
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.INCORRECT_SIGNUP_FORM);
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
@@ -77,8 +76,7 @@ public class SignUpCommand extends Command {
         }
 
         if (!validate(new UserValidator(), user)) {
-            appendRequestParameter(page, RequestParameter.TIME,
-                    LocalDateTime.now().toString());
+            appendTimeParam(page);
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.INCORRECT_SIGNUP_FORM);
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
@@ -87,10 +85,18 @@ public class SignUpCommand extends Command {
         }
 
         UserService service = factory.getService(UserService.class).orElseThrow();
+        if (service.findByEmail(email).isPresent()) {
+            page = PageFactory.defineAndGet(PageEnum.SIGNIN);
+            appendTimeParam(page);
+            appendRequestParameter(page, RequestParameter.MESSAGE,
+                    RequestMessage.USER_EXISTS);
+            appendRequestParameter(page, RequestParameter.ATTRIBUTE,
+                    RequestAttribute.INFO.toString());
+            return page;
+        }
         if (service.isInBlackList(user)) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            appendRequestParameter(page, RequestParameter.TIME,
-                    LocalDateTime.now().toString());
+            appendTimeParam(page);
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.BANNED_ACCOUNT_EXIST);
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
@@ -99,8 +105,7 @@ public class SignUpCommand extends Command {
         }
         if (service.isExist(userPassport.getNumber(), userPassport.getIdNumber())) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            appendRequestParameter(page, RequestParameter.TIME,
-                    LocalDateTime.now().toString());
+            appendTimeParam(page);
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.USER_WITH_PASSPORT_EXIST);
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
@@ -110,8 +115,7 @@ public class SignUpCommand extends Command {
         Integer isCreated = service.registerNewUser(user);
         if (isCreated != 0) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
-            appendRequestParameter(page, RequestParameter.TIME,
-                    LocalDateTime.now().toString());
+            appendTimeParam(page);
             appendRequestParameter(page, RequestParameter.MESSAGE,
                     RequestMessage.SUCCESSFUL_SIGNUP);
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,

@@ -59,6 +59,8 @@ public enum RequestMessage {
             .getProperty("admin_cannot_rent")),
     CAR_ADDED(RequestMessageManager.getInstance()
             .getProperty("car_added")),
+    USER_EXISTS(RequestMessageManager.getInstance()
+            .getProperty("user_exists")),
     INCORRECT_CAR_ADD_FORM(RequestMessageManager.getInstance()
             .getProperty("incorrect_car_form"));
 
