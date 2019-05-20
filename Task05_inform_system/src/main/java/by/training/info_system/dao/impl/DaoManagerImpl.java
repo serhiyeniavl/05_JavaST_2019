@@ -32,11 +32,12 @@ public class DaoManagerImpl implements DaoManager {
     @Override
     public <T extends Dao<?>> Optional<T> createDao(final Class<T> key) {
         Class<? extends AbstractDao> value = CLASSES.get(key);
-        if  (value != null) {
+        if (value != null) {
             try {
-                AbstractDao dao = value.getDeclaredConstructor(null).newInstance(null);
+                AbstractDao dao = value.getDeclaredConstructor(
+                        null).newInstance(null);
                 dao.setConnection(connection);
-                return Optional.of((T)dao);
+                return Optional.of((T) dao);
             } catch (InstantiationException e) {
                 log.error("Error when triy to create an instance of a class", e);
             } catch (IllegalAccessException e) {

@@ -36,7 +36,8 @@ public class ChangeEmailCommand extends Command {
         }
 
         User user = (User) request.getSession(false).getAttribute("user");
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         if (!isPassCorrect(user, service, password)) {
             appendRequestParameter(page, RequestParameter.ATTRIBUTE,
                     RequestAttribute.INCORRECT_DATA.getValue());

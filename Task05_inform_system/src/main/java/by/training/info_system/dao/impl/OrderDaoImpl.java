@@ -13,10 +13,6 @@ import by.training.info_system.entity.status.OrderStatus;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +20,8 @@ import java.util.Optional;
 @Log4j2
 public class OrderDaoImpl extends AbstractDao implements OrderDao {
     //language=SQL
-    private static final String SQL_FIND_ORDERS_BY_STATUS = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+    private static final String SQL_FIND_ORDERS_BY_STATUS
+            = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
             + "final_price, brand_name, rent_price, image_path, reg_number,"
             + " U.id, email, role, fname, lname, serie, number"
             + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
@@ -44,9 +41,19 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
             + "WHERE Orders.user_id = ? AND Orders.status = '%s' ORDER BY Orders.id "
             + "LIMIT ? OFFSET ?";
 
+    //language=SQL
+    private static final String COUNT_ORDERS_BY_STATUS
+            = "SELECT COUNT(id) FROM Orders WHERE status = '%s'";
+
+    //language=SQL
+    private static final String COUNT_ORDERS_BY_STATUS_AND_UID
+            = "SELECT COUNT(id) FROM Orders "
+            + "WHERE Orders.status = '%s' AND Orders.user_id = %s";
+
     @Override
     public Optional<List<Order>> readCurrentOrders() {
-        String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+        String sql
+                = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
                 + "final_price, brand_name, rent_price, image_path, reg_number,"
                 + " U.id, email, role, fname, lname, serie, number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
@@ -73,120 +80,112 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
 
     @Override
     public Integer countOverdue() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.EXPIRED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countOverdue(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.EXPIRED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countNotConfirmed() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.NOT_CONFIRMED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countNotConfirmed(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.NOT_CONFIRMED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countAccepted() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.ACCEPTED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countAccepted(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.ACCEPTED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countActive() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.ACTIVE.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countActive(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.ACTIVE.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countDenied() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.DENIED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countDenied(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.DENIED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countExtended() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.EXTENDED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countExtended(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.EXTENDED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countCompleted() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.COMPLETED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countCompleted(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.COMPLETED.getValue(), userId);
         return countOrders(sql);
     }
 
     @Override
     public Integer countConfirmed() {
-        String sql = String.format("SELECT COUNT(id) FROM Orders WHERE status = '%s'",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS,
                 OrderStatus.CONFIRMED.getValue());
         return countOrders(sql);
     }
 
     @Override
     public Integer countConfirmed(final long userId) {
-        String sql = String.format("SELECT COUNT(id) FROM Orders "
-                        + "WHERE Orders.status = '%s' AND Orders.user_id = %s",
+        String sql = String.format(COUNT_ORDERS_BY_STATUS_AND_UID,
                 OrderStatus.CONFIRMED.getValue(), userId);
         return countOrders(sql);
     }
@@ -346,7 +345,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
         try {
             statement.setLong(1, entity.getCar().getId());
             statement.setLong(2, entity.getUser().getId());
-            statement.setString(3, OrderStatus.NOT_CONFIRMED.getValue());
+            statement.setString(3, OrderStatus.NOT_CONFIRMED
+                    .getValue());
 
             int query = statement.executeUpdate();
             if (query < 1) {
@@ -373,7 +373,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
 
     @Override
     public Optional<Order> get(long id) {
-        String sql = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
+        String sql
+                = "SELECT Orders.id, status, Orders.issue_date, return_date, real_return_date,"
                 + "final_price, brand_name, rent_price, image_path, reg_number,"
                 + " U.id, email, role, fname, lname, serie, number"
                 + " FROM Orders JOIN Cars C on Orders.car_id = C.id "
@@ -645,11 +646,6 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao {
         } finally {
             closePreparedStatement(statement);
         }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<List<Order>> findOrders(long userId) {
         return Optional.empty();
     }
 

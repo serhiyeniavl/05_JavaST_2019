@@ -9,7 +9,6 @@ import by.training.info_system.resource.page.JspPage;
 import by.training.info_system.resource.page.PageEnum;
 import by.training.info_system.resource.page.PageFactory;
 import by.training.info_system.util.Encoder;
-import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +49,9 @@ public class SecurityFilter implements Filter {
             jspPage.appendRequestParameter(RequestParameter.SECURITY.getValue()
                     + "=" + Encoder.encodeString(RequestMessage.MORE_SECURE.getValue()));
             jspPage.appendRequestParameter(RequestParameter.TIME.getValue()
-            + "=" + Encoder.encodeString(LocalDateTime.now().toString()));
+                    + "=" + Encoder.encodeString(LocalDateTime.now().toString()));
             jspPage.appendRequestParameter(RequestParameter.ATTRIBUTE.getValue()
-            + "=" + Encoder.encodeString(RequestAttribute.INFO.getValue()));
+                    + "=" + Encoder.encodeString(RequestAttribute.INFO.getValue()));
             httpResponse.sendRedirect(httpResponse.encodeRedirectURL(httpRequest.getContextPath()
                     + "/" + jspPage.getUri() + jspPage.getRequestParameters()));
         }

@@ -17,7 +17,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Paths;
 
 @Log4j2
@@ -65,12 +68,14 @@ public class AddNewCarCommand extends Command {
                 buffer.append(dirs[i]);
                 buffer.append("/");
             }
-            String pathToStorePhoto = buffer + "src/main/webapp/img/cars/" + photoName;
+            String pathToStorePhoto = buffer + "src/main/webapp/img/cars/"
+                    + photoName;
             OutputStream outputStream = new FileOutputStream(pathToStorePhoto);
             fileContent.transferTo(outputStream);
             isFileReceived = true;
             car.setImagePath(photoName);
-            CarService service = factory.getService(CarService.class).orElseThrow();
+            CarService service = factory.getService(CarService.class)
+                    .orElseThrow();
             isCarCreated = service.addCar(car);
         } catch (IOException e) {
             log.error("File path is nor correct", e);

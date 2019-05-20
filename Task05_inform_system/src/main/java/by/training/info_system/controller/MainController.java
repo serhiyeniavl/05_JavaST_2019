@@ -19,13 +19,13 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         ConnectionPool.getInstance();
     }
 
     @Override
     protected void doGet(final HttpServletRequest req,
-                         final HttpServletResponse resp) throws IOException {
+                         final HttpServletResponse resp) {
         CommandManager commandManager = CommandManagerFactory.getManager(
                 new ServiceFactoryImpl(new DaoManagerImpl()));
         JspPage redirectPage = commandManager.execute(new EmptyCommand(), req, resp);

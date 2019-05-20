@@ -20,8 +20,10 @@ public class ConfirmOrderManagerCommand extends Command {
         JspPage page = PageFactory.defineAndGet(PageEnum.ORDERS);
 
         Long orderId = Long.valueOf(request.getParameter("confirm"));
-        OrderService service = factory.getService(OrderService.class).orElseThrow();
-        boolean isUpdated = service.updateOrderStatus(orderId, OrderStatus.CONFIRMED);
+        OrderService service = factory.getService(OrderService.class)
+                .orElseThrow();
+        boolean isUpdated = service.updateOrderStatus(orderId,
+                OrderStatus.CONFIRMED);
         appendTimeParam(page);
         String params = findCurrentParameters(request);
         page.appendRequestParameter(params.substring(1));

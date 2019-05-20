@@ -30,7 +30,8 @@ public class EmptyCommand extends Command {
     public JspPage execute(final HttpServletRequest request,
                            final HttpServletResponse response) {
         String requestedPage = (String) request.getAttribute("requestedPage");
-        JspPage page = PageFactory.defineAndGet(PageEnum.valueOf(requestedPage.toUpperCase()));
+        JspPage page = PageFactory.defineAndGet(PageEnum.valueOf(requestedPage
+                .toUpperCase()));
 
         updateBlackList();
 

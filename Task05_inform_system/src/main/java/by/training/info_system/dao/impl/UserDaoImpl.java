@@ -420,11 +420,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public Optional<List<User>> findAllWithDiscount() {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<List<User>> findManagers(final int page,
                                              final int recordsPerPage) {
         String sql = String.format("SELECT Users.id, email, role, fname, lname, address, serie, number,"

@@ -11,6 +11,8 @@ import java.sql.Statement;
 @Log4j2
 public abstract class AbstractDao {
     protected static final String RESULT_SET_ERROR = "Result set error: ";
+    protected static final String METHOD_DOESNT_SUPPORT
+            = "This method doesn't support";
 
     private Connection connection;
 

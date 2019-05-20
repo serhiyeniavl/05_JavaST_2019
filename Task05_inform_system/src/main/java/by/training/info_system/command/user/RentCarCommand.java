@@ -40,9 +40,11 @@ public class RentCarCommand extends Command {
             return page;
         }
 
-        CarService carService = factory.getService(CarService.class).orElseThrow();
+        CarService carService = factory.getService(CarService.class)
+                .orElseThrow();
         Car car = carService.findById(
-                Long.valueOf(request.getParameter("rent_butt"))).orElseThrow();
+                Long.valueOf(request.getParameter("rent_butt")))
+                .orElseThrow();
         User user = (User) session.getAttribute("user");
         if (user.getRole().equals(Role.ADMIN)) {
             appendTimeParam(page);
@@ -52,8 +54,10 @@ public class RentCarCommand extends Command {
                     RequestMessage.ADMIN_CANNOT_RENT);
             return page;
         }
-        OrderService orderService = factory.getService(OrderService.class).orElseThrow();
-        UserService userService = factory.getService(UserService.class).orElseThrow();
+        OrderService orderService = factory.getService(OrderService.class)
+                .orElseThrow();
+        UserService userService = factory.getService(UserService.class)
+                .orElseThrow();
         if (userService.isInBlackList(user)) {
             session.invalidate();
             appendTimeParam(page);

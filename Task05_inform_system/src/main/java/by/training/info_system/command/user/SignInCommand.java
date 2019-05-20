@@ -25,7 +25,8 @@ public class SignInCommand extends Command {
 
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         Optional<User> user = service.findByEmail(email);
         if (user.isPresent()
                 && PasswordHasher.checkPass(pass, user.get().getPassword())) {

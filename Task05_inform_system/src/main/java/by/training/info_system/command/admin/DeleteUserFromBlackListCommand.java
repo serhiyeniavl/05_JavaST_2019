@@ -14,10 +14,12 @@ public class DeleteUserFromBlackListCommand extends Command {
     public JspPage execute(final HttpServletRequest request,
                            final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.USERS);
-        page.appendRequestParameter(findCurrentParameters(request).substring(1));
+        page.appendRequestParameter(findCurrentParameters(request)
+                .substring(1));
         long userId = Long.parseLong(request.getParameter("user_id"));
 
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         service.deleteFromBlackList(userId);
         return page;
     }

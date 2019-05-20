@@ -263,20 +263,21 @@
             <div class="col-md-6 mt-md-0 mt-3">
                 <h5 class="text-uppercase font-weight-bold" id="info">How does
                     it work?</h5>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Expedita sapiente sint, nulla, nihil
-                    repudiandae commodi voluptatibus corrupti animi sequi
-                    aliquid magnam debitis, maxime quam recusandae
-                    harum esse fugiat. Itaque, culpa?</p>
+                <p>At this page you can see a cars we provide for our customers.
+                 By clicking button "Rent" this order sends to our managers
+                and they are inspecting that. If manager agree with your order
+                 and has no questions he confirms your order. Since that you can
+                take your rental car and drive. You get a car for 1 day
+                or 24 hours.</p>
             </div>
             <hr class="clearfix w-100 d-md-none pb-3">
             <div class="col-md-6 mb-md-0 mb-3">
                 <h5 class="text-uppercase font-weight-bold">What if?</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Optio deserunt fuga perferendis modi earum
-                    commodi aperiam temporibus quod nulla nesciunt aliquid
-                    debitis ullam omnis quos ipsam, aspernatur id
-                    excepturi hic.</p>
+                <p>If you have any problems with returning car to our
+                    service - you can contact us and require to extend by one day.
+                 If you don't ask our managers about extending and return car
+                 over time - you account will be banned by 3 days. So, look after
+                 your time and we hope you enjoy it!</p>
 
             </div>
         </div>

@@ -21,7 +21,8 @@ public class ExtendUserOrderCommand extends Command {
         JspPage page = PageFactory.defineAndGet(PageEnum.ORDERS);
 
         Long orderId = Long.valueOf(request.getParameter("extend"));
-        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        OrderService service = factory.getService(OrderService.class)
+                .orElseThrow();
         Order order = service.findOrderById(orderId).orElseThrow();
         order.setReturnDate(order.getReturnDate().plusDays(1L));
         order.setStatus(OrderStatus.EXTENDED);

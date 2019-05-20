@@ -46,6 +46,5 @@ public interface OrderDao extends Dao<Order> {
     Optional<List<Order>> findCompleted(long userId, int page, int recordsPerPage);
     Optional<List<Order>> findConfirmed(int page, int recordsPerPage);
     Optional<List<Order>> findConfirmed(long userId, int page, int recordsPerPage);
-    Optional<List<Order>> findOrders(long userId);
     Optional<List<Order>> findOrders(long userId, int page, int recordsPerPage);
 }

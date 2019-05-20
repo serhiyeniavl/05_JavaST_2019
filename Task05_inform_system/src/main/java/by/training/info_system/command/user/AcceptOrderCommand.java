@@ -22,7 +22,8 @@ public class AcceptOrderCommand extends Command {
         JspPage page = PageFactory.defineAndGet(PageEnum.MY_ORDERS);
 
         Long orderId = Long.valueOf(request.getParameter("accept"));
-        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        OrderService service = factory.getService(OrderService.class)
+                .orElseThrow();
         Order order = service.findOrderById(orderId).orElseThrow();
         order.setIssueDate(LocalDateTime.now());
         order.setReturnDate(LocalDateTime.now().plusDays(1L));

@@ -3,7 +3,6 @@ package by.training.info_system.service.impl;
 import by.training.info_system.dao.UserDao;
 import by.training.info_system.entity.BlackListNode;
 import by.training.info_system.entity.User;
-import by.training.info_system.entity.data.UserData;
 import by.training.info_system.entity.role.Role;
 import by.training.info_system.service.AbstractService;
 import by.training.info_system.service.UserService;
@@ -86,24 +85,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public Integer countUsers() {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.countUsers();
-    }
-
-    @Override
-    public Integer countManagers() {
-        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
-        return userDao.countManagers();
-    }
-
-    @Override
-    public Integer countCustomers() {
-        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
-        return userDao.countCustomers();
-    }
-
-    @Override
-    public Integer countUsersInBlackList() {
-        UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
-        return userDao.countUsersInBlackList();
     }
 
     @Override

@@ -14,7 +14,9 @@ public class CommandManagerImpl implements CommandManager {
     }
 
     @Override
-    public JspPage execute(final Command command, final HttpServletRequest request, final HttpServletResponse response) {
+    public JspPage execute(final Command command,
+                           final HttpServletRequest request,
+                           final HttpServletResponse response) {
         command.setFactory(factory);
         return command.execute(request, response);
     }

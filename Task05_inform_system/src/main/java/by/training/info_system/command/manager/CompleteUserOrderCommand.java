@@ -21,20 +21,24 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class CompleteUserOrderCommand extends Command {
+    private static final Integer BAN_FOR_EXPIRED = 3;
+
     @Override
     public JspPage execute(final HttpServletRequest request,
                            final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.ORDERS);
 
         Long orderId = Long.valueOf(request.getParameter("complete"));
-        OrderService service = factory.getService(OrderService.class).orElseThrow();
+        OrderService service = factory.getService(OrderService.class)
+                .orElseThrow();
         Order order = service.findOrderById(orderId).orElseThrow();
         if (order.getStatus().equals(OrderStatus.EXPIRED)) {
-            UserService userService = factory.getService(UserService.class).orElseThrow();
+            UserService userService = factory.getService(UserService.class)
+                    .orElseThrow();
             BlackListNode userNode = BlackListNode.builder()
                     .user(order.getUser())
                     .lockDate(LocalDate.now())
-                    .unlockDate(LocalDate.now().plusDays(3))
+                    .unlockDate(LocalDate.now().plusDays(BAN_FOR_EXPIRED))
                     .reason(BanReason.EXPIRED_TIME)
                     .build();
             userService.moveToBlackList(userNode);
@@ -66,7 +70,8 @@ public class CompleteUserOrderCommand extends Command {
 
     private Long calculatePrice(final Order order) {
         LocalDateTime tempTime = LocalDateTime.from(order.getIssueDate());
-        long hours = tempTime.until(order.getRealReturnDate(), ChronoUnit.HOURS);
+        long hours = tempTime.until(order.getRealReturnDate(),
+                ChronoUnit.HOURS);
         return order.getCar().getRentPrice() * hours;
     }
 }

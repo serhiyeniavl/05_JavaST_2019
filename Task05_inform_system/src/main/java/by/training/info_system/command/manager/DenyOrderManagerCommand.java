@@ -20,8 +20,10 @@ public class DenyOrderManagerCommand extends Command {
         JspPage page = PageFactory.defineAndGet(PageEnum.ORDERS);
 
         Long orderId = Long.valueOf(request.getParameter("deny"));
-        OrderService service = factory.getService(OrderService.class).orElseThrow();
-        boolean isUpdated = service.updateOrderStatus(orderId, OrderStatus.DENIED);
+        OrderService service = factory.getService(OrderService.class)
+                .orElseThrow();
+        boolean isUpdated = service.updateOrderStatus(orderId,
+                OrderStatus.DENIED);
         appendTimeParam(page);
         String params = findCurrentParameters(request);
         page.appendRequestParameter(params.substring(1));

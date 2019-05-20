@@ -13,9 +13,6 @@ public interface UserService extends Service {
     Optional<User> findByEmailFullInto(String email);
     Integer registerNewUser(User user);
     Integer countUsers();
-    Integer countUsersInBlackList();
-    Integer countManagers();
-    Integer countCustomers();
     boolean isInBlackList(User user);
     boolean updateRole(long id, Role role);
     boolean delete(long id);

@@ -16,20 +16,6 @@ import java.util.Optional;
 
 @Log4j2
 public class CarDaoImpl extends AbstractDao implements CarDao {
-    @Override
-    public Optional<List<Car>> findWithTerminatingMaintaining() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<List<Car>> findByBrand(final Character brand) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<List<Car>> findInRange(final Integer price1, final Integer price2) {
-        return Optional.empty();
-    }
 
     @Override
     public Integer create(final Car entity) {
@@ -152,13 +138,13 @@ public class CarDaoImpl extends AbstractDao implements CarDao {
     }
 
     @Override
-    public boolean update(Car entity) {
-        return false;
+    public boolean update(final Car entity) {
+        throw new UnsupportedOperationException(METHOD_DOESNT_SUPPORT);
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
+    public boolean delete(final long id) {
+        throw new UnsupportedOperationException(METHOD_DOESNT_SUPPORT);
     }
 
 }

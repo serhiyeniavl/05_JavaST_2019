@@ -17,7 +17,8 @@ public class DeleteUserCommand extends Command {
         String currentParams = findCurrentParameters(request);
         page.appendRequestParameter(currentParams.substring(1));
 
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         long userId = Long.parseLong(request.getParameter("user_id"));
         service.delete(userId);
         return page;

@@ -35,7 +35,8 @@ public class ChangePasswordCommand extends Command {
         }
 
         User user = (User) request.getSession(false).getAttribute("user");
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         if (isOldPassCorrect(user, service, oldPassword)) {
             if (service.updatePassword(user.getId(),
                     PasswordHasher.hashPass(newPassword))) {

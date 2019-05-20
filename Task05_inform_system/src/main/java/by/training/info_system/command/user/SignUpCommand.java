@@ -26,7 +26,8 @@ import java.time.format.DateTimeFormatter;
 public class SignUpCommand extends Command {
 
     @Override
-    public JspPage execute(final HttpServletRequest request, final HttpServletResponse response) {
+    public JspPage execute(final HttpServletRequest request,
+                           final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.SIGNUP);
 
         String email = request.getParameter("email").trim();
@@ -84,7 +85,8 @@ public class SignUpCommand extends Command {
             return page;
         }
 
-        UserService service = factory.getService(UserService.class).orElseThrow();
+        UserService service = factory.getService(UserService.class)
+                .orElseThrow();
         if (service.findByEmail(email).isPresent()) {
             page = PageFactory.defineAndGet(PageEnum.SIGNIN);
             appendTimeParam(page);
