@@ -72,12 +72,12 @@
 
 <body style="background-color: #F5F5F5">
 
-<h1 align="center" style="color: #030005">Users</h1>
+<h1 align="center" style="color: #030005"><fmt:message key="user"/></h1>
 <br/>
 <br/>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="">Control panel</a>
+        <a class="navbar-brand" href=""><fmt:message key="panel"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -88,31 +88,30 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="${users}?page=1">All users</a>
+                    <a class="nav-link" href="${users}?page=1"><fmt:message key="all"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=managers&page=1">Managers</a>
+                    <a class="nav-link active" href="${users}?show=managers&page=1"><fmt:message key="managers"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=customers&page=1">Customers</a>
+                    <a class="nav-link active" href="${users}?show=customers&page=1"><fmt:message key="customers"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="${users}?show=blackList&page=1">Black
-                        list</a>
+                    <a class="nav-link active" href="${users}?show=blackList&page=1"><fmt:message key="black_list"/></a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" action="${users}?id">
                 <input class="form-control mr-sm-2" type="search" required autocomplete="off"
                        name="id" placeholder="ID" aria-label="Search" style="width: 24%">
                 <button class="btn btn-outline-success my-2 my-sm-0"
-                        type="submit">Search
+                        type="submit"><fmt:message key="search"/>
                 </button>
             </form>
             <form class="form-inline my-2 my-lg-0" action="${users}?email">
                 <input class="form-control mr-sm-2" type="search" required autocomplete="off"
                        name ="email" placeholder="Email" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0"
-                        type="submit">Search
+                        type="submit"><fmt:message key="search"/>
                 </button>
             </form>
         </div>
@@ -123,18 +122,18 @@
         <tr style="font-size: larger; border: #030005; color: #030005;">
             <th>ID</th>
             <th>Email</th>
-            <th>Full name</th>
+            <th><fmt:message key="full_name"/></th>
             <th>Role</th>
             <c:choose>
                 <c:when test="${empty blackList}">
-                    <th>Address</th>
-                    <th>Passport ID</th>
+                    <th><fmt:message key="address"/></th>
+                    <th><fmt:message key="passport"/></th>
                     <th></th>
                 </c:when>
                 <c:otherwise>
-                    <th>Reason</th>
-                    <th>Lock date</th>
-                    <th>Unlock date</th>
+                    <th><fmt:message key="reason"/></th>
+                    <th><fmt:message key="lock_date"/></th>
+                    <th><fmt:message key="unlock_date"/></th>
                     <th></th>
                 </c:otherwise>
             </c:choose>
@@ -147,7 +146,7 @@
         </tbody>
     </table>
     <div id="center">
-        <h2>There are no users.</h2>
+        <h2><fmt:message key="no_users"/></h2>
     </div>
     </c:when>
     <c:otherwise>
@@ -170,7 +169,7 @@
                                                value="make_manager">
                                         <button type="submit" name="user_id"
                                                 value="${u.id}"
-                                                class="btn btn-outline-primary">Make a manager
+                                                class="btn btn-outline-primary"><fmt:message key="make_manager"/>
                                         </button>
                                     </form>
                                 </c:when>
@@ -181,7 +180,7 @@
                                                value="make_user">
                                         <button type="submit" name="user_id"
                                                 value="${u.id}"
-                                                class="btn btn-outline-primary">Make an user
+                                                class="btn btn-outline-primary"><fmt:message key="make_user"/>
                                         </button>
                                     </form>
                                 </c:otherwise>
@@ -196,7 +195,7 @@
                                            value="delete_user">
                                     <button type="submit" name="user_id"
                                             value="${u.id}"
-                                            class="btn btn-outline-danger">Delete
+                                            class="btn btn-outline-danger"><fmt:message key="delete"/>
                                     </button>
                                 </form>
                             </c:if>
@@ -219,7 +218,7 @@
                                            value="delete_user_black_list">
                                     <button type="submit" name="user_id"
                                             value="${u.user.id}"
-                                            class="btn btn-outline-danger">Delete from list
+                                            class="btn btn-outline-danger"><fmt:message key="delete_from_list"/>
                                     </button>
                                 </form>
                             </c:if>
@@ -239,7 +238,7 @@
     <ul class="pagination pagination-sm justify-content-center">
         <c:if test="${current_page != 1 && not empty current_page}">
             <li class="page-item"><a class="page-link a-nav"
-                                     href="${users}?page=${current_page - 1}&show=${show}">Previous</a>
+                                     href="${users}?page=${current_page - 1}&show=${show}"><fmt:message key="previous"/></a>
             </li>
         </c:if>
         <c:forEach begin="1" end="${num_of_pages}" var="i">
@@ -259,7 +258,7 @@
         </c:forEach>
         <c:if test="${current_page lt num_of_pages}">
             <li class="page-item"><a class="page-link a-nav"
-                                     href="${users}?page=${current_page + 1}&show=${show}">Next</a>
+                                     href="${users}?page=${current_page + 1}&show=${show}"><fmt:message key="next"/></a>
             </li>
         </c:if>
     </ul>

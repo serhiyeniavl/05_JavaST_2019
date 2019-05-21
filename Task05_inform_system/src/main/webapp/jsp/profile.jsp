@@ -78,15 +78,13 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab"
                    data-toggle="tab" href="#nav-home" role="tab"
-                   aria-controls="nav-home" aria-selected="true">Profile</a>
+                   aria-controls="nav-home" aria-selected="true"><fmt:message key="profile"/> </a>
                 <a class="nav-item nav-link" id="nav-profile-tab"
                    data-toggle="tab" href="#nav-profile" role="tab"
-                   aria-controls="nav-profile" aria-selected="false">Change
-                    email</a>
+                   aria-controls="nav-profile" aria-selected="false"><fmt:message key="change_email"/></a>
                 <a class="nav-item nav-link" id="nav-contact-tab"
                    data-toggle="tab" href="#nav-contact" role="tab"
-                   aria-controls="nav-contact" aria-selected="false">Change
-                    password</a>
+                   aria-controls="nav-contact" aria-selected="false"><fmt:message key="change_password"/></a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -95,35 +93,35 @@
                 <table class="table table-hover" style="margin-top: 3%;">
                     <tbody>
                     <tr>
-                        <th scope="row">First name:</th>
+                        <th scope="row"><fmt:message key="fname"/>:</th>
                         <td>${data.getUserData().FName}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Last name:</th>
+                        <th scope="row"><fmt:message key="lname"/>:</th>
                         <td>${data.getUserData().LName}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Email:</th>
+                        <th scope="row"><fmt:message key="email"/>:</th>
                         <td>${data.email}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Address:</th>
+                        <th scope="row"><fmt:message key="address"/>:</th>
                         <td>${data.getUserData().address}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Passport number:</th>
+                        <th scope="row"><fmt:message key="passport_num"/>:</th>
                         <td>${data.getUserData().passport.serie}${data.userData.passport.number}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Passport id:</th>
+                        <th scope="row"><fmt:message key="passport_id"/>:</th>
                         <td>${data.getUserData().passport.idNumber}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Issue date:</th>
+                        <th scope="row"><fmt:message key="issue_date"/>:</th>
                         <td>${data.getUserData().passport.showIssueDate()}</td>
                     </tr>
                     <tr>
-                        <th scope="row">End date:</th>
+                        <th scope="row"><fmt:message key="end_date"/>:</th>
                         <td>${data.getUserData().passport.showEndDate()}</td>
                     </tr>
                     </tbody>
@@ -143,25 +141,23 @@
                 <form action="${profile}" method="post" style="padding-top: 7%;">
                     <input type="hidden" name="command" value="change_email">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">New email
-                            address</label>
+                        <label for="exampleInputEmail1"><fmt:message key="new_email"/></label>
                         <input type="email" class="form-control" name="email"
                                id="exampleInputEmail1" required
                                aria-describedby="emailHelp"
-                               placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll
-                            never share your email with anyone else.
+                               placeholder="<fmt:message key="enter_email"/>">
+                        <small id="emailHelp" class="form-text text-muted"><fmt:message key="small"/>
                         </small>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="exampleInputPassword1"><fmt:message key="password"/></label>
                         <input type="password" class="form-control" name="password"
                                id="exampleInputPassword1" required
-                               placeholder="Password">
-                        <small class="form-text text-muted">Confirm password.
+                               placeholder="<fmt:message key="password"/>">
+                        <small class="form-text text-muted"><fmt:message key="confrim_password"/>
                         </small>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit
+                    <button type="submit" class="btn btn-primary"><fmt:message key="submit"/>
                     </button>
                 </form>
             </div>
@@ -171,26 +167,25 @@
                       style="padding-top: 7%;">
                     <input type="hidden" name="command" value="change_password">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Old password</label>
+                        <label for="exampleInputEmail1"><fmt:message key="old_password"/></label>
                         <input type="password" name="old_password"
                                class="form-control" required
                                aria-describedby="emailHelp"
-                               placeholder="Enter old password">
+                               placeholder="<fmt:message key="enter_old_password"/>">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">New password</label>
+                        <label for="exampleInputPassword1"><fmt:message key="new_password"/></label>
                         <input type="password" name="new_password1"
                                class="form-control" required
-                               placeholder="Password">
+                               placeholder="<fmt:message key="password"/>">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Confirm new
-                            password</label>
+                        <label for="exampleInputPassword1"><fmt:message key="confrim_password"/></label>
                         <input type="password" name="new_password2"
                                class="form-control" required
-                               placeholder="Password">
+                               placeholder="<fmt:message key="password"/>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit
+                    <button type="submit" class="btn btn-primary"><fmt:message key="submit"/>
                     </button>
                 </form>
             </div>

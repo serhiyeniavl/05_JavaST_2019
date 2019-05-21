@@ -213,58 +213,58 @@
             <div class="col-md-6">
                 <div class="card">
                     <header class="card-header">
-                        <h4 class="card-title mt-2">Add new car</h4>
+                        <h4 class="card-title mt-2"><fmt:message key="add_car"/> </h4>
                     </header>
                     <article class="card-body">
                         <form method="post" action="${cars}" enctype="multipart/form-data">
                             <input type="hidden" name="command" value="add_new_car"/>
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>Year made </label>
+                                    <label><fmt:message key="year_made"/></label>
                                     <input name="year" type="text" required class="form-control" placeholder="xxxx">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
-                                    <label>Rent price</label>
+                                    <label><fmt:message key="price"/></label>
                                     <input name="rent" type="text" required class="form-control" placeholder="x...">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>Description </label>
+                                    <label><fmt:message key="description"/> </label>
                                     <input name="description" type="text" required class="form-control" placeholder="Aaa...">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>Brand name</label>
+                                    <label><fmt:message key="brand"/></label>
                                     <input name="brand_name" type="text" required class="form-control" placeholder="Aaa...">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
-                                    <label>Class auto</label>
+                                    <label><fmt:message key="class"/></label>
                                     <input name="class" type="text" class="form-control" required placeholder="Enter class auto">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
-                                <label>Vin code</label>
+                                <label><fmt:message key="vin"/></label>
                                 <input name="vin" type="text" required class="form-control" placeholder="xAAAAxxAAAAxxxxxx">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
-                                <label>Reg number</label>
+                                <label><fmt:message key="reg"/></label>
                                 <input name="reg" type="text" required class="form-control" placeholder="xxxxAA-x">
                             </div> <!-- form-group end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>Run </label>
+                                    <label><fmt:message key="run"/> </label>
                                     <input name="run" type="text" required class="form-control" placeholder="xxxx...">
                                 </div> <!-- form-group end.// -->
                                 <div class="form-group custom-file">
                                     <input type="file" name="photo" accept="/image/*" required class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Car photo</label>
+                                    <label class="custom-file-label" for="customFile"><fmt:message key="car_photo"/></label>
                                 </div>
                             </div> <!-- form-row end.// -->
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"> Add </button>
+                                <button type="submit" class="btn btn-primary btn-block"> <fmt:message key="add"/> </button>
                             </div> <!-- form-group// -->
                         </form>
                     </article> <!-- card-body end .// -->

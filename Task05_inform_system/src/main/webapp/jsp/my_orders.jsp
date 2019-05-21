@@ -96,7 +96,7 @@
 <body style="background-color: #F5F5F5">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" style="margin-right: 3%; color: white">Navigation</a>
+    <a class="navbar-brand" style="margin-right: 3%; color: white"><fmt:message key="nav"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -105,7 +105,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Find by status
+                    <fmt:message key="find_by_status"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <c:forEach var="status" items="${order_status}">
@@ -115,8 +115,8 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" name="order_id" required placeholder="Search by ID"  autocomplete="off" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="search" name="order_id" required placeholder="<fmt:message key="search_id"/>"  autocomplete="off" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="search_butt"/></button>
         </form>
     </div>
 </nav>
@@ -140,40 +140,40 @@
                         </div>
                         <div class="col-md-6">
                             <tr>
-                                Order
+                                <fmt:message key="order"/>
                                 <th><c:out value="#${ order.id }"/></th>
                                 <br>
                                 Car:
                                 <th><c:out
                                         value="${ order.car.brandName }"/></th>
                                 <br>
-                                Price per hour:
+                                <fmt:message key="price"/>:
                                 <th><c:out
                                         value="${ order.car.rentPrice }$"/></th>
                                 <br>
                                 <c:if test="${not empty order.issueDate}">
-                                    Issue date:
+                                    <fmt:message key="issue"/>:
                                     <th><c:out
                                             value="${ order.showIssueDate()}"/></th>
                                     <br>
                                 </c:if>
                                 <c:if test="${not empty order.returnDate}">
-                                    Return date:
+                                    <fmt:message key="end"/>:
                                     <th><c:out
                                             value="${ order.showReturnDate()}"/></th>
                                     <br>
                                 </c:if>
                                 <c:if test="${not empty order.realReturnDate}">
-                                    Real return date:
+                                    <fmt:message key="real_end"/>:
                                     <th><c:out
                                             value="${ order.showRealReturnDate()}"/></th>
                                     <br>
-                                    Final price:
+                                    <fmt:message key="final_price"/>:
                                     <th><c:out
                                             value="${ order.finalPrice}$"/></th>
                                     <br>
                                 </c:if>
-                                Status:
+                                <fmt:message key="status"/>:
                                 <th><c:out
                                         value="${ order.status.getValue()}"/></th>
                                 <br>
@@ -184,7 +184,7 @@
                                         <td>
                                             <button class="btn btn-info"
                                                     type="submit" name="accept"
-                                                    value="${order.id}">Take a car
+                                                    value="${order.id}"><fmt:message key="take"/>
                                             </button>
                                         </td>
                                     </form>
@@ -207,7 +207,7 @@
                 <ul class="pagination pagination-lg justify-content-center">
                     <c:if test="${current_page != 1}">
                         <li class="page-item"><a class="page-link a-nav"
-                                                 href="${user_orders}?page=${current_page - 1}&show=${show}">Previous</a>
+                                                 href="${user_orders}?page=${current_page - 1}&show=${show}"><fmt:message key="previous"/></a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${num_of_pages}" var="i">
@@ -227,7 +227,7 @@
                     </c:forEach>
                     <c:if test="${current_page lt num_of_pages}">
                         <li class="page-item"><a class="page-link a-nav"
-                                                 href="${user_orders}?page=${current_page + 1}&show=${show}">Next</a>
+                                                 href="${user_orders}?page=${current_page + 1}&show=${show}"><fmt:message key="next"/></a>
                         </li>
                     </c:if>
                 </ul>
