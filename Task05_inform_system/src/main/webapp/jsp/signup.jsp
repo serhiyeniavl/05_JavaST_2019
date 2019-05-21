@@ -41,8 +41,8 @@
         <div class="col-md-6">
             <div class="card">
                 <header class="card-header">
-                    <a href="${signin}" class="float-right btn btn-outline-primary mt-1">Sign in</a>
-                    <h4 class="card-title mt-2">Sign up</h4>
+                    <a href="${signin}" class="float-right btn btn-outline-primary mt-1"><fmt:message key="signin"/></a>
+                    <h4 class="card-title mt-2"><fmt:message key="signup"/></h4>
                     <c:if test="${not empty incorrect_data}">
                         <h6 style="color: red; text-align: center">${incorrect_data}
                             <br>If you have any questions, please,
@@ -54,54 +54,54 @@
                         <input type="hidden" name="command" value="signup"/>
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>First name </label>
+                                <label><fmt:message key="fname"/> </label>
                                 <input name="fname" type="text" required class="form-control" placeholder="Aa...">
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
-                                <label>Last name</label>
+                                <label><fmt:message key="lname"/></label>
                                 <input name="lname" type="text" required class="form-control" placeholder="Aa...">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>Serie and passport number </label>
+                                <label><fmt:message key="serienumber"/> </label>
                                 <input name="ps_number" type="text" required class="form-control" placeholder="AAxxxxxxx">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>Passport issue date</label>
+                                <label><fmt:message key="issue_date"/></label>
                                 <input name="ps_issue" type="text" required class="form-control" placeholder="dd-mm-yyyy">
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
-                                <label>Passport end date</label>
+                                <label><fmt:message key="end_date"/></label>
                                 <input name="ps_end" type="text" class="form-control" required placeholder="dd-mm-yyyy">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
                         <div class="form-group">
-                            <label>Passport id number</label>
+                            <label><fmt:message key="idnumber"/></label>
                             <input name="ps_id" type="text" required class="form-control" placeholder="xxxxxxxAxxxAAx">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
-                            <label>Email address</label>
+                            <label><fmt:message key="email"/></label>
                             <input name="email" type="email" required class="form-control" placeholder="aaaa@post.aaa">
-                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <small class="form-text text-muted"><fmt:message key="small"/></small>
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
-                            <label>Address</label>
+                            <label><fmt:message key="address"/></label>
                             <input name="address" type="text" required class="form-control" placeholder="City, Street N/H">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
-                            <label>Create password</label>
+                            <label><fmt:message key="password"/></label>
                             <input name="password" type="password" required class="form-control" placeholder="">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+                            <button type="submit" class="btn btn-primary btn-block"> <fmt:message key="register"/>  </button>
                         </div> <!-- form-group// -->
-                        <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
+                        <small class="text-muted"><fmt:message key="attention1"/> <br> <fmt:message key="attention2"/></small>
                     </form>
                 </article> <!-- card-body end .// -->
-                <div class="border-top card-body text-center">Have an account? <a href="${signin}">Sign In</a></div>
+                <div class="border-top card-body text-center"><fmt:message key="have_an_account"/> <a href="${signin}"><fmt:message key="signin"/></a></div>
             </div> <!-- card.// -->
         </div> <!-- col.//-->
 

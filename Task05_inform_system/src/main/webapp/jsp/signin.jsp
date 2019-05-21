@@ -54,10 +54,8 @@
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall"
-                 style="background-color: rgba(247,247,247);">
-                <h1 class="text-center login-title" style="font-size: 23px">Sign
-                    in to continue to
-                    Free ride</h1>
+                 style="background-color: rgba(247,247,247, 1)">
+                <h1 class="text-center login-title" style="font-size: 23px"><fmt:message key="header"/></h1>
                 <img style="margin-top: 20px;" class="profile-img"
                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                      alt="">
@@ -67,7 +65,7 @@
                     <input name="email" type="email" class="form-control"
                            placeholder="Email" required autofocus>
                     <input name="pass" type="password" class="form-control"
-                           placeholder="Password" required>
+                           placeholder="<fmt:message key="password"/>" required>
                     <c:if test="${not empty incorrect_data}">
                         <h5 style="color: red; text-align: center">${incorrect_data}
                             <br>If you have any questions, please,
@@ -88,17 +86,10 @@
                     </c:if>
                     <button class="btn btn-lg btn-primary btn-block"
                             type="submit">
-                        Sign in
+                        <fmt:message key="signin"/>
                     </button>
-                    <label class="checkbox pull-left"
-                           style="margin-right: 70px;">
-                        <input type="checkbox" name="remember"
-                               value="remember-me">
-                        Remember me
-                    </label>
-                    <a href="${signup}" class="text-center new-account">Create
-                        an account </a>
-                    <a href="${home}" class="text-center new-account" style="position: absolute; margin-left: 30%;">Homepage</a>
+                    <a href="${signup}" class="text-center new-account"><fmt:message key="create_acc"/> </a>
+                    <a href="${home}" class="text-center new-account" style="position: absolute; margin-left: 30%;"><fmt:message key="home"/></a>
                 </form>
             </div>
         </div>

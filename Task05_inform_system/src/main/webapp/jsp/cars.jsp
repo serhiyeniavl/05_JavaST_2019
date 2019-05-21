@@ -86,7 +86,7 @@
             background-color: white;
             padding-top: 5px;
             padding-bottom: 5px;
-            width: 25%;
+            width: 30%;
             color: black;
             border: 2px solid #555555;
         }
