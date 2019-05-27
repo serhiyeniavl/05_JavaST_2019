@@ -66,6 +66,9 @@ CREATE TABLE `Passport` (
                           PRIMARY KEY (`id`)
 );
 
+CREATE INDEX us_email_index ON Users (email);
+CREATE INDEX order_status_index ON Orders (status);
+
 
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`)
   ON DELETE cascade ON UPDATE CASCADE;

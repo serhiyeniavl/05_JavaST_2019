@@ -40,4 +40,8 @@ INSERT INTO Car_info(vin_code, reg_number, run) VALUES
 ('1FJBM57RYFM84958', '4952HR-7', '456745');
 
 INSERT INTO Black_list(user_id, reason, lock_date, unlock_date) VALUES
-('4', 'Didn\'t return a car in time.', '2019-05-22', '2019-05-25');
+('4', 'Didn\'t return a car in time.', '2019-05-27', '2019-05-30');
+
+INSERT INTO Orders(car_id, user_id, status, issue_date, return_date, real_return_date, final_price) VALUES
+('2', '3', 'Confirmed', null, null, null, null),
+('3', '2', 'Active', '2019-05-27 17:50:00', '2019-05-28 17:50:00', null, null);

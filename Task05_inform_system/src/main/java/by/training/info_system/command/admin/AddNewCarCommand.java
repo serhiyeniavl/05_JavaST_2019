@@ -25,7 +25,7 @@ import java.nio.file.Paths;
 
 @Log4j2
 public class AddNewCarCommand extends Command {
-    @Override
+        @Override
     public JspPage execute(final HttpServletRequest request,
                            final HttpServletResponse response) {
         JspPage page = PageFactory.defineAndGet(PageEnum.CARS);
