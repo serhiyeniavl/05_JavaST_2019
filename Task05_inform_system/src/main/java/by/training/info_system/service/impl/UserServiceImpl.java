@@ -19,7 +19,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmailFullInto(final String email) {
+    public Optional<User> findByEmailFullInfo(final String email) {
         UserDao userDao = daoManager.createDao(UserDao.class).orElseThrow();
         return userDao.readFullInfo(email);
     }

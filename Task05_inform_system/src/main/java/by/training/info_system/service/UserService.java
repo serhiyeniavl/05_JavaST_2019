@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserService extends Service {
     Optional<User> findById(long id);
     Optional<User> findByEmail(String email);
-    Optional<User> findByEmailFullInto(String email);
+    Optional<User> findByEmailFullInfo(String email);
     Integer registerNewUser(User user);
     Integer countUsers();
     boolean isInBlackList(User user);

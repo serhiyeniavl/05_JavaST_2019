@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suit1">
+    <test name="Users service test">
+        <classes>
+            <class name="by.training.info_system.service.impl.UserServiceTest"/>
+        </classes>
+    </test>
+    <test name="Orders service test">
+        <classes>
+            <class name="by.training.info_system.service.impl.OrderServiceTest"/>
+        </classes>
+    </test>
+</suite>

@@ -569,7 +569,7 @@ public class EmptyCommand extends Command {
 
     private void loadUserByEmail(final HttpServletRequest request, final String email) {
         UserService service = factory.getService(UserService.class).orElseThrow();
-        User user = service.findByEmailFullInto(email).orElse(null);
+        User user = service.findByEmailFullInfo(email).orElse(null);
         List<User> findingUser = null;
         if (user != null) {
             findingUser = new ArrayList<>();
