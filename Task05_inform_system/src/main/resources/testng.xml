@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Suit1">
+<suite name="Services tests">
     <test name="Users service test">
         <classes>
             <class name="by.training.info_system.service.impl.UserServiceTest"/>
@@ -10,6 +10,11 @@
     <test name="Orders service test">
         <classes>
             <class name="by.training.info_system.service.impl.OrderServiceTest"/>
+        </classes>
+    </test>
+    <test name="Car service test">
+        <classes>
+            <class name="by.training.info_system.service.impl.CarServiceTest"/>
         </classes>
     </test>
 </suite>
